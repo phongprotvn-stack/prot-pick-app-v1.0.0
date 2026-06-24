@@ -1,16 +1,18 @@
-import React, { StrictMode } from 'react';
+import React, { StrictMode, Suspense } from 'react';
 import { useApp, compressImage } from './context/AppContext';
 import Header from './components/Header';
-import DashboardTab from './components/DashboardTab';
-import StudentsTab from './components/StudentsTab';
-import CurriculumTab from './components/CurriculumTab';
-import SessionsTab from './components/SessionsTab';
-import AboutTab from './components/AboutTab';
 import BottomNav from './components/BottomNav';
 import PinModal from './components/PinModal';
 import SkillHistoryModal from './components/SkillHistoryModal';
 import AudioPlayer from './components/AudioPlayer';
 import { Activity, Users, BookOpen, Calendar, Award, Bell, Plus } from 'lucide-react';
+
+// Lazy-loaded tab components for code splitting
+const DashboardTab = React.lazy(() => import('./components/DashboardTab'));
+const StudentsTab = React.lazy(() => import('./components/StudentsTab'));
+const CurriculumTab = React.lazy(() => import('./components/CurriculumTab'));
+const SessionsTab = React.lazy(() => import('./components/SessionsTab'));
+const AboutTab = React.lazy(() => import('./components/AboutTab'));
 
 function AppContent() {
   const {
@@ -79,6 +81,7 @@ function AppContent() {
         />
 
           <main className="max-w-7xl mx-auto px-4 md:px-6 pt-4 pb-24 md:py-6" id="protpick-main-canvas">
+          <Suspense fallback={<div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-rose-500 border-t-transparent rounded-full animate-spin" /></div>}>
           {/* NOTIFICATION CENTER - always visible */}
           {(() => {
             const latestNoti = sortedNotifications.filter(n => role === 'coach' || n.isPublic)[0];
@@ -299,6 +302,7 @@ function AppContent() {
               syncCoach={syncCoach}
             />
           )}
+        </Suspense>
         </main>
 
         {/* MOBILE BOTTOM NAV */}
