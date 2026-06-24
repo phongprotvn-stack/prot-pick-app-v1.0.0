@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 
 // Firebase configuration from environment variables
 // Set these in .env file (see .env.example)
@@ -14,8 +15,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+const auth = getAuth(app);
+
+// Auto sign-in anonymously so Firestore writes work with rules
+signInAnonymously(auth).catch(() => {
+  // Silent fail - app works in read-only mode without auth
+});
+
 // Use specific database ID if provided, otherwise use default
 const databaseId = import.meta.env.VITE_FIREBASE_DATABASE_ID || '(default)';
 const db = getFirestore(app, databaseId);
 
-export { db };
+export { db, auth };
