@@ -219,6 +219,113 @@ export default function Header({
           </div>
         </div>
       </div>
+
+      {/* MOBILE SETTINGS DRAWER (HAMBURGER MENU) */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex">
+          <div
+            className="fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity duration-300"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <div className="relative flex flex-col w-80 max-w-[85vw] bg-zinc-950 border-r border-zinc-850 text-white p-5 shadow-2xl h-full animate-slideRight">
+            <div className="flex items-center justify-between pb-4 border-b border-zinc-850">
+              <div className="flex items-center gap-2">
+                <Menu className="w-4 h-4 text-rose-500" />
+                <span className="font-black text-xs uppercase tracking-wider text-rose-500">
+                  {lang === 'vi' ? 'Cài đặt' : 'Settings'}
+                </span>
+              </div>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto py-5 space-y-6 no-scrollbar">
+              {/* ROLE PICKER */}
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block font-bold">
+                  {lang === 'vi' ? 'Vai Trò' : 'User Role'}
+                </span>
+                <div className="grid grid-cols-2 gap-2 bg-zinc-900 p-1 rounded-xl border border-zinc-800">
+                  <button
+                    onClick={() => { handleRoleToggle('coach'); setIsMobileMenuOpen(false); }}
+                    className={`py-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
+                      role === 'coach' ? 'bg-rose-600 text-white shadow-sm font-black' : 'text-zinc-400'
+                    }`}
+                  >
+                    🛠 {lang === 'vi' ? 'HLV' : 'Coach'}
+                  </button>
+                  <button
+                    onClick={() => { handleRoleToggle('student'); setIsMobileMenuOpen(false); }}
+                    className={`py-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
+                      role === 'student' ? 'bg-rose-600 text-white shadow-sm font-black' : 'text-zinc-400'
+                    }`}
+                  >
+                    👥 {lang === 'vi' ? 'Học Viên' : 'Student'}
+                  </button>
+                </div>
+              </div>
+
+              {/* LANGUAGE PICKER */}
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block font-bold">
+                  {lang === 'vi' ? 'Ngôn ngữ' : 'Language'}
+                </span>
+                <div className="grid grid-cols-2 gap-2 bg-zinc-900 p-1 rounded-xl border border-zinc-800">
+                  <button
+                    onClick={() => handleLangToggle('vi')}
+                    className={`py-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
+                      lang === 'vi' ? 'bg-zinc-800 text-rose-500 font-black border border-zinc-700' : 'text-zinc-400'
+                    }`}
+                  >
+                    Tiếng Việt
+                  </button>
+                  <button
+                    onClick={() => handleLangToggle('en')}
+                    className={`py-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
+                      lang === 'en' ? 'bg-zinc-800 text-rose-500 font-black border border-zinc-700' : 'text-zinc-400'
+                    }`}
+                  >
+                    English
+                  </button>
+                </div>
+              </div>
+
+              {/* QUICK NAV */}
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block font-bold">
+                  {lang === 'vi' ? 'Điều hướng' : 'Navigation'}
+                </span>
+                <div className="space-y-1">
+                  {[
+                    { id: 'dashboard', label: t.tabDashboard, icon: <Activity className="w-4 h-4" /> },
+                    { id: 'students', label: t.tabStudents, icon: <Users className="w-4 h-4" /> },
+                    { id: 'curriculum', label: t.tabCurriculum, icon: <BookOpen className="w-4 h-4" /> },
+                    { id: 'sessions', label: t.tabSessions, icon: <Calendar className="w-4 h-4" /> },
+                    { id: 'about', label: t.tabAbout, icon: <Award className="w-4 h-4" /> }
+                  ].map(tab => (
+                    <button
+                      key={tab.id}
+                      onClick={() => { setActiveTab(tab.id); setIsMobileMenuOpen(false); }}
+                      className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        activeTab === tab.id
+                          ? 'bg-rose-600/10 text-rose-500 border border-rose-500/20'
+                          : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200'
+                      }`}
+                    >
+                      {tab.icon}
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
