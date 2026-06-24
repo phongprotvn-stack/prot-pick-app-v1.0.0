@@ -1,0 +1,224 @@
+import React, { useState } from 'react';
+import {
+  Activity, Users, BookOpen, Calendar, Award,
+  Sun, Moon, Bell, X, PlusCircle, Search, Menu, ChevronDown
+} from 'lucide-react';
+import { LanguageKey, translations } from '../translations';
+import { NotificationItem } from '../types';
+
+interface HeaderProps {
+  t: Record<string, string>;
+  lang: LanguageKey;
+  role: 'coach' | 'student';
+  theme: 'light' | 'dark';
+  searchQuery: string;
+  setSearchQuery: (q: string) => void;
+  notifications: NotificationItem[];
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: (v: boolean) => void;
+  isMobileSearchOpen: boolean;
+  setIsMobileSearchOpen: (v: boolean) => void;
+  isNotiHistoryOpen: boolean;
+  setIsNotiHistoryOpen: (v: boolean) => void;
+  newNoti: Partial<NotificationItem> | null;
+  setNewNoti: (v: Partial<NotificationItem> | null) => void;
+  handleRoleToggle: (role: 'coach' | 'student') => void;
+  handleLangToggle: (lang: LanguageKey) => void;
+  handleThemeToggle: () => void;
+  handleSaveNoti: (e: React.FormEvent) => void;
+  handleDeleteNoti: (id: string) => void;
+  translateViToEn: (text: string) => Promise<string | null>;
+  translationTimeoutRef: React.MutableRefObject<Record<string, NodeJS.Timeout>>;
+  setActiveTab: (tab: string) => void;
+  activeTab: string;
+  sortedNotifications: NotificationItem[];
+}
+
+export default function Header({
+  t, lang, role, theme, searchQuery, setSearchQuery,
+  notifications, isMobileMenuOpen, setIsMobileMenuOpen,
+  isMobileSearchOpen, setIsMobileSearchOpen,
+  isNotiHistoryOpen, setIsNotiHistoryOpen,
+  newNoti, setNewNoti,
+  handleRoleToggle, handleLangToggle, handleThemeToggle,
+  handleSaveNoti, handleDeleteNoti,
+  translateViToEn, translationTimeoutRef,
+  setActiveTab, activeTab, sortedNotifications
+}: HeaderProps) {
+  return (
+    <header className="bg-zinc-950 border-b border-zinc-850 sticky top-0 z-30 shadow-xl">
+      {/* TOP BAR */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
+        <div className="flex items-center justify-between">
+          {/* LEFT: APP BRAND */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-1.5 bg-zinc-900 rounded-xl border border-zinc-800 text-zinc-400 cursor-pointer"
+            >
+              <Menu className="w-5 h-5 stroke-[2.5]" />
+            </button>
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 bg-gradient-to-br from-rose-500 to-rose-800 rounded-xl flex items-center justify-center shadow-md shadow-rose-500/20">
+                <span className="text-white font-black text-xs tracking-tighter">PP</span>
+              </div>
+              <div>
+                <h1 className="text-sm font-black text-white tracking-tight leading-tight">{t.appTitle}</h1>
+                <span className="text-[9px] font-mono text-rose-500 font-bold uppercase tracking-wider">Combat never ends</span>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: THEME & TOOLS */}
+          <div className="flex items-center gap-1.5">
+            {/* Mobile Search Toggle */}
+            <button
+              onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
+              className="md:hidden p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+            >
+              <Search className="w-4 h-4 text-zinc-400" />
+            </button>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={handleThemeToggle}
+              className="p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-rose-500" />}
+            </button>
+
+            {/* Language Toggle */}
+            <button
+              onClick={() => handleLangToggle(lang === 'vi' ? 'en' : 'vi')}
+              className="p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 text-[10px] font-black text-zinc-400 cursor-pointer"
+            >
+              {lang === 'vi' ? 'EN' : 'VI'}
+            </button>
+
+            {/* Role Toggle */}
+            <button
+              onClick={() => handleRoleToggle(role === 'coach' ? 'student' : 'coach')}
+              className={`px-2.5 py-1.5 rounded-xl text-[10px] font-black transition-all active:scale-95 cursor-pointer border ${
+                role === 'coach'
+                  ? 'bg-rose-600 text-white border-rose-500 shadow-sm'
+                  : 'bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-zinc-800'
+              }`}
+            >
+              {role === 'coach' ? (lang === 'vi' ? 'HLV' : 'COACH') : (lang === 'vi' ? 'HỌC VIÊN' : 'STUDENT')}
+            </button>
+
+            {/* NOTIFICATIONS */}
+            <div className="relative">
+              <button
+                onClick={() => setIsNotiHistoryOpen(!isNotiHistoryOpen)}
+                className="relative p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+              >
+                <Bell className="w-4 h-4 text-zinc-400" />
+                {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-rose-500 border-2 border-zinc-950 rounded-full text-[6px] font-black text-white flex items-center justify-center animate-pulse">
+                    {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length}
+                  </span>
+                )}
+              </button>
+
+              {isNotiHistoryOpen && (
+                <div className="absolute right-0 mt-3.5 z-50 w-72 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-2xl shadow-2xl p-4 space-y-3 font-sans animate-slideDown overflow-visible">
+                  <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-2">
+                    <h4 className="text-xs font-black uppercase tracking-wider text-rose-600 flex items-center gap-1.5">
+                      <Bell className="w-3.5 h-3.5" />
+                      {lang === 'vi' ? 'Thông báo' : 'Notifications'}
+                    </h4>
+                    <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-850 px-2 py-0.5 rounded-full font-bold">
+                      {notifications.filter(n => role === 'coach' || n.isPublic).length}
+                    </span>
+                  </div>
+
+                  <div className="max-h-60 overflow-y-auto space-y-2.5 pr-1 no-scrollbar-y">
+                    {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length > 0 ? (
+                      sortedNotifications.filter(n => role === 'coach' || n.isPublic).map((noti) => (
+                        <div key={noti.id} className="p-2.5 bg-zinc-50 dark:bg-zinc-950/65 border border-zinc-150 dark:border-zinc-850 hover:border-zinc-205 dark:hover:border-zinc-800 rounded-xl space-y-1 text-left relative group">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="bg-zinc-200 dark:bg-zinc-800 text-[8px] text-zinc-650 dark:text-zinc-450 font-mono px-1 py-0.5 rounded font-bold">{noti.date}</span>
+                            <span className={`px-1.5 py-0.5 rounded-full text-[7px] uppercase font-black tracking-wider border ${
+                              noti.type === 'success'
+                                ? 'bg-emerald-500/10 text-emerald-655 dark:text-emerald-400 border-emerald-500/20'
+                                : noti.type === 'warning'
+                                  ? 'bg-amber-500/10 text-amber-655 dark:text-amber-400 border-amber-500/20'
+                                  : 'bg-sky-500/10 text-sky-650 dark:text-sky-400 border-sky-500/20'
+                            }`}>
+                              {lang === 'vi' ? (noti.type === 'success' ? 'Thành công' : noti.type === 'warning' ? 'Cảnh báo' : 'Thông tin') : noti.type.toUpperCase()}
+                            </span>
+                          </div>
+                          <h5 className="font-bold text-xs text-zinc-900 dark:text-white tracking-tight">
+                            {lang === 'vi' ? noti.titleVI : noti.titleEN}
+                          </h5>
+                          <p className="text-[10px] text-zinc-600 dark:text-zinc-450 leading-relaxed">
+                            {lang === 'vi' ? noti.contentVI : noti.contentEN}
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-xs text-zinc-500 italic text-center py-4">{t.noNoti}</p>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* MOBILE SEARCH OVERLAY ROW */}
+      {isMobileSearchOpen && (
+        <div className="md:hidden px-4 py-2 bg-zinc-950 border-t border-zinc-850 animate-slideDown">
+          <div className="relative flex items-center bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-1.5">
+            <Search className="w-3.5 h-3.5 text-rose-500 mr-2 shrink-0 animate-pulse" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={t.searchPlaceholder}
+              className="w-full bg-transparent text-xs text-white focus:outline-none placeholder-zinc-600"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="text-[10px] text-zinc-400 hover:text-zinc-200 cursor-pointer font-bold shrink-0 ml-1.5"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* TABS NAVIGATION PANEL (DESKTOP ONLY) */}
+      <div className="hidden md:block bg-zinc-950 border-t border-zinc-850 px-4 md:px-6">
+        <div className="max-w-7xl mx-auto flex overflow-x-auto no-scrollbar py-1">
+          <div className="flex gap-1.5 min-w-max">
+            {[
+              { id: 'dashboard', label: t.tabDashboard, icon: <Activity className="w-4 h-4" /> },
+              { id: 'students', label: t.tabStudents, icon: <Users className="w-4 h-4" /> },
+              { id: 'curriculum', label: t.tabCurriculum, icon: <BookOpen className="w-4 h-4" /> },
+              { id: 'sessions', label: t.tabSessions, icon: <Calendar className="w-4 h-4" /> },
+              { id: 'about', label: t.tabAbout, icon: <Award className="w-4 h-4" /> }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-5 py-3 text-xs font-bold transition-all border-b-2 cursor-pointer ${
+                  activeTab === tab.id
+                    ? 'border-rose-500 text-rose-500'
+                    : 'border-transparent text-zinc-400 hover:text-zinc-100 hover:border-zinc-750'
+                }`}
+              >
+                {tab.icon}
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}

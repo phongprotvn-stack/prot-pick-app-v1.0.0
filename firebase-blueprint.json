@@ -1,0 +1,157 @@
+{
+  "entities": {
+    "Student": {
+      "title": "Student",
+      "description": "Pickleball student profiling record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "avatar": { "type": "string" },
+        "level": { "type": "string" },
+        "joiningDate": { "type": "string" },
+        "isPublic": { "type": "boolean" },
+        "skills": { "type": "object" },
+        "targetGoal": { "type": "string" },
+        "notes": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "nationality": { "type": "string" },
+        "dominantHand": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "CurriculumSkill": {
+      "title": "CurriculumSkill",
+      "description": "Pickleball skills curriculum definition",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "descriptionVI": { "type": "string" },
+        "descriptionEN": { "type": "string" }
+      },
+      "required": ["id", "name", "category"]
+    },
+    "LessonPlan": {
+      "title": "LessonPlan",
+      "description": "Training plans designed by coach",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "titleVI": { "type": "string" },
+        "titleEN": { "type": "string" },
+        "descriptionVI": { "type": "string" },
+        "descriptionEN": { "type": "string" },
+        "skillsFocused": { "type": "array" },
+        "durationMin": { "type": "number" },
+        "isPublic": { "type": "boolean" }
+      },
+      "required": ["id", "titleVI", "durationMin"]
+    },
+    "Session": {
+      "title": "Session",
+      "description": "Training session details and evaluations",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "date": { "type": "string" },
+        "lessonPlanId": { "type": "string" },
+        "title": { "type": "string" },
+        "durationMin": { "type": "number" },
+        "notes": { "type": "string" },
+        "status": { "type": "string" },
+        "skillScores": { "type": "object" },
+        "isPublic": { "type": "boolean" },
+        "coachFeedbackVI": { "type": "string" },
+        "coachFeedbackEN": { "type": "string" }
+      },
+      "required": ["id", "studentId", "date"]
+    },
+    "NotificationItem": {
+      "title": "NotificationItem",
+      "description": "Global or group level notifications",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "titleVI": { "type": "string" },
+        "titleEN": { "type": "string" },
+        "contentVI": { "type": "string" },
+        "contentEN": { "type": "string" },
+        "date": { "type": "string" },
+        "type": { "type": "string" },
+        "isPublic": { "type": "boolean" }
+      },
+      "required": ["id", "titleVI", "contentVI"]
+    },
+    "CoachProfile": {
+      "title": "CoachProfile",
+      "description": "Coach profile settings",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "avatar": { "type": "string" },
+        "slogan": { "type": "string" },
+        "aboutVI": { "type": "string" },
+        "aboutEN": { "type": "string" },
+        "coursesVI": { "type": "array" },
+        "coursesEN": { "type": "array" },
+        "youtubeYoutIds": { "type": "array" },
+        "photos": { "type": "array" }
+      }
+    },
+    "SectionLegend": {
+      "title": "SectionLegend",
+      "description": "Custom legend notes",
+      "type": "object",
+      "properties": {
+        "notes": { "type": "string" }
+      }
+    },
+    "SecurityPin": {
+      "title": "SecurityPin",
+      "description": "Security coach pin information",
+      "type": "object",
+      "properties": {
+        "pin": { "type": "string" }
+      },
+      "required": ["pin"]
+    }
+  },
+  "firestore": {
+    "students/{studentId}": {
+      "schema": "Student",
+      "description": "Collection of Student profiles"
+    },
+    "skills/{skillId}": {
+      "schema": "CurriculumSkill",
+      "description": "Collection of curriculum skills"
+    },
+    "lessonplans/{planId}": {
+      "schema": "LessonPlan",
+      "description": "Collection of training plan templates"
+    },
+    "sessions/{sessionId}": {
+      "schema": "Session",
+      "description": "Collection of student training sessions"
+    },
+    "notifications/{notificationId}": {
+      "schema": "NotificationItem",
+      "description": "Collection of public status or alert notifications"
+    },
+    "settings/coach": {
+      "schema": "CoachProfile",
+      "description": "Coach single document settings"
+    },
+    "settings/legend": {
+      "schema": "SectionLegend",
+      "description": "Legend document details"
+    },
+    "settings/security": {
+      "schema": "SecurityPin",
+      "description": "Private security authentication settings"
+    }
+  }
+}
