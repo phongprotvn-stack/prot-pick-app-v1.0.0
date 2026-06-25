@@ -60,6 +60,7 @@ export default function Header({
   const [isPinInputOpen, setIsPinInputOpen] = useState(false);
   const [menuPinInput, setMenuPinInput] = useState('');
   const [menuPinError, setMenuPinError] = useState('');
+  const [pinDisplayP, setPinDisplayP] = useState(false);
   const pinInputRef = useRef<HTMLInputElement>(null);
 
   // Close dropdown when clicking outside
@@ -269,29 +270,27 @@ export default function Header({
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                {/* ROLE BADGE - P for Coach, T for Student */}
+                {/* ROLE BADGE - P (Coach) / T (Student) - click always opens PIN to switch/authenticate */}
                 <button
                   onClick={() => {
-                    if (role === 'coach') {
-                      setIsPinInputOpen(!isPinInputOpen);
-                      setMenuPinInput('');
-                      setMenuPinError('');
-                      setTimeout(() => {
-                        const el = document.querySelector('[class*="space-y-3"][class*="border-t"][class*="pt-4"]');
-                        el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                      }, 150);
-                    }
+                    setPinDisplayP(true);
+                    setIsPinInputOpen(true);
+                    setMenuPinInput('');
+                    setMenuPinError('');
+                    setTimeout(() => {
+                      pinInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 150);
                   }}
                   className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black transition-all cursor-pointer ${
-                    role === 'coach'
+                    pinDisplayP || role === 'coach'
                       ? 'bg-rose-500/15 text-rose-500 border border-rose-500/30 hover:bg-rose-500/25'
                       : 'bg-zinc-100 dark:bg-zinc-900 text-rose-500 border border-zinc-200 dark:border-zinc-800'
                   }`}
-                  title={role === 'coach'
-                    ? (lang === 'vi' ? 'Nhấn để xác thực HLV' : 'Tap to authenticate Coach')
-                    : (lang === 'vi' ? 'Chế độ Học viên' : 'Student mode')}
+                  title={lang === 'vi'
+                    ? 'Nhấn để chuyển sang HLV'
+                    : 'Tap to switch to Coach'}
                 >
-                  {role === 'coach' ? 'P' : 'T'}
+                  {pinDisplayP || role === 'coach' ? 'P' : 'T'}
                 </button>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -333,15 +332,15 @@ export default function Header({
                 </div>
               </div>
 
-              {/* PIN INPUT - appears when coach clicks P badge */}
-              {isPinInputOpen && role === 'coach' && (
+              {/* PIN INPUT - appears when user clicks P/T badge */}
+              {isPinInputOpen && (
                 <div className="space-y-3 border-t border-zinc-200 dark:border-zinc-800 pt-4">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-mono text-rose-500 uppercase tracking-widest block font-bold">
                       {lang === 'vi' ? 'Xác thực HLV' : 'Coach Auth'}
                     </span>
                     <button
-                      onClick={() => { setIsPinInputOpen(false); setMenuPinInput(''); setMenuPinError(''); }}
+                      onClick={() => { setIsPinInputOpen(false); setPinDisplayP(false); setMenuPinInput(''); setMenuPinError(''); }}
                       className="text-[9px] text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 font-bold cursor-pointer"
                     >
                       {lang === 'vi' ? 'Đóng' : 'Close'}
@@ -362,11 +361,13 @@ export default function Header({
                         if (val.length === 4) {
                           if (val === dbCoachPin) {
                             setRole('coach');
-                            setActiveTab('about');
+                            setPinDisplayP(false);
                             setIsPinInputOpen(false);
                             setIsMobileMenuOpen(false);
+                            setMenuPinInput('');
+                            setMenuPinError('');
                             showToast(lang === 'vi'
-                              ? '\u{1F513} \u0110ã m\u1EDF khóa quy\u1EC1n S\u1EEDa \u0111\u1ED5i HLV thành công!'
+                              ? '\u{1F513} \u0110\u00E3 m\u1EDF kh\xF3a quy\u1EC1n Ch\u1EC9nh s\u1EEDa HLV th\xE0nh c\xF4ng!'
                               : '\u{1F513} Coach Edit privilege activated!');
                           } else {
                             setMenuPinError(lang === 'vi' ? 'Mã PIN không chính xác!' : 'Incorrect PIN!');
