@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   Activity, Users, BookOpen, Calendar, Award,
   Sun, Moon, Bell, X, PlusCircle, Search, Menu, ChevronDown
@@ -48,6 +48,20 @@ export default function Header({
   translateViToEn, translationTimeoutRef,
   setActiveTab, activeTab, sortedNotifications
 }: HeaderProps) {
+  const notiRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    if (!isNotiHistoryOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (notiRef.current && !notiRef.current.contains(e.target as Node)) {
+        setIsNotiHistoryOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [isNotiHistoryOpen, setIsNotiHistoryOpen]);
+
   return (
     <header className="bg-zinc-950 border-b border-zinc-850 sticky top-0 z-30 shadow-xl">
       {/* TOP BAR */}
@@ -111,7 +125,7 @@ export default function Header({
             </button>
 
             {/* NOTIFICATIONS */}
-            <div className="relative">
+            <div className="relative" ref={notiRef}>
               <button
                 onClick={() => setIsNotiHistoryOpen(!isNotiHistoryOpen)}
                 className="relative p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
@@ -125,12 +139,6 @@ export default function Header({
               </button>
 
               {isNotiHistoryOpen && (
-                <>
-                  {/* Backdrop — click anywhere outside the dropdown to close */}
-                  <div
-                    className="fixed inset-0 z-40"
-                    onClick={() => setIsNotiHistoryOpen(false)}
-                  />
                   <div className="absolute right-0 mt-3.5 z-50 w-72 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-2xl shadow-2xl p-4 space-y-3 font-sans animate-slideDown overflow-visible">
                     <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-2">
                       <h4 className="text-xs font-black uppercase tracking-wider text-rose-600 flex items-center gap-1.5">
@@ -179,7 +187,6 @@ export default function Header({
                       )}
                     </div>
                   </div>
-                </>
               )}
             </div>
           </div>
