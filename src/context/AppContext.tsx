@@ -306,9 +306,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
               'Basics': 'BASICS', 'Dink & Soft': 'ADVANCEDS', 'Hard Drives': 'ADVANCEDS',
               'Defense & Reset': 'ADVANCEDS', 'Tactics & Footwork': 'TACTICS'
             };
+            const normalizeCat = (name: string, oldCat: string): string => {
+              const mapped = catMap[oldCat] || oldCat;
+              return (name === 'Lob' && oldCat !== 'ADVANCEDS') ? 'ADVANCEDS' : mapped;
+            };
             let changed = false;
             list = list.map(s => {
-              const newCat = catMap[s.category] || s.category;
+              const newCat = normalizeCat(s.name, s.category);
               if (newCat !== s.category) changed = true;
               return { ...s, category: (newCat as CurriculumSkill['category']) };
             });
@@ -321,8 +325,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             // Update Firebase if old data was migrated
             if (changed) snap.forEach(d => {
               const skill = d.data() as CurriculumSkill;
-              const newCat = catMap[skill.category];
-              if (newCat) updateDoc(doc(db, 'skills', d.id), { category: (newCat as CurriculumSkill['category']) });
+              const newCat = normalizeCat(skill.name, skill.category);
+              if (newCat !== skill.category) updateDoc(doc(db, 'skills', d.id), { category: (newCat as CurriculumSkill['category']) });
             });
           }
         })
