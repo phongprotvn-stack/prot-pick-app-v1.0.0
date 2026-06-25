@@ -23,7 +23,7 @@ export default function BottomNav({
     { id: 'students', label: lang === 'vi' ? 'Học viên' : 'Students', icon: <Users className="w-5 h-5" /> },
     { id: 'curriculum', label: lang === 'vi' ? 'Giáo án' : 'Plans', icon: <BookOpen className="w-5 h-5" /> },
     { id: 'sessions', label: lang === 'vi' ? 'Lịch dạy' : 'Sessions', icon: <Calendar className="w-5 h-5" /> },
-    { id: 'about', label: lang === 'vi' ? 'HLV Phong' : 'Coach Prot', icon: <Award className="w-5 h-5" /> }
+    { id: 'about', label: lang === 'vi' ? 'HLV Prot' : 'Coach Prot', icon: <Award className="w-5 h-5" /> }
   ];
 
   return (
