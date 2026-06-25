@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useMemo } from 'react';
-import { collection, doc, onSnapshot, setDoc, getDoc, getDocs, deleteDoc } from 'firebase/firestore';
+import { collection, doc, onSnapshot, setDoc, getDoc, getDocs, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Student, CurriculumSkill, LessonPlan, Session, NotificationItem, CoachProfile } from '../types';
 import { initialStudents, initialSkills, initialLessonPlans, initialSessions, initialNotifications, defaultCoach } from '../data';
@@ -298,8 +298,33 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       );
       unsubscribes.push(
         onSnapshot(collection(db, 'skills'), (snap) => {
-          const list: CurriculumSkill[] = []; snap.forEach(d => list.push(d.data() as CurriculumSkill));
-          if (list.length > 0) { setSkillsList(list); localStorage.setItem('protpick_skills', JSON.stringify(list)); }
+          let list: CurriculumSkill[] = []; snap.forEach(d => list.push(d.data() as CurriculumSkill));
+          if (list.length > 0) {
+            // Normalize old category values → new ones + sort by canonical order
+            const canonicalOrder = ['Forehand', 'Backhand', 'Serve', 'Return', 'Block', 'Dink', 'Volley', 'Drop', 'Reset', 'Flick', 'Roll', 'Lob', 'Smash', 'Footwork', 'Transition Zone', 'Strategy'];
+            const catMap: Record<string, string> = {
+              'Basics': 'BASICS', 'Dink & Soft': 'ADVANCEDS', 'Hard Drives': 'ADVANCEDS',
+              'Defense & Reset': 'ADVANCEDS', 'Tactics & Footwork': 'TACTICS'
+            };
+            let changed = false;
+            list = list.map(s => {
+              const newCat = catMap[s.category] || s.category;
+              if (newCat !== s.category) changed = true;
+              return { ...s, category: (newCat as CurriculumSkill['category']) };
+            });
+            list.sort((a, b) => {
+              const ia = canonicalOrder.indexOf(a.name), ib = canonicalOrder.indexOf(b.name);
+              return (ia !== -1 ? ia : 999) - (ib !== -1 ? ib : 999);
+            });
+            setSkillsList(list);
+            localStorage.setItem('protpick_skills', JSON.stringify(list));
+            // Update Firebase if old data was migrated
+            if (changed) snap.forEach(d => {
+              const skill = d.data() as CurriculumSkill;
+              const newCat = catMap[skill.category];
+              if (newCat) updateDoc(doc(db, 'skills', d.id), { category: (newCat as CurriculumSkill['category']) });
+            });
+          }
         })
       );
       unsubscribes.push(
