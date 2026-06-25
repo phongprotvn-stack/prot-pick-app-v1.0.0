@@ -102,6 +102,62 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-span-3 space-y-1">
+              <label className="text-xs font-bold text-zinc-400">Avatar</label>
+              <div className="flex items-start gap-3">
+                {/* AVATAR PREVIEW */}
+                <div className="w-14 h-14 rounded-xl overflow-hidden shrink-0 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center">
+                  {editingStudent.avatar ? (
+                    <img
+                      src={editingStudent.avatar}
+                      alt=""
+                      className="w-full h-full object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                    />
+                  ) : (
+                    <User className="w-6 h-6 text-zinc-400" />
+                  )}
+                </div>
+                <div className="flex-1 space-y-1.5">
+                  {/* URL INPUT */}
+                  <input
+                    type="text"
+                    value={editingStudent.avatar || ''}
+                    onChange={(e) => setEditingStudent({ ...editingStudent, avatar: e.target.value })}
+                    className="w-full text-sm p-3 bg-zinc-100 dark:bg-zinc-955 border border-zinc-200 dark:border-zinc-850 rounded-2xl text-black dark:text-white"
+                    placeholder="https://images.unsplash.com/..."
+                  />
+                  {/* FILE UPLOAD BUTTON */}
+                  <label className="inline-flex items-center gap-1.5 text-[11px] font-bold text-rose-500 hover:text-rose-400 cursor-pointer transition-colors">
+                    <Upload className="w-3.5 h-3.5" />
+                    {lang === 'vi' ? 'Tải ảnh từ máy' : 'Upload from device'}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            if (typeof reader.result === 'string') {
+                              compressImage(reader.result, 200, 200, 0.7).then((dataUrl) => {
+                                setEditingStudent({ ...editingStudent, avatar: dataUrl });
+                                showToast(lang === 'vi' ? 'Đã tải ảnh lên!' : 'Image uploaded!');
+                              });
+                            }
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-1">
               <label className="text-xs font-bold text-zinc-400">Name / Tên học viên *</label>
               <input
@@ -111,17 +167,6 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
                 onChange={(e) => setEditingStudent({ ...editingStudent, name: e.target.value })}
                 className="w-full text-sm p-3 bg-zinc-100 dark:bg-zinc-955 border border-zinc-200 dark:border-zinc-850 rounded-2xl text-black dark:text-white"
                 placeholder="e.g. Nguyễn Minh Hải"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="text-xs font-bold text-zinc-400">Avatar URL</label>
-              <input
-                type="text"
-                value={editingStudent.avatar || ''}
-                onChange={(e) => setEditingStudent({ ...editingStudent, avatar: e.target.value })}
-                className="w-full text-sm p-3 bg-zinc-100 dark:bg-zinc-955 border border-zinc-200 dark:border-zinc-850 rounded-2xl text-black dark:text-white"
-                placeholder="https://images.unsplash.com/..."
               />
             </div>
 
