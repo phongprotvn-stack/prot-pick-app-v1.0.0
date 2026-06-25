@@ -54,7 +54,7 @@ function AppContent() {
 
   // Toast notification bar
   const ToastBar = toastMessage ? (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] bg-zinc-800/90 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-700 dark:border-zinc-700 text-white px-5 py-3 rounded-2xl shadow-2xl text-sm font-bold animate-slideDown pointer-events-auto max-w-[90vw] text-center">
+    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white px-5 py-3 rounded-2xl shadow-2xl text-sm font-bold animate-slideDown pointer-events-auto max-w-[90vw] text-center">
       {toastMessage}
     </div>
   ) : null;

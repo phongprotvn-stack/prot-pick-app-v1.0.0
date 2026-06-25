@@ -102,7 +102,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
           </div>
 
           <div className="flex gap-2 justify-end pt-2 text-xs font-bold">
-            <button type="button" onClick={() => setNewSkill(null)} className="px-4 py-1.5 bg-zinc-800 text-zinc-400 rounded-lg cursor-pointer">Hủy</button>
+            <button type="button" onClick={() => setNewSkill(null)} className="px-4 py-1.5 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg cursor-pointer">Hủy</button>
             <button type="submit" className="px-5 py-1.5 bg-rose-600 text-white rounded-lg cursor-pointer">Lưu lại</button>
           </div>
         </form>
@@ -152,7 +152,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
               {role === 'coach' && (
                 <button
                   onClick={() => setEditingPlan({ titleVI: '', titleEN: '', descriptionVI: '', descriptionEN: '', skillsFocused: [], durationMin: 60, isPublic: true })}
-                  className="bg-zinc-850 hover:bg-zinc-800 p-1.5 rounded-lg text-rose-500 hover:text-white cursor-pointer"
+                  className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-850 dark:hover:bg-zinc-800 p-1.5 rounded-lg text-rose-600 dark:text-rose-500 hover:text-rose-700 dark:hover:text-white cursor-pointer"
                   title="Tạo giáo án mới"
                 >
                   <PlusCircle className="w-4.5 h-4.5" />
@@ -229,7 +229,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
 
                 <div className="space-y-2">
                   <label className="text-zinc-450 font-bold block">Skills Targeted / Kỹ năng tiêu điểm (Lựa chọn dán)</label>
-                  <div className="flex flex-wrap gap-1.5 h-20 overflow-y-auto bg-zinc-100 dark:bg-zinc-900 border border-zinc-250 dark:border-zinc-800 p-2 rounded-lg text-[10px] text-white">
+                  <div className="flex flex-wrap gap-1.5 h-20 overflow-y-auto bg-zinc-100 dark:bg-zinc-900 border border-zinc-250 dark:border-zinc-800 p-2 rounded-lg text-[10px] text-zinc-900 dark:text-white">
                     {skillsList.map(sk => {
                       const isChosen = (editingPlan.skillsFocused || []).includes(sk.name);
                       return (
@@ -246,7 +246,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                             setEditingPlan({ ...editingPlan, skillsFocused: prev });
                           }}
                           className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
-                            isChosen ? 'bg-rose-600 text-white font-bold' : 'bg-zinc-800 text-zinc-400'
+                            isChosen ? 'bg-rose-600 text-white font-bold' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
                           }`}
                         >
                           {sk.name}
@@ -257,7 +257,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                 </div>
 
                 <div className="flex gap-2 justify-end pt-1">
-                  <button type="button" onClick={() => setEditingPlan(null)} className="px-3 py-1 bg-zinc-800 text-zinc-400 rounded-lg cursor-pointer">Cancel</button>
+                  <button type="button" onClick={() => setEditingPlan(null)} className="px-3 py-1 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg cursor-pointer">Cancel</button>
                   <button type="submit" className="px-3.5 py-1 bg-rose-600 text-white font-bold rounded-lg cursor-pointer">{t.save}</button>
                 </div>
               </form>

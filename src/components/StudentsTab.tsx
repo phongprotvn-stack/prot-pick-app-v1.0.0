@@ -242,7 +242,7 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
               <button
                 type="button"
                 onClick={() => setEditingStudent(null)}
-                className="bg-zinc-800 hover:bg-zinc-700 px-5 py-2 rounded-xl text-xs font-bold text-zinc-350 cursor-pointer"
+                className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 px-5 py-2 rounded-xl text-xs font-bold text-zinc-700 dark:text-zinc-350 cursor-pointer"
               >
                 {t.cancel}
               </button>
@@ -278,7 +278,7 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-black truncate max-w-[110px]">{s.name}</span>
                   {!s.isPublic && (
-                    <span className="text-[7px] text-zinc-400 bg-zinc-800 border border-zinc-750 px-1 py-0.5 rounded uppercase">Private</span>
+                    <span className="text-[7px] text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-750 px-1 py-0.5 rounded uppercase">Private</span>
                   )}
                 </div>
                 <p className="text-[10px] text-zinc-400 font-mono">D.Rating: {scoreAvg}/5.0 (Lv {s.level})</p>
@@ -293,13 +293,13 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
         <div className="space-y-6" id="football-manager-coaching-profile">
           
           {/* COMBINED DETAILS HEADER */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 text-zinc-900 dark:text-white shadow-xl relative overflow-hidden">
             <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-rose-955/20 to-transparent pointer-events-none"></div>
             
             {/* PUBLIC FLAG WATERMARK AND ACTIONS */}
             <div className="absolute top-4 right-4 flex items-center gap-2">
               <span className={`px-2.5 py-1 rounded-full text-xs font-black uppercase ${
-                activeStudent.isPublic ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-zinc-800 text-red-400 border border-zinc-700'
+                activeStudent.isPublic ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-zinc-100 dark:bg-zinc-800 text-red-600 dark:text-red-400 border border-zinc-300 dark:border-zinc-700'
               }`}>
                 {activeStudent.isPublic ? t.statusPublic : t.statusPrivate}
               </span>
@@ -308,14 +308,14 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
                 <div className="flex gap-1">
                   <button
                     onClick={() => setEditingStudent(activeStudent)}
-                    className="bg-zinc-800 hover:bg-zinc-750 text-white p-2 rounded-xl transition-colors cursor-pointer"
+                    className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-zinc-900 dark:text-white p-2 rounded-xl transition-colors cursor-pointer"
                     title={t.editStudent}
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => handleDeleteStudent(activeStudent.id)}
-                    className="bg-zinc-800 hover:bg-rose-950 text-rose-500 p-2 rounded-xl transition-colors cursor-pointer"
+                    className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-800 dark:hover:bg-rose-950 text-rose-600 dark:text-rose-500 p-2 rounded-xl transition-colors cursor-pointer"
                     title={t.deleteStudent}
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -459,7 +459,7 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
                 </div>
               </div>
 
-              <div className="bg-zinc-950 border border-zinc-800 p-4 rounded-2xl text-center min-w-[130px]">
+              <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 p-4 rounded-2xl text-center min-w-[130px]">
                 <span className="text-[10px] text-zinc-400 font-mono uppercase tracking-wider block">{t.studentRating}</span>
                 <span className="text-3xl font-black text-rose-500 tracking-tight mt-1 block">
                   {getAverageRating(activeStudent)}

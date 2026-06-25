@@ -29,7 +29,7 @@ export default function BottomNav({
   return (
     <>
       {/* MOBILE FIXED BOTTOM NAVIGATION TAB BAR */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-zinc-950 border-t border-zinc-850 pb-safe shadow-xl" id="mobile-bottom-tabs">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-850 pb-safe shadow-xl" id="mobile-bottom-tabs">
         <div className="flex justify-around items-center h-16">
           {tabs.map(tab => {
             const isActive = activeTab === tab.id;
@@ -43,7 +43,7 @@ export default function BottomNav({
                 className="flex flex-col items-center justify-center flex-1 py-1 text-center transition-all cursor-pointer bg-transparent border-none outline-none"
               >
                 <div className={`relative p-1 rounded-full transition-all ${
-                  isActive ? 'text-rose-500 scale-110' : 'text-zinc-500 hover:text-zinc-350'
+                  isActive ? 'text-rose-500 scale-110' : 'text-zinc-600 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-350'
                 }`}>
                   {tab.icon}
                   {isActive && (
@@ -51,7 +51,7 @@ export default function BottomNav({
                   )}
                 </div>
                 <span className={`text-[9px] font-semibold mt-0.5 tracking-tight transition-colors ${
-                  isActive ? 'text-rose-500 font-extrabold' : 'text-zinc-550'
+                  isActive ? 'text-rose-500 font-extrabold' : 'text-zinc-600 dark:text-zinc-550'
                 }`}>
                   {tab.label}
                 </span>

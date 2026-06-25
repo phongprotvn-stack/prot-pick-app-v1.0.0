@@ -328,7 +328,7 @@ export default function AboutTab({
               <span className="text-[10px] uppercase font-mono text-rose-500 font-bold block">📸 GIAO LƯU & TẬN HƯỞNG KHOẢNH KHẮC</span>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {coach.photos.map((ph: string, idx: number) => (
-                  <div key={idx} className="relative h-28 rounded-2xl overflow-hidden border border-zinc-150 dark:border-zinc-900 bg-zinc-950 group">
+                  <div key={idx} className="relative h-28 rounded-2xl overflow-hidden border border-zinc-150 dark:border-zinc-900 bg-zinc-100 dark:bg-zinc-950 group">
                     <img src={ph} className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" alt="pickleball session photo" referrerPolicy="no-referrer" />
                     {role === 'coach' && (
                       <button

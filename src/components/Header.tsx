@@ -63,7 +63,7 @@ export default function Header({
   }, [isNotiHistoryOpen, setIsNotiHistoryOpen]);
 
   return (
-    <header className="bg-zinc-950 border-b border-zinc-850 sticky top-0 z-30 shadow-xl">
+    <header className="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-850 sticky top-0 z-30 shadow-xl">
       {/* TOP BAR */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
         <div className="flex items-center justify-between">
@@ -71,14 +71,14 @@ export default function Header({
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-1.5 bg-zinc-900 rounded-xl border border-zinc-800 text-zinc-400 cursor-pointer"
+              className="md:hidden p-1.5 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 cursor-pointer"
             >
               <Menu className="w-5 h-5 stroke-[2.5]" />
             </button>
             <div className="flex items-center gap-2">
               <img src="/pwa-192x192.png" alt="PP" className="w-9 h-9 rounded-xl object-cover shadow-md shadow-rose-500/20" />
               <div>
-                <h1 className="text-sm font-black text-white tracking-tight leading-tight">{t.appTitle}</h1>
+                <h1 className="text-sm font-black text-zinc-900 dark:text-white tracking-tight leading-tight">{t.appTitle}</h1>
                 <span className="text-[9px] font-mono text-rose-500 font-bold uppercase tracking-wider">Combat never ends</span>
               </div>
             </div>
@@ -89,7 +89,7 @@ export default function Header({
             {/* Mobile Search Toggle */}
             <button
               onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
-              className="md:hidden p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+              className="md:hidden p-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
             >
               <Search className="w-4 h-4 text-zinc-400" />
             </button>
@@ -97,7 +97,7 @@ export default function Header({
             {/* Theme Toggle */}
             <button
               onClick={handleThemeToggle}
-              className="p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+              className="p-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
             >
               {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-rose-500" />}
             </button>
@@ -105,7 +105,7 @@ export default function Header({
             {/* Language Toggle */}
             <button
               onClick={() => handleLangToggle(lang === 'vi' ? 'en' : 'vi')}
-              className="p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 text-[10px] font-black text-zinc-400 cursor-pointer"
+              className="p-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 text-[10px] font-black text-zinc-600 dark:text-zinc-400 cursor-pointer"
             >
               {lang === 'vi' ? 'EN' : 'VI'}
             </button>
@@ -116,7 +116,7 @@ export default function Header({
               className={`px-2.5 py-1.5 rounded-xl text-[10px] font-black transition-all active:scale-95 cursor-pointer border ${
                 role === 'coach'
                   ? 'bg-rose-600 text-white border-rose-500 shadow-sm'
-                  : 'bg-zinc-900 text-zinc-400 border-zinc-800 hover:bg-zinc-800'
+                  : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-800'
               }`}
             >
               {role === 'coach' ? (lang === 'vi' ? 'HLV' : 'COACH') : (lang === 'vi' ? 'HỌC VIÊN' : 'STUDENT')}
@@ -126,11 +126,11 @@ export default function Header({
             <div className="relative" ref={notiRef}>
               <button
                 onClick={() => setIsNotiHistoryOpen(!isNotiHistoryOpen)}
-                className="relative p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+                className="relative p-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
               >
                 <Bell className="w-4 h-4 text-zinc-400" />
                 {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-rose-500 border-2 border-zinc-950 rounded-full text-[6px] font-black text-white flex items-center justify-center animate-pulse">
+                  <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-rose-500 border-2 border-white dark:border-zinc-950 rounded-full text-[6px] font-black text-white flex items-center justify-center animate-pulse">
                     {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length}
                   </span>
                 )}
@@ -193,20 +193,20 @@ export default function Header({
 
       {/* MOBILE SEARCH OVERLAY ROW */}
       {isMobileSearchOpen && (
-        <div className="md:hidden px-4 py-2 bg-zinc-950 border-t border-zinc-850 animate-slideDown">
-          <div className="relative flex items-center bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-1.5">
+        <div className="md:hidden px-4 py-2 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-850 animate-slideDown">
+          <div className="relative flex items-center bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-1.5">
             <Search className="w-3.5 h-3.5 text-rose-500 mr-2 shrink-0 animate-pulse" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t.searchPlaceholder}
-              className="w-full bg-transparent text-xs text-white focus:outline-none placeholder-zinc-600"
+              className="w-full bg-transparent text-xs text-zinc-900 dark:text-white focus:outline-none placeholder-zinc-400 dark:placeholder-zinc-600"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="text-[10px] text-zinc-400 hover:text-zinc-200 cursor-pointer font-bold shrink-0 ml-1.5"
+                className="text-[10px] text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 cursor-pointer font-bold shrink-0 ml-1.5"
               >
                 Clear
               </button>
@@ -216,7 +216,7 @@ export default function Header({
       )}
 
       {/* TABS NAVIGATION PANEL (DESKTOP ONLY) */}
-      <div className="hidden md:block bg-zinc-950 border-t border-zinc-850 px-4 md:px-6">
+      <div className="hidden md:block bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-850 px-4 md:px-6">
         <div className="max-w-7xl mx-auto flex overflow-x-auto no-scrollbar py-1">
           <div className="flex gap-1.5 min-w-max">
             {[
@@ -232,7 +232,7 @@ export default function Header({
                 className={`flex items-center gap-2 px-5 py-3 text-xs font-bold transition-all border-b-2 cursor-pointer ${
                   activeTab === tab.id
                     ? 'border-rose-500 text-rose-500'
-                    : 'border-transparent text-zinc-400 hover:text-zinc-100 hover:border-zinc-750'
+                    : 'border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-300 dark:hover:border-zinc-750'
                 }`}
               >
                 {tab.icon}
@@ -250,7 +250,7 @@ export default function Header({
             className="fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity duration-300"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="relative flex flex-col w-80 max-w-[85vw] bg-zinc-950 border-r border-zinc-850 text-white p-5 shadow-2xl h-full animate-slideRight">
+          <div className="relative flex flex-col w-80 max-w-[85vw] bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-850 text-zinc-900 dark:text-white p-5 shadow-2xl h-full animate-slideRight">
             <div className="flex items-center justify-between pb-4 border-b border-zinc-850">
               <div className="flex items-center gap-2">
                 <Menu className="w-4 h-4 text-rose-500" />
@@ -260,7 +260,7 @@ export default function Header({
               </div>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white cursor-pointer"
+                className="p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -269,10 +269,10 @@ export default function Header({
             <div className="flex-1 overflow-y-auto py-5 space-y-6 no-scrollbar">
               {/* ROLE PICKER */}
               <div className="space-y-2">
-                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block font-bold">
+                <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block font-bold">
                   {lang === 'vi' ? 'Vai Trò' : 'User Role'}
                 </span>
-                <div className="grid grid-cols-2 gap-2 bg-zinc-900 p-1 rounded-xl border border-zinc-800">
+                <div className="grid grid-cols-2 gap-2 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-xl border border-zinc-200 dark:border-zinc-800">
                   <button
                     onClick={() => { handleRoleToggle('coach'); setIsMobileMenuOpen(false); }}
                     className={`py-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
@@ -294,10 +294,10 @@ export default function Header({
 
               {/* LANGUAGE PICKER */}
               <div className="space-y-2">
-                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block font-bold">
+                <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block font-bold">
                   {lang === 'vi' ? 'Ngôn ngữ' : 'Language'}
                 </span>
-                <div className="grid grid-cols-2 gap-2 bg-zinc-900 p-1 rounded-xl border border-zinc-800">
+                <div className="grid grid-cols-2 gap-2 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-xl border border-zinc-200 dark:border-zinc-800">
                   <button
                     onClick={() => handleLangToggle('vi')}
                     className={`py-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
@@ -319,7 +319,7 @@ export default function Header({
 
               {/* QUICK NAV */}
               <div className="space-y-2">
-                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block font-bold">
+                <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block font-bold">
                   {lang === 'vi' ? 'Điều hướng' : 'Navigation'}
                 </span>
                 <div className="space-y-1">
@@ -336,7 +336,7 @@ export default function Header({
                       className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         activeTab === tab.id
                           ? 'bg-rose-600/10 text-rose-500 border border-rose-500/20'
-                          : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200'
+                          : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200'
                       }`}
                     >
                       {tab.icon}

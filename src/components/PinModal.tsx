@@ -121,10 +121,10 @@ export default function PinModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity duration-300">
-      <div className="bg-zinc-900 border border-rose-500/25 rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl relative overflow-hidden animate-scaleIn">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-rose-500/25 rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl relative overflow-hidden animate-scaleIn">
         <button
           onClick={() => setIsPinModalOpen(false)}
-          className="absolute top-4 right-4 text-zinc-400 hover:text-white p-1 rounded-full hover:bg-zinc-805 transition cursor-pointer"
+          className="absolute top-4 right-4 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white p-1 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-805 transition cursor-pointer"
           type="button"
         >
           <X className="w-5 h-5" />
@@ -132,12 +132,12 @@ export default function PinModal({
 
         {!isChangingPin ? (
           /* VERIFICATION / LOGIN MODE */
-          <div className="space-y-6 text-zinc-100">
+          <div className="space-y-6 text-zinc-900 dark:text-zinc-100">
             <div className="text-center space-y-2">
               <div className="bg-rose-500/10 text-rose-500 p-4 rounded-3xl inline-block mx-auto">
                 <Lock className="w-8 h-8 animate-pulse" />
               </div>
-              <h3 className="text-xl font-black text-white tracking-tight">
+              <h3 className="text-xl font-black text-zinc-900 dark:text-white tracking-tight">
                 {lang === 'vi' ? 'XÁC THỰC QUYỀN HLV' : 'VERIFY COACH PRIVILEGE'}
               </h3>
               <p className="text-xs text-zinc-400 max-w-xs mx-auto">
@@ -148,7 +148,7 @@ export default function PinModal({
             </div>
 
             <div className="space-y-4">
-              <div className="relative flex flex-col items-center justify-center p-2 bg-zinc-950 border border-zinc-800 rounded-2xl">
+              <div className="relative flex flex-col items-center justify-center p-2 bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl">
                 <input
                   type="tel"
                   pattern="[0-9]*"
@@ -189,7 +189,7 @@ export default function PinModal({
                   key={num}
                   type="button"
                   onClick={() => handlePinDigit(num)}
-                  className="h-12 bg-zinc-800 hover:bg-zinc-700/80 active:scale-95 text-xl font-extrabold text-white rounded-xl transition flex items-center justify-center cursor-pointer shadow-xs border border-zinc-750"
+                  className="h-12 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700/80 active:scale-95 text-xl font-extrabold text-zinc-900 dark:text-white rounded-xl transition flex items-center justify-center cursor-pointer shadow-xs border border-zinc-300 dark:border-zinc-750"
                 >
                   {num}
                 </button>
@@ -197,14 +197,14 @@ export default function PinModal({
               <button
                 type="button"
                 onClick={() => { setPinInputValue(''); setPinModalError(''); }}
-                className="h-12 bg-zinc-800/40 hover:bg-zinc-800/80 hover:text-rose-500 active:scale-95 text-xs font-black text-zinc-400 rounded-xl transition flex items-center justify-center cursor-pointer shadow-xs"
+                className="h-12 bg-zinc-200/40 dark:bg-zinc-800/40 hover:bg-zinc-300 dark:hover:bg-zinc-800/80 hover:text-rose-600 dark:hover:text-rose-500 active:scale-95 text-xs font-black text-zinc-600 dark:text-zinc-400 rounded-xl transition flex items-center justify-center cursor-pointer shadow-xs"
               >
                 CLEAR
               </button>
               <button
                 type="button"
                 onClick={() => handlePinDigit(0)}
-                className="h-12 bg-zinc-800 hover:bg-zinc-700/80 active:scale-95 text-xl font-extrabold text-white rounded-xl transition flex items-center justify-center cursor-pointer shadow-xs border border-zinc-750"
+                className="h-12 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700/80 active:scale-95 text-xl font-extrabold text-zinc-900 dark:text-white rounded-xl transition flex items-center justify-center cursor-pointer shadow-xs border border-zinc-300 dark:border-zinc-750"
               >
                 0
               </button>
@@ -233,9 +233,9 @@ export default function PinModal({
           </div>
         ) : (
           /* CHANGE PIN MODE */
-          <div className="space-y-5 text-zinc-100">
+          <div className="space-y-5 text-zinc-900 dark:text-zinc-100">
             <div className="text-center space-y-1">
-              <h3 className="text-lg font-black text-white">
+              <h3 className="text-lg font-black text-zinc-900 dark:text-white">
                 {lang === 'vi' ? 'ĐỔI MÃ PIN BẢO MẬT' : 'CHANGE SECURITY PIN'}
               </h3>
               <p className="text-[11px] text-zinc-400">
@@ -253,7 +253,7 @@ export default function PinModal({
                   maxLength={12}
                   value={currentPinValueForChange}
                   onChange={(e) => setCurrentPinValueForChange(e.target.value)}
-                  className="w-full p-2.5 bg-zinc-955 border border-zinc-750 text-white rounded-xl focus:ring-1 focus:ring-rose-500 focus:outline-none"
+                  className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-955 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500 focus:outline-none"
                 />
               </div>
               <div className="space-y-1">
@@ -265,7 +265,7 @@ export default function PinModal({
                   maxLength={12}
                   value={newPinValue1}
                   onChange={(e) => setNewPinValue1(e.target.value)}
-                  className="w-full p-2.5 bg-zinc-955 border border-zinc-750 text-white rounded-xl focus:ring-1 focus:ring-rose-500 focus:outline-none"
+                  className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-955 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500 focus:outline-none"
                 />
               </div>
               <div className="space-y-1">
@@ -277,7 +277,7 @@ export default function PinModal({
                   maxLength={12}
                   value={newPinValue2}
                   onChange={(e) => setNewPinValue2(e.target.value)}
-                  className="w-full p-2.5 bg-zinc-955 border border-zinc-750 text-white rounded-xl focus:ring-1 focus:ring-rose-500 focus:outline-none"
+                  className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-955 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500 focus:outline-none"
                 />
               </div>
 
@@ -292,7 +292,7 @@ export default function PinModal({
               <button
                 type="button"
                 onClick={() => setIsPinModalOpen(false)}
-                className="flex-1 py-2 bg-zinc-800 hover:bg-zinc-750 text-zinc-350 font-bold rounded-xl text-xs transition cursor-pointer"
+                className="flex-1 py-2 bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-800 dark:hover:bg-zinc-750 text-zinc-700 dark:text-zinc-350 font-bold rounded-xl text-xs transition cursor-pointer"
               >
                 {t.cancel}
               </button>

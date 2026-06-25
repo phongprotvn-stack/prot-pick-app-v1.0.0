@@ -130,13 +130,13 @@ export default function AudioPlayer({ lang, role, compact }: AudioPlayerProps) {
       // 👥 STUDENT COMPACT VIEW: NO "LOFI", NO "SC", NO CHANGE LINK. Just small play & pause controls.
       return (
         <div 
-          className="bg-zinc-900/90 border border-zinc-800 rounded-full px-2.5 py-1 flex items-center gap-2 shadow-xs" 
+          className="bg-white/90 dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 rounded-full px-2.5 py-1 flex items-center gap-2 shadow-xs" 
           id="student-music-controls-compact"
         >
           <div className="flex items-center gap-1.5 font-mono text-[10px] text-zinc-400">
             <Music className={`w-3.5 h-3.5 ${isPlaying ? 'text-rose-500 animate-bounce' : 'text-zinc-550'}`} />
           </div>
-          <div className="flex items-center gap-1 bg-zinc-950 p-0.5 rounded-full border border-zinc-800">
+          <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-950 p-0.5 rounded-full border border-zinc-200 dark:border-zinc-800">
             <button
               type="button"
               onClick={() => { if (!isPlaying) togglePlay(); }}
@@ -171,7 +171,7 @@ export default function AudioPlayer({ lang, role, compact }: AudioPlayerProps) {
       <>
         <div 
           onClick={() => setIsPrivacyOpen(true)}
-          className="bg-zinc-900/90 hover:bg-zinc-850 border border-zinc-750 rounded-2xl px-3 py-1.5 flex items-center gap-2.5 shadow-sm relative text-white cursor-pointer group transition-all" 
+          className="bg-white/90 dark:bg-zinc-900/90 hover:bg-zinc-100 dark:hover:bg-zinc-850 border border-zinc-200 dark:border-zinc-750 rounded-2xl px-3 py-1.5 flex items-center gap-2.5 shadow-sm relative text-zinc-900 dark:text-white cursor-pointer group transition-all" 
           id="coach-music-bar-compact"
           title={lang === 'vi' ? "Click để xem Chính sách bảo mật & Cài đặt" : "Click to view Privacy policy & settings"}
         >
@@ -185,7 +185,7 @@ export default function AudioPlayer({ lang, role, compact }: AudioPlayerProps) {
             </div>
           </div>
 
-          <div className="text-[11px] p-1 bg-zinc-850 hover:bg-zinc-750 text-zinc-300 rounded-md transition-colors font-extrabold shrink-0 border border-zinc-700">
+          <div className="text-[11px] p-1 bg-zinc-200 dark:bg-zinc-850 hover:bg-zinc-300 dark:hover:bg-zinc-750 text-zinc-600 dark:text-zinc-300 rounded-md transition-colors font-extrabold shrink-0 border border-zinc-300 dark:border-zinc-700">
             🛡️ INFO
           </div>
         </div>
@@ -193,11 +193,11 @@ export default function AudioPlayer({ lang, role, compact }: AudioPlayerProps) {
         {/* MODAL OVERLAY: PRIVACY POLICY & SETTINGS */}
         {isPrivacyOpen && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-999 flex items-center justify-center p-4 overflow-y-auto">
-            <div className="bg-zinc-950 border border-zinc-800 rounded-3xl p-6 md:p-8 max-w-2xl w-full text-zinc-100 shadow-2xl relative space-y-6 max-h-[90vh] overflow-y-auto no-scrollbar animate-scaleUp">
+            <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 md:p-8 max-w-2xl w-full text-zinc-900 dark:text-zinc-100 shadow-2xl relative space-y-6 max-h-[90vh] overflow-y-auto no-scrollbar animate-scaleUp">
               
               <button 
                 onClick={() => setIsPrivacyOpen(false)}
-                className="absolute top-4 right-4 p-2 text-zinc-400 hover:text-white bg-zinc-900 rounded-full border border-zinc-800 transition-all cursor-pointer"
+                className="absolute top-4 right-4 p-2 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-zinc-900 rounded-full border border-zinc-200 dark:border-zinc-800 transition-all cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -215,7 +215,7 @@ export default function AudioPlayer({ lang, role, compact }: AudioPlayerProps) {
               </div>
 
               {/* GORGEOUS VISUAL COMPONENT: PRIVACY POLICY CERTIFICATE */}
-              <div className="bg-gradient-to-br from-zinc-900 to-zinc-950 border-2 border-amber-500/25 rounded-2xl p-5 md:p-6 space-y-4 shadow-inner relative overflow-hidden">
+              <div className="bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-900 dark:to-zinc-950 border-2 border-amber-500/25 rounded-2xl p-5 md:p-6 space-y-4 shadow-inner relative overflow-hidden">
                 <div className="absolute right-0 bottom-0 opacity-[0.03] select-none pointer-events-none text-9xl text-amber-500 font-black">
                   SEAL
                 </div>
@@ -227,7 +227,7 @@ export default function AudioPlayer({ lang, role, compact }: AudioPlayerProps) {
                   </span>
                 </div>
 
-                <div className="space-y-3.5 text-xs text-zinc-350 leading-relaxed font-sans">
+                <div className="space-y-3.5 text-xs text-zinc-700 dark:text-zinc-350 leading-relaxed font-sans">
                   <div className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                     <p>
@@ -266,7 +266,7 @@ export default function AudioPlayer({ lang, role, compact }: AudioPlayerProps) {
               </div>
 
               {/* BACKGROUND LOFI MUSIC SETTINGS (ONLY IN THIS MODAL FOR COACH PHONG) */}
-              <div className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-4.5 space-y-4">
+              <div className="bg-zinc-100/60 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4.5 space-y-4">
                 <h3 className="text-sm font-bold text-rose-500 flex items-center gap-2 uppercase tracking-wide">
                   <Music className="w-4 h-4" />
                   {lang === 'vi' ? "Điều Chỉnh Nhạc Nền (.MP3)" : "Ambient Music URL Control"}
@@ -280,7 +280,7 @@ export default function AudioPlayer({ lang, role, compact }: AudioPlayerProps) {
                       value={musicUrl}
                       onChange={(e) => handleUrlChange(e.target.value)}
                       placeholder="Paste direct MP3 link..."
-                      className="w-full p-2.5 bg-zinc-950 border border-zinc-750 text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-mono text-[11px]"
+                      className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-white rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-mono text-[11px]"
                     />
                     <span className="text-[9px] text-zinc-500 block">
                       {lang === 'vi' ? "💡 Gợi ý: Hãy truyền dán link file .mp3 trực tiếp hoạt động ổn định nhất." : "💡 Tip: Direct .mp3 streaming gives optimal looping performance."}
@@ -295,7 +295,7 @@ export default function AudioPlayer({ lang, role, compact }: AudioPlayerProps) {
                   </div>
 
                   {/* Volume Control */}
-                  <div className="flex items-center gap-3 bg-zinc-950 p-2.5 rounded-xl border border-zinc-800">
+                  <div className="flex items-center gap-3 bg-zinc-100 dark:bg-zinc-950 p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800">
                     <button
                       onClick={togglePlay}
                       className="bg-rose-600 hover:bg-rose-700 text-white px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 shrink-0 transition-all cursor-pointer text-[10.5px]"
@@ -414,9 +414,9 @@ export default function AudioPlayer({ lang, role, compact }: AudioPlayerProps) {
 
       {isPrivacyOpen && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-999 flex items-center justify-center p-4">
-          <div className="bg-zinc-950 border border-zinc-800 rounded-3xl p-6 max-w-lg w-full text-zinc-100 shadow-2xl relative space-y-4 animate-scaleUp">
+          <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 max-w-lg w-full text-zinc-900 dark:text-zinc-100 shadow-2xl relative space-y-4 animate-scaleUp">
             <h3 className="text-sm font-black text-rose-500">CHÍNH SÁCH RẢO MẬT HỌC VIÊN</h3>
-            <p className="text-xs text-zinc-300 leading-relaxed font-sans">
+            <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
               Toàn bộ dữ liệu tập luyện của bạn nằm hoàn toàn bảo mật trong giáo trình quản lý chuyên nghiệp của Coach Phongprot. Sân đấu, điểm số, lịch sử luyện cam kết giữ bí mật nội bộ tuyệt đối để phụng sự học tập hiệu quả.
             </p>
             <button
