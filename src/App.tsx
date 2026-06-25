@@ -110,8 +110,11 @@ function AppContent() {
           navStack={navStack}
           goBack={goBack}
           sortedNotifications={sortedNotifications}
+          dbCoachPin={dbCoachPin}
+          setRole={setRole}
+          showToast={showToast}
         />
-
+ 
           <main className="max-w-7xl mx-auto px-4 md:px-6 pt-4 pb-24 md:py-6" id="protpick-main-canvas">
           <Suspense fallback={<div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-rose-500 border-t-transparent rounded-full animate-spin" /></div>}>
           {/* NOTIFICATION CENTER - always visible */}

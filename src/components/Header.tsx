@@ -1,7 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   Activity, Users, BookOpen, Calendar, Award,
-  Sun, Moon, Bell, X, PlusCircle, Search, Menu, ChevronDown, ChevronLeft
+  Sun, Moon, Bell, X, PlusCircle, Search, Menu,
+  ChevronDown, ChevronLeft, ChevronRight,
+  HelpCircle, Star, Share2
 } from 'lucide-react';
 import { LanguageKey, translations } from '../translations';
 import { NotificationItem } from '../types';
@@ -36,6 +38,9 @@ interface HeaderProps {
   navStack: string[];
   goBack: () => void;
   sortedNotifications: NotificationItem[];
+  dbCoachPin: string;
+  setRole: (r: 'coach' | 'student') => void;
+  showToast: (msg: string) => void;
 }
 
 export default function Header({
@@ -48,9 +53,14 @@ export default function Header({
   handleRoleToggle, handleLangToggle, handleThemeToggle,
   handleSaveNoti, handleDeleteNoti,
   translateViToEn, translationTimeoutRef,
-  setActiveTab, activeTab, navStack, goBack, sortedNotifications
+  setActiveTab, activeTab, navStack, goBack, sortedNotifications,
+  dbCoachPin, setRole, showToast
 }: HeaderProps) {
   const notiRef = useRef<HTMLDivElement>(null);
+  const [isPinInputOpen, setIsPinInputOpen] = useState(false);
+  const [menuPinInput, setMenuPinInput] = useState('');
+  const [menuPinError, setMenuPinError] = useState('');
+  const pinInputRef = useRef<HTMLInputElement>(null);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -250,72 +260,50 @@ export default function Header({
             onClick={() => setIsMobileMenuOpen(false)}
           />
           <div className="relative flex flex-col w-80 max-w-[85vw] bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-850 text-zinc-900 dark:text-white p-5 shadow-2xl h-full animate-slideRight" style={{ paddingTop: 'calc(1.25rem + var(--sat,0px))', paddingBottom: 'var(--sab,0px)' }}>
-            <div className="flex items-center justify-between pb-4 border-b border-zinc-850">
+            {/* MENU HEADER with role badge */}
+            <div className="flex items-center justify-between pb-4 border-b border-zinc-200 dark:border-zinc-850">
               <div className="flex items-center gap-2">
                 <Menu className="w-4 h-4 text-rose-500" />
                 <span className="font-black text-xs uppercase tracking-wider text-rose-500">
                   {lang === 'vi' ? 'Cài đặt' : 'Settings'}
                 </span>
               </div>
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-2">
+                {/* ROLE BADGE - P for Coach, T for Student */}
+                <button
+                  onClick={() => {
+                    if (role === 'coach') {
+                      setIsPinInputOpen(!isPinInputOpen);
+                      setMenuPinInput('');
+                      setMenuPinError('');
+                      setTimeout(() => {
+                        const el = document.querySelector('[class*="space-y-3"][class*="border-t"][class*="pt-4"]');
+                        el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }, 150);
+                    }
+                  }}
+                  className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black transition-all cursor-pointer ${
+                    role === 'coach'
+                      ? 'bg-rose-500/15 text-rose-500 border border-rose-500/30 hover:bg-rose-500/25'
+                      : 'bg-zinc-100 dark:bg-zinc-900 text-rose-500 border border-zinc-200 dark:border-zinc-800'
+                  }`}
+                  title={role === 'coach'
+                    ? (lang === 'vi' ? 'Nhấn để xác thực HLV' : 'Tap to authenticate Coach')
+                    : (lang === 'vi' ? 'Chế độ Học viên' : 'Student mode')}
+                >
+                  {role === 'coach' ? 'P' : 'T'}
+                </button>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
+            {/* MENU BODY */}
             <div className="flex-1 overflow-y-auto py-5 space-y-6 no-scrollbar">
-              {/* ROLE PICKER */}
-              <div className="space-y-2">
-                <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block font-bold">
-                  {lang === 'vi' ? 'Vai Trò' : 'User Role'}
-                </span>
-                <div className="grid grid-cols-2 gap-2 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-xl border border-zinc-200 dark:border-zinc-800">
-                  <button
-                    onClick={() => { handleRoleToggle('coach'); setIsMobileMenuOpen(false); }}
-                    className={`py-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
-                      role === 'coach' ? 'bg-rose-600 text-white shadow-sm font-black' : 'text-zinc-400'
-                    }`}
-                  >
-                    🛠 {lang === 'vi' ? 'HLV' : 'Coach'}
-                  </button>
-                  <button
-                    onClick={() => { handleRoleToggle('student'); setIsMobileMenuOpen(false); }}
-                    className={`py-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
-                      role === 'student' ? 'bg-rose-600 text-white shadow-sm font-black' : 'text-zinc-400'
-                    }`}
-                  >
-                    👥 {lang === 'vi' ? 'Học Viên' : 'Student'}
-                  </button>
-                </div>
-              </div>
-
-              {/* LANGUAGE PICKER */}
-              <div className="space-y-2">
-                <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block font-bold">
-                  {lang === 'vi' ? 'Ngôn ngữ' : 'Language'}
-                </span>
-                <div className="grid grid-cols-2 gap-2 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-xl border border-zinc-200 dark:border-zinc-800">
-                  <button
-                    onClick={() => handleLangToggle('vi')}
-                    className={`py-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
-                      lang === 'vi' ? 'bg-zinc-800 text-rose-500 font-black border border-zinc-700' : 'text-zinc-400'
-                    }`}
-                  >
-                    Tiếng Việt
-                  </button>
-                  <button
-                    onClick={() => handleLangToggle('en')}
-                    className={`py-2 rounded-lg text-xs font-bold transition-all text-center cursor-pointer ${
-                      lang === 'en' ? 'bg-zinc-800 text-rose-500 font-black border border-zinc-700' : 'text-zinc-400'
-                    }`}
-                  >
-                    English
-                  </button>
-                </div>
-              </div>
-
               {/* QUICK NAV */}
               <div className="space-y-2">
                 <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block font-bold">
@@ -342,6 +330,110 @@ export default function Header({
                       {tab.label}
                     </button>
                   ))}
+                </div>
+              </div>
+
+              {/* PIN INPUT - appears when coach clicks P badge */}
+              {isPinInputOpen && role === 'coach' && (
+                <div className="space-y-3 border-t border-zinc-200 dark:border-zinc-800 pt-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-rose-500 uppercase tracking-widest block font-bold">
+                      {lang === 'vi' ? 'Xác thực HLV' : 'Coach Auth'}
+                    </span>
+                    <button
+                      onClick={() => { setIsPinInputOpen(false); setMenuPinInput(''); setMenuPinError(''); }}
+                      className="text-[9px] text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 font-bold cursor-pointer"
+                    >
+                      {lang === 'vi' ? 'Đóng' : 'Close'}
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <input
+                      ref={pinInputRef}
+                      type="password"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={4}
+                      value={menuPinInput}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/[^0-9]/g, '');
+                        setMenuPinInput(val);
+                        setMenuPinError('');
+                        if (val.length === 4) {
+                          if (val === dbCoachPin) {
+                            setRole('coach');
+                            setActiveTab('about');
+                            setIsPinInputOpen(false);
+                            setIsMobileMenuOpen(false);
+                            showToast(lang === 'vi'
+                              ? '\u{1F513} \u0110ã m\u1EDF khóa quy\u1EC1n S\u1EEDa \u0111\u1ED5i HLV thành công!'
+                              : '\u{1F513} Coach Edit privilege activated!');
+                          } else {
+                            setMenuPinError(lang === 'vi' ? 'Mã PIN không chính xác!' : 'Incorrect PIN!');
+                            setMenuPinInput('');
+                          }
+                        }
+                      }}
+                      className="flex-1 px-3 py-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-sm text-center font-mono font-bold text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500/40 placeholder-zinc-400 dark:placeholder-zinc-600"
+                      placeholder="* * * *"
+                      autoFocus
+                    />
+                  </div>
+                  {menuPinError && (
+                    <p className="text-[11px] text-rose-500 font-bold">{menuPinError}</p>
+                  )}
+                  <p className="text-[9px] text-zinc-500 dark:text-zinc-500 leading-relaxed">
+                    {lang === 'vi'
+                      ? 'Nhập mã PIN 4 số để xác thực quyền Chỉnh sửa HLV.'
+                      : 'Enter 4-digit PIN to verify Coach edit privileges.'}
+                  </p>
+                </div>
+              )}
+
+              {/* KHÁC - OTHER SECTION */}
+              <div className="space-y-2 border-t border-zinc-200 dark:border-zinc-800 pt-4">
+                <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block font-bold">
+                  {lang === 'vi' ? 'KHÁC' : 'OTHER'}
+                </span>
+                <div className="space-y-1">
+                  <button
+                    onClick={() => { setIsMobileMenuOpen(false); setActiveTab('about'); }}
+                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200 transition-all cursor-pointer"
+                  >
+                    <span className="flex items-center gap-3">
+                      <HelpCircle className="w-4 h-4 text-rose-500" />
+                      {lang === 'vi' ? 'Trung tâm trợ giúp' : 'Help Center'}
+                    </span>
+                    <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      window.open('https://prot-pick.vercel.app', '_blank');
+                    }}
+                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200 transition-all cursor-pointer"
+                  >
+                    <span className="flex items-center gap-3">
+                      <Star className="w-4 h-4 text-amber-500" />
+                      {lang === 'vi' ? 'Đánh giá ứng dụng' : 'Rate App'}
+                    </span>
+                    <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      if (navigator.share) {
+                        navigator.share({ title: 'PROT PICK', url: 'https://prot-pick.vercel.app' });
+                      }
+                    }}
+                    className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200 transition-all cursor-pointer"
+                  >
+                    <span className="flex items-center gap-3">
+                      <Share2 className="w-4 h-4 text-emerald-500" />
+                      {lang === 'vi' ? 'Giới thiệu bạn bè' : 'Refer Friends'}
+                    </span>
+                    <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
+                  </button>
                 </div>
               </div>
             </div>
