@@ -1,10 +1,10 @@
 import { Student, CurriculumSkill, LessonPlan, Session, NotificationItem, CoachProfile } from './types';
 
 export const initialSkills: CurriculumSkill[] = [
-  { id: '1', name: 'Forehand', category: 'BASIC', descriptionVI: 'Đánh thuận tay cơ bản từ vạch cuối sân', descriptionEN: 'Baseline forehand basic drive and stroke' },
-  { id: '2', name: 'Backhand', category: 'BASIC', descriptionVI: 'Đánh trái tay, kiểm soát lực và hướng', descriptionEN: 'Baseline backhand defense and spin stroke' },
-  { id: '3', name: 'Serve', category: 'BASIC', descriptionVI: 'Giao bóng sâu xuống cuối sân, tạo xoáy', descriptionEN: 'Deep serve to baseline with spin options' },
-  { id: '4', name: 'Return', category: 'BASIC', descriptionVI: 'Trả giao bóng sâu, di chuyển lên lưới nhanh', descriptionEN: 'Deep return of serve while advancing to kitchen' },
+  { id: '1', name: 'Forehand', category: 'BASICS', descriptionVI: 'Đánh thuận tay cơ bản từ vạch cuối sân', descriptionEN: 'Baseline forehand basic drive and stroke' },
+  { id: '2', name: 'Backhand', category: 'BASICS', descriptionVI: 'Đánh trái tay, kiểm soát lực và hướng', descriptionEN: 'Baseline backhand defense and spin stroke' },
+  { id: '3', name: 'Serve', category: 'BASICS', descriptionVI: 'Giao bóng sâu xuống cuối sân, tạo xoáy', descriptionEN: 'Deep serve to baseline with spin options' },
+  { id: '4', name: 'Return', category: 'BASICS', descriptionVI: 'Trả giao bóng sâu, di chuyển lên lưới nhanh', descriptionEN: 'Deep return of serve while advancing to kitchen' },
   { id: '5', name: 'Block', category: 'ADVANCEDS', descriptionVI: 'Chặn các cú đánh mạnh từ đối thủ ngay tại lưới', descriptionEN: 'Blocking powerful drives right at the kitchen line' },
   { id: '6', name: 'Dink', category: 'ADVANCEDS', descriptionVI: 'Thả bóng nhỏ bền bỉ, an toàn trong ô bếp', descriptionEN: 'Consistent soft placement within the kitchen' },
   { id: '7', name: 'Volley', category: 'ADVANCEDS', descriptionVI: 'Bắt bóng sống trên không chủ động ghi điểm', descriptionEN: 'Air volley punch for active point pressure' },

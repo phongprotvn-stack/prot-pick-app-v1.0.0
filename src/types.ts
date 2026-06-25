@@ -19,7 +19,7 @@ export interface Student {
 export interface CurriculumSkill {
   id: string;
   name: string;
-  category: 'BASIC' | 'ADVANCEDS' | 'TACTICS';
+  category: 'BASICS' | 'ADVANCEDS' | 'TACTICS';
   descriptionVI: string;
   descriptionEN: string;
 }

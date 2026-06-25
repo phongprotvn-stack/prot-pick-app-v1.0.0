@@ -71,11 +71,9 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                 onChange={(e) => setNewSkill({ ...newSkill, category: e.target.value as any })}
                 className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-955 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl"
               >
-                <option value="Basics">Basics (Trình nền tảng)</option>
-                <option value="Dink & Soft">Dink & Soft (Bóng nhỏ)</option>
-                <option value="Hard Drives">Hard Drives (Tấn công)</option>
-                <option value="Defense & Reset">Defense & Reset (Phản đòn & Chặn)</option>
-                <option value="Tactics & Footwork">Tactics & Footwork (Chiến thuật & Di chuyển)</option>
+                <option value="BASICS">BASICS</option>
+                <option value="ADVANCEDS">ADVANCEDS</option>
+                <option value="TACTICS">TACTICS</option>
               </select>
             </div>
           </div>
@@ -138,7 +136,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                   <div className="flex items-center justify-between font-mono">
                     <span className="text-[10px] font-bold text-zinc-400 uppercase">Skill #{index + 1}</span>
                     <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                      skill.category === 'BASIC' ? 'bg-rose-500/10 text-rose-450' :
+                      skill.category === 'BASICS' ? 'bg-rose-500/10 text-rose-450' :
                       skill.category === 'ADVANCEDS' ? 'bg-amber-500/10 text-amber-500' :
                       skill.category === 'TACTICS' ? 'bg-emerald-500/10 text-emerald-500' :
                       'bg-rose-500/10 text-rose-450'

@@ -231,7 +231,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     if (savedTheme) setThemeState(savedTheme);
 
     setStudents(getLocalOrSet<Student[]>('protpick_students', initialStudents));
-    setSkillsList(getLocalOrSet<CurriculumSkill[]>('protpick_skills', initialSkills).sort((a, b) => {
+    setSkillsList(initialSkills.sort((a, b) => {
       const order = [
         'Forehand', 'Backhand', 'Serve', 'Return', 'Block', 'Dink', 'Volley', 'Drop',
         'Reset', 'Flick', 'Roll', 'Lob', 'Smash', 'Footwork', 'Transition Zone', 'Strategy'
@@ -240,6 +240,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       const idxB = order.indexOf(b.name);
       return (idxA !== -1 ? idxA : 999) - (idxB !== -1 ? idxB : 999);
     }));
+    localStorage.setItem('protpick_skills', JSON.stringify(initialSkills));
     setLessonPlans(getLocalOrSet<LessonPlan[]>('protpick_lessonplans', initialLessonPlans));
     setSessions(getLocalOrSet<Session[]>('protpick_sessions', initialSessions));
     setNotifications(getLocalOrSet<NotificationItem[]>('protpick_notifications', initialNotifications));
@@ -533,7 +534,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const handleSaveSkill = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newSkill?.name) return;
-    const skillObj: CurriculumSkill = { id: 'skill_' + Date.now(), name: newSkill.name, category: newSkill.category || 'Basics', descriptionVI: newSkill.descriptionVI || '', descriptionEN: newSkill.descriptionEN || '' };
+    const skillObj: CurriculumSkill = { id: 'skill_' + Date.now(), name: newSkill.name, category: newSkill.category || 'BASICS', descriptionVI: newSkill.descriptionVI || '', descriptionEN: newSkill.descriptionEN || '' };
     syncSkills([...skillsList, skillObj]);
     syncStudents(students.map(s => s.skills[skillObj.name] === undefined ? { ...s, skills: { ...s.skills, [skillObj.name]: 2 } } : s));
     showToast(lang === 'vi' ? `Đã thêm kỹ năng ${skillObj.name}` : `Skill ${skillObj.name} added`); setNewSkill(null);
