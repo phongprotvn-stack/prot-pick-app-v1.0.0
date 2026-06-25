@@ -64,6 +64,7 @@ export interface AppContextType {
   newPinValue1: string; setNewPinValue1: (v: string) => void;
   newPinValue2: string; setNewPinValue2: (v: string) => void;
   isNotiHistoryOpen: boolean; setIsNotiHistoryOpen: (v: boolean) => void;
+  selectedNotiId: string | null; setSelectedNotiId: (v: string | null) => void;
   toastMessage: string | null;
   isMobileMenuOpen: boolean; setIsMobileMenuOpen: (v: boolean) => void;
   isMobileSearchOpen: boolean; setIsMobileSearchOpen: (v: boolean) => void;
@@ -169,6 +170,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [newPinValue1, setNewPinValue1] = useState('');
   const [newPinValue2, setNewPinValue2] = useState('');
   const [isNotiHistoryOpen, setIsNotiHistoryOpen] = useState(false);
+  const [selectedNotiId, setSelectedNotiId] = useState<string | null>(null);
   const translationTimeoutRef = useRef<Record<string, NodeJS.Timeout>>({});
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -627,7 +629,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     isPinModalOpen, setIsPinModalOpen, pinInputValue, setPinInputValue, pinModalError, setPinModalError,
     isChangingPin, setIsChangingPin, currentPinValueForChange, setCurrentPinValueForChange,
     newPinValue1, setNewPinValue1, newPinValue2, setNewPinValue2,
-    isNotiHistoryOpen, setIsNotiHistoryOpen, toastMessage,
+    isNotiHistoryOpen, setIsNotiHistoryOpen, selectedNotiId, setSelectedNotiId, toastMessage,
     isMobileMenuOpen, setIsMobileMenuOpen, isMobileSearchOpen, setIsMobileSearchOpen,
     chartContainerRefForHistory, translationTimeoutRef, t,
     sortedNotifications, resolvedStudents, activeStudent,

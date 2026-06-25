@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import {
   Activity, Users, BookOpen, Calendar, Award,
   Sun, Moon, Bell, X, PlusCircle, Search, Menu, ChevronDown
@@ -20,6 +20,8 @@ interface HeaderProps {
   setIsMobileSearchOpen: (v: boolean) => void;
   isNotiHistoryOpen: boolean;
   setIsNotiHistoryOpen: (v: boolean) => void;
+  selectedNotiId: string | null;
+  setSelectedNotiId: (v: string | null) => void;
   newNoti: Partial<NotificationItem> | null;
   setNewNoti: (v: Partial<NotificationItem> | null) => void;
   handleRoleToggle: (role: 'coach' | 'student') => void;
@@ -39,26 +41,13 @@ export default function Header({
   notifications, isMobileMenuOpen, setIsMobileMenuOpen,
   isMobileSearchOpen, setIsMobileSearchOpen,
   isNotiHistoryOpen, setIsNotiHistoryOpen,
+  selectedNotiId, setSelectedNotiId,
   newNoti, setNewNoti,
   handleRoleToggle, handleLangToggle, handleThemeToggle,
   handleSaveNoti, handleDeleteNoti,
   translateViToEn, translationTimeoutRef,
   setActiveTab, activeTab, sortedNotifications
 }: HeaderProps) {
-  const notiRef = useRef<HTMLDivElement>(null);
-
-  // Close notification dropdown when clicking outside
-  useEffect(() => {
-    if (!isNotiHistoryOpen) return;
-    function handleClick(e: MouseEvent) {
-      if (notiRef.current && !notiRef.current.contains(e.target as Node)) {
-        setIsNotiHistoryOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, [isNotiHistoryOpen, setIsNotiHistoryOpen]);
-
   return (
     <header className="bg-zinc-950 border-b border-zinc-850 sticky top-0 z-30 shadow-xl">
       {/* TOP BAR */}
@@ -122,7 +111,7 @@ export default function Header({
             </button>
 
             {/* NOTIFICATIONS */}
-            <div className="relative" ref={notiRef}>
+            <div className="relative">
               <button
                 onClick={() => setIsNotiHistoryOpen(!isNotiHistoryOpen)}
                 className="relative p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
@@ -136,46 +125,61 @@ export default function Header({
               </button>
 
               {isNotiHistoryOpen && (
-                <div className="absolute right-0 mt-3.5 z-50 w-72 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-2xl shadow-2xl p-4 space-y-3 font-sans animate-slideDown overflow-visible">
-                  <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-2">
-                    <h4 className="text-xs font-black uppercase tracking-wider text-rose-600 flex items-center gap-1.5">
-                      <Bell className="w-3.5 h-3.5" />
-                      {lang === 'vi' ? 'Thông báo' : 'Notifications'}
-                    </h4>
-                    <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-850 px-2 py-0.5 rounded-full font-bold">
-                      {notifications.filter(n => role === 'coach' || n.isPublic).length}
-                    </span>
-                  </div>
+                <>
+                  {/* Backdrop — click anywhere outside the dropdown to close */}
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setIsNotiHistoryOpen(false)}
+                  />
+                  <div className="absolute right-0 mt-3.5 z-50 w-72 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-2xl shadow-2xl p-4 space-y-3 font-sans animate-slideDown overflow-visible">
+                    <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-2">
+                      <h4 className="text-xs font-black uppercase tracking-wider text-rose-600 flex items-center gap-1.5">
+                        <Bell className="w-3.5 h-3.5" />
+                        {lang === 'vi' ? 'Thông báo' : 'Notifications'}
+                      </h4>
+                      <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-850 px-2 py-0.5 rounded-full font-bold">
+                        {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length}
+                      </span>
+                    </div>
 
-                  <div className="max-h-60 overflow-y-auto space-y-2.5 pr-1 no-scrollbar-y">
-                    {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length > 0 ? (
-                      sortedNotifications.filter(n => role === 'coach' || n.isPublic).map((noti) => (
-                        <div key={noti.id} className="p-2.5 bg-zinc-50 dark:bg-zinc-950/65 border border-zinc-150 dark:border-zinc-850 hover:border-zinc-205 dark:hover:border-zinc-800 rounded-xl space-y-1 text-left relative group">
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="bg-zinc-200 dark:bg-zinc-800 text-[8px] text-zinc-650 dark:text-zinc-450 font-mono px-1 py-0.5 rounded font-bold">{noti.date}</span>
-                            <span className={`px-1.5 py-0.5 rounded-full text-[7px] uppercase font-black tracking-wider border ${
-                              noti.type === 'success'
-                                ? 'bg-emerald-500/10 text-emerald-655 dark:text-emerald-400 border-emerald-500/20'
-                                : noti.type === 'warning'
-                                  ? 'bg-amber-500/10 text-amber-655 dark:text-amber-400 border-amber-500/20'
-                                  : 'bg-sky-500/10 text-sky-650 dark:text-sky-400 border-sky-500/20'
-                            }`}>
-                              {lang === 'vi' ? (noti.type === 'success' ? 'Thành công' : noti.type === 'warning' ? 'Cảnh báo' : 'Thông tin') : noti.type.toUpperCase()}
-                            </span>
+                    <div className="max-h-60 overflow-y-auto space-y-2.5 pr-1 no-scrollbar-y">
+                      {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length > 0 ? (
+                        sortedNotifications.filter(n => role === 'coach' || n.isPublic).map((noti) => (
+                          <div
+                            key={noti.id}
+                            onClick={() => { setSelectedNotiId(noti.id); setIsNotiHistoryOpen(false); }}
+                            className={`p-2.5 rounded-xl space-y-1 text-left relative group cursor-pointer transition-all ${
+                              selectedNotiId === noti.id
+                                ? 'bg-rose-100 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-800'
+                                : 'bg-zinc-50 dark:bg-zinc-950/65 border border-zinc-150 dark:border-zinc-850 hover:border-zinc-300 dark:hover:border-zinc-700'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="bg-zinc-200 dark:bg-zinc-800 text-[8px] text-zinc-650 dark:text-zinc-450 font-mono px-1 py-0.5 rounded font-bold">{noti.date}</span>
+                              <span className={`px-1.5 py-0.5 rounded-full text-[7px] uppercase font-black tracking-wider border ${
+                                noti.type === 'success'
+                                  ? 'bg-emerald-500/10 text-emerald-655 dark:text-emerald-400 border-emerald-500/20'
+                                  : noti.type === 'warning'
+                                    ? 'bg-amber-500/10 text-amber-655 dark:text-amber-400 border-amber-500/20'
+                                    : 'bg-sky-500/10 text-sky-650 dark:text-sky-400 border-sky-500/20'
+                              }`}>
+                                {lang === 'vi' ? (noti.type === 'success' ? 'Thành công' : noti.type === 'warning' ? 'Cảnh báo' : 'Thông tin') : noti.type.toUpperCase()}
+                              </span>
+                            </div>
+                            <h5 className="font-bold text-xs text-zinc-900 dark:text-white tracking-tight">
+                              {lang === 'vi' ? noti.titleVI : noti.titleEN}
+                            </h5>
+                            <p className="text-[10px] text-zinc-600 dark:text-zinc-450 leading-relaxed line-clamp-2">
+                              {lang === 'vi' ? noti.contentVI : noti.contentEN}
+                            </p>
                           </div>
-                          <h5 className="font-bold text-xs text-zinc-900 dark:text-white tracking-tight">
-                            {lang === 'vi' ? noti.titleVI : noti.titleEN}
-                          </h5>
-                          <p className="text-[10px] text-zinc-600 dark:text-zinc-450 leading-relaxed">
-                            {lang === 'vi' ? noti.contentVI : noti.contentEN}
-                          </p>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-xs text-zinc-500 italic text-center py-4">{t.noNoti}</p>
-                    )}
+                        ))
+                      ) : (
+                        <p className="text-xs text-zinc-500 italic text-center py-4">{t.noNoti}</p>
+                      )}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
           </div>

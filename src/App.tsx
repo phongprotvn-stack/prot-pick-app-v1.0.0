@@ -1,4 +1,4 @@
-import React, { StrictMode, Suspense } from 'react';
+import React, { Suspense, useEffect, lazy } from 'react';
 import { useApp, compressImage } from './context/AppContext';
 import Header from './components/Header';
 import BottomNav from './components/BottomNav';
@@ -32,7 +32,7 @@ function AppContent() {
     handleDirectSkillRate, handleUpdateStudentAvatar, handleUpdateCoachAvatar, handleSaveLegend,
     handleAddMedia, showToast, translateViToEn, sortedNotifications,
     isMobileMenuOpen, setIsMobileMenuOpen, isMobileSearchOpen, setIsMobileSearchOpen,
-    isNotiHistoryOpen, setIsNotiHistoryOpen, toastMessage, futureIdeas, votedIdeas, setVotedIdeas,
+    isNotiHistoryOpen, setIsNotiHistoryOpen, selectedNotiId, setSelectedNotiId, toastMessage, futureIdeas, votedIdeas, setVotedIdeas,
     isFutureIdeasOpen, setIsFutureIdeasOpen, chartContainerRefForHistory,
     isPinModalOpen, setIsPinModalOpen, isChangingPin, setIsChangingPin,
     pinInputValue, setPinInputValue, pinModalError, setPinModalError,
@@ -44,6 +44,13 @@ function AppContent() {
     setCustomLegendNotes,
     syncCoach,
   } = useApp();
+
+  // Scroll to selected notification
+  useEffect(() => {
+    if (!selectedNotiId) return;
+    const el = document.getElementById(`noti-${selectedNotiId}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [selectedNotiId]);
 
   // Toast notification bar
   const ToastBar = toastMessage ? (
@@ -67,6 +74,8 @@ function AppContent() {
           setIsMobileSearchOpen={setIsMobileSearchOpen}
           isNotiHistoryOpen={isNotiHistoryOpen}
           setIsNotiHistoryOpen={setIsNotiHistoryOpen}
+          selectedNotiId={selectedNotiId}
+          setSelectedNotiId={setSelectedNotiId}
           newNoti={newNoti} setNewNoti={setNewNoti}
           handleRoleToggle={handleRoleToggle}
           handleLangToggle={handleLangToggle}
@@ -84,7 +93,9 @@ function AppContent() {
           <Suspense fallback={<div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-rose-500 border-t-transparent rounded-full animate-spin" /></div>}>
           {/* NOTIFICATION CENTER - always visible */}
           {(() => {
-            const latestNoti = sortedNotifications.filter(n => role === 'coach' || n.isPublic)[0];
+            const visible = sortedNotifications.filter(n => role === 'coach' || n.isPublic);
+            const focus = selectedNotiId ? visible.find(n => n.id === selectedNotiId) : null;
+            const latestNoti = focus || visible[0];
             return (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                 <div className="lg:col-span-2 col-span-1 bg-white/70 dark:bg-zinc-900/40 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800/60 rounded-3xl p-6 shadow-md dark:shadow-none transition-all relative overflow-hidden flex flex-col justify-between" id="protpick-notification-center">
@@ -97,7 +108,9 @@ function AppContent() {
                       <span>{t.notifications}</span>
                     </div>
                     {latestNoti ? (
-                      <div className="space-y-2">
+                      <div id={`noti-${latestNoti.id}`} className={`space-y-2 transition-all duration-300 ${
+                        selectedNotiId === latestNoti.id ? 'ring-2 ring-rose-500/30 rounded-2xl p-4 -m-4' : ''
+                      }`}>
                         <h3 className="text-lg font-black text-zinc-900 dark:text-zinc-50 tracking-tight leading-snug">
                           {lang === 'vi' ? latestNoti.titleVI : latestNoti.titleEN}
                         </h3>
