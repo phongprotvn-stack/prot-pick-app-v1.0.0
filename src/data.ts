@@ -1,22 +1,22 @@
 import { Student, CurriculumSkill, LessonPlan, Session, NotificationItem, CoachProfile } from './types';
 
 export const initialSkills: CurriculumSkill[] = [
-  { id: '1', name: 'Forehand', category: 'Basics', descriptionVI: 'Đánh thuận tay cơ bản từ vạch cuối sân', descriptionEN: 'Baseline forehand basic drive and stroke' },
-  { id: '2', name: 'Backhand', category: 'Basics', descriptionVI: 'Đánh trái tay, kiểm soát lực và hướng', descriptionEN: 'Baseline backhand defense and spin stroke' },
-  { id: '3', name: 'Serve', category: 'Basics', descriptionVI: 'Giao bóng sâu xuống cuối sân, tạo xoáy', descriptionEN: 'Deep serve to baseline with spin options' },
-  { id: '4', name: 'Return', category: 'Basics', descriptionVI: 'Trả giao bóng sâu, di chuyển lên lưới nhanh', descriptionEN: 'Deep return of serve while advancing to kitchen' },
-  { id: '5', name: 'Block', category: 'Defense & Reset', descriptionVI: 'Chặn các cú đánh mạnh từ đối thủ ngay tại lưới', descriptionEN: 'Blocking powerful drives right at the kitchen line' },
-  { id: '6', name: 'Dink', category: 'Dink & Soft', descriptionVI: 'Thả bóng nhỏ bền bỉ, an toàn trong ô bếp', descriptionEN: 'Consistent soft placement within the kitchen' },
-  { id: '7', name: 'Volley', category: 'Hard Drives', descriptionVI: 'Bắt bóng sống trên không chủ động ghi điểm', descriptionEN: 'Air volley punch for active point pressure' },
-  { id: '8', name: 'Drop', category: 'Dink & Soft', descriptionVI: 'Thả bóng chậm từ biên để tiến sân (Third Shot Drop)', descriptionEN: 'Soft defensive drop from baseline to transition' },
-  { id: '9', name: 'Reset', category: 'Defense & Reset', descriptionVI: 'Đưa trái bóng bay nhanh về nhịp dink chậm an toàn', descriptionEN: 'Neutralize fast balls back into the kitchen' },
-  { id: '10', name: 'Flick', category: 'Hard Drives', descriptionVI: 'Kỹ thuật gõ bóng cổ tay đột ngột tăng tốc lực', descriptionEN: 'Sudden wrist flick to catch opponent off guard' },
-  { id: '11', name: 'Roll', category: 'Hard Drives', descriptionVI: 'Gạt bóng xoáy lên từ dưới kitchen lên', descriptionEN: 'Topspin roll from below or near kitchen height' },
-  { id: '12', name: 'Lob', category: 'Tactics & Footwork', descriptionVI: 'Cú đưa bóng bổng qua đầu ép đối thủ lùi sân', descriptionEN: 'Tactical defensive or offensive high lob overhead' },
-  { id: '13', name: 'Smash', category: 'Hard Drives', descriptionVI: 'Cú đập đè uy lực khi đối thủ trả bóng bổng', descriptionEN: 'Powerful downward smash on high feedback' },
-  { id: '14', name: 'Footwork', category: 'Tactics & Footwork', descriptionVI: 'Bộ chân di chuyển ngang dọc sân nhanh nhạy', descriptionEN: 'Agile steps and recovery around the court' },
-  { id: '15', name: 'Transition Zone', category: 'Tactics & Footwork', descriptionVI: 'Lối chơi xử lý bóng ở khu vực trung tâm', descriptionEN: 'Handling tricky balls between baseline and kitchen' },
-  { id: '16', name: 'Strategy', category: 'Tactics & Footwork', descriptionVI: 'Chiến thuật phối hợp đôi, di chuyển bọc lót', descriptionEN: 'Doubles partner sync, rotation and shot choice' }
+  { id: '1', name: 'Forehand', category: 'BASIC', descriptionVI: 'Đánh thuận tay cơ bản từ vạch cuối sân', descriptionEN: 'Baseline forehand basic drive and stroke' },
+  { id: '2', name: 'Backhand', category: 'BASIC', descriptionVI: 'Đánh trái tay, kiểm soát lực và hướng', descriptionEN: 'Baseline backhand defense and spin stroke' },
+  { id: '3', name: 'Serve', category: 'BASIC', descriptionVI: 'Giao bóng sâu xuống cuối sân, tạo xoáy', descriptionEN: 'Deep serve to baseline with spin options' },
+  { id: '4', name: 'Return', category: 'BASIC', descriptionVI: 'Trả giao bóng sâu, di chuyển lên lưới nhanh', descriptionEN: 'Deep return of serve while advancing to kitchen' },
+  { id: '5', name: 'Block', category: 'ADVANCEDS', descriptionVI: 'Chặn các cú đánh mạnh từ đối thủ ngay tại lưới', descriptionEN: 'Blocking powerful drives right at the kitchen line' },
+  { id: '6', name: 'Dink', category: 'ADVANCEDS', descriptionVI: 'Thả bóng nhỏ bền bỉ, an toàn trong ô bếp', descriptionEN: 'Consistent soft placement within the kitchen' },
+  { id: '7', name: 'Volley', category: 'ADVANCEDS', descriptionVI: 'Bắt bóng sống trên không chủ động ghi điểm', descriptionEN: 'Air volley punch for active point pressure' },
+  { id: '8', name: 'Drop', category: 'ADVANCEDS', descriptionVI: 'Thả bóng chậm từ biên để tiến sân (Third Shot Drop)', descriptionEN: 'Soft defensive drop from baseline to transition' },
+  { id: '9', name: 'Reset', category: 'ADVANCEDS', descriptionVI: 'Đưa trái bóng bay nhanh về nhịp dink chậm an toàn', descriptionEN: 'Neutralize fast balls back into the kitchen' },
+  { id: '10', name: 'Flick', category: 'ADVANCEDS', descriptionVI: 'Kỹ thuật gõ bóng cổ tay đột ngột tăng tốc lực', descriptionEN: 'Sudden wrist flick to catch opponent off guard' },
+  { id: '11', name: 'Roll', category: 'ADVANCEDS', descriptionVI: 'Gạt bóng xoáy lên từ dưới kitchen lên', descriptionEN: 'Topspin roll from below or near kitchen height' },
+  { id: '12', name: 'Lob', category: 'ADVANCEDS', descriptionVI: 'Cú đưa bóng bổng qua đầu ép đối thủ lùi sân', descriptionEN: 'Tactical defensive or offensive high lob overhead' },
+  { id: '13', name: 'Smash', category: 'ADVANCEDS', descriptionVI: 'Cú đập đè uy lực khi đối thủ trả bóng bổng', descriptionEN: 'Powerful downward smash on high feedback' },
+  { id: '14', name: 'Footwork', category: 'TACTICS', descriptionVI: 'Bộ chân di chuyển ngang dọc sân nhanh nhạy', descriptionEN: 'Agile steps and recovery around the court' },
+  { id: '15', name: 'Transition Zone', category: 'TACTICS', descriptionVI: 'Lối chơi xử lý bóng ở khu vực trung tâm', descriptionEN: 'Handling tricky balls between baseline and kitchen' },
+  { id: '16', name: 'Strategy', category: 'TACTICS', descriptionVI: 'Chiến thuật phối hợp đôi, di chuyển bọc lót', descriptionEN: 'Doubles partner sync, rotation and shot choice' }
 ];
 
 export const initialStudents: Student[] = [

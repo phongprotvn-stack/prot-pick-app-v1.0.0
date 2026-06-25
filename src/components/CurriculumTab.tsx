@@ -124,12 +124,25 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-            {skillsList.map((skill, index) => {
+            {[...skillsList].sort((a, b) => {
+              const order = [
+                'Forehand', 'Backhand', 'Serve', 'Return', 'Block', 'Dink', 'Volley', 'Drop',
+                'Reset', 'Flick', 'Roll', 'Lob', 'Smash', 'Footwork', 'Transition Zone', 'Strategy'
+              ];
+              const idxA = order.indexOf(a.name);
+              const idxB = order.indexOf(b.name);
+              return (idxA !== -1 ? idxA : 999) - (idxB !== -1 ? idxB : 999);
+            }).map((skill, index) => {
               return (
                 <div key={skill.id} className="p-3 bg-zinc-100/40 dark:bg-zinc-955 border border-zinc-150 dark:border-zinc-900 rounded-2xl space-y-1">
                   <div className="flex items-center justify-between font-mono">
                     <span className="text-[10px] font-bold text-zinc-400 uppercase">Skill #{index + 1}</span>
-                    <span className="text-[9px] bg-rose-500/10 text-rose-450 px-2 py-0.5 rounded-full font-bold uppercase">{skill.category}</span>
+                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase ${
+                      skill.category === 'BASIC' ? 'bg-rose-500/10 text-rose-450' :
+                      skill.category === 'ADVANCEDS' ? 'bg-amber-500/10 text-amber-500' :
+                      skill.category === 'TACTICS' ? 'bg-emerald-500/10 text-emerald-500' :
+                      'bg-rose-500/10 text-rose-450'
+                    }`}>{skill.category}</span>
                   </div>
                   <h4 className="text-xs font-black text-zinc-800 dark:text-white">{skill.name}</h4>
                   <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">

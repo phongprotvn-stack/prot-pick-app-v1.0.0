@@ -231,7 +231,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     if (savedTheme) setThemeState(savedTheme);
 
     setStudents(getLocalOrSet<Student[]>('protpick_students', initialStudents));
-    setSkillsList(getLocalOrSet<CurriculumSkill[]>('protpick_skills', initialSkills));
+    setSkillsList(getLocalOrSet<CurriculumSkill[]>('protpick_skills', initialSkills).sort((a, b) => {
+      const order = [
+        'Forehand', 'Backhand', 'Serve', 'Return', 'Block', 'Dink', 'Volley', 'Drop',
+        'Reset', 'Flick', 'Roll', 'Lob', 'Smash', 'Footwork', 'Transition Zone', 'Strategy'
+      ];
+      const idxA = order.indexOf(a.name);
+      const idxB = order.indexOf(b.name);
+      return (idxA !== -1 ? idxA : 999) - (idxB !== -1 ? idxB : 999);
+    }));
     setLessonPlans(getLocalOrSet<LessonPlan[]>('protpick_lessonplans', initialLessonPlans));
     setSessions(getLocalOrSet<Session[]>('protpick_sessions', initialSessions));
     setNotifications(getLocalOrSet<NotificationItem[]>('protpick_notifications', initialNotifications));
