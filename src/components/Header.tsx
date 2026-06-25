@@ -65,9 +65,9 @@ export default function Header({
   }, [isNotiHistoryOpen, setIsNotiHistoryOpen]);
 
   return (
-    <header className="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-850 sticky top-0 z-30 shadow-xl">
+    <header className="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-850 sticky top-0 z-30 shadow-xl" style={{ paddingTop: 'var(--sat)' }}>
       {/* TOP BAR */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-2 md:py-3">
         <div className="flex items-center justify-between">
           {/* LEFT: BACK + APP BRAND */}
           <div className="flex items-center gap-3">
@@ -249,7 +249,7 @@ export default function Header({
             className="fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity duration-300"
             onClick={() => setIsMobileMenuOpen(false)}
           />
-          <div className="relative flex flex-col w-80 max-w-[85vw] bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-850 text-zinc-900 dark:text-white p-5 shadow-2xl h-full animate-slideRight">
+          <div className="relative flex flex-col w-80 max-w-[85vw] bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-850 text-zinc-900 dark:text-white p-5 shadow-2xl h-full animate-slideRight" style={{ paddingTop: 'calc(1.25rem + var(--sat,0px))', paddingBottom: 'var(--sab,0px)' }}>
             <div className="flex items-center justify-between pb-4 border-b border-zinc-850">
               <div className="flex items-center gap-2">
                 <Menu className="w-4 h-4 text-rose-500" />

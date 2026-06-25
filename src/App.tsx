@@ -360,7 +360,8 @@ function AppContent() {
                 setTimeout(() => document.getElementById('session-form-heading')?.scrollIntoView({ behavior: 'smooth' }), 100);
               } else if (activeTab === 'dashboard') setNewNoti({ titleVI: '', titleEN: '', contentVI: '', contentEN: '', type: 'info', isPublic: true });
             }}
-            className="md:hidden fixed bottom-20 right-4 z-40 w-14 h-14 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white rounded-full flex items-center justify-center shadow-2xl transition-all cursor-pointer"
+            className="md:hidden fixed right-4 z-40 w-14 h-14 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white rounded-full flex items-center justify-center shadow-2xl transition-all cursor-pointer"
+          style={{ bottom: 'calc(4rem + var(--sab,0px) + 0.75rem)' }}
             title={lang === 'vi' ? 'Thêm mới' : 'Add New'}
           >
             <Plus className="w-6 h-6 stroke-[3]" />

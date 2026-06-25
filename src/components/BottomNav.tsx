@@ -29,7 +29,7 @@ export default function BottomNav({
   return (
     <>
       {/* MOBILE FIXED BOTTOM NAVIGATION TAB BAR */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-850 pb-safe shadow-xl" id="mobile-bottom-tabs">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-850 shadow-xl" id="mobile-bottom-tabs" style={{ paddingBottom: 'var(--sab)' }}>
         <div className="flex justify-around items-center h-16">
           {tabs.map(tab => {
             const isActive = activeTab === tab.id;
@@ -78,7 +78,8 @@ export default function BottomNav({
               setNewNoti({ titleVI: '', titleEN: '', contentVI: '', contentEN: '', type: 'info', isPublic: true });
             }
           }}
-          className="md:hidden fixed bottom-20 right-4 z-40 w-14 h-14 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white rounded-full flex items-center justify-center shadow-2xl transition-all cursor-pointer"
+          className="md:hidden fixed right-4 z-40 w-14 h-14 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white rounded-full flex items-center justify-center shadow-2xl transition-all cursor-pointer"
+          style={{ bottom: 'calc(4rem + var(--sab,0px) + 0.75rem)' }}
           title={lang === 'vi' ? 'Thêm mới' : 'Add New'}
         >
           <Plus className="w-6 h-6 stroke-[3]" />
