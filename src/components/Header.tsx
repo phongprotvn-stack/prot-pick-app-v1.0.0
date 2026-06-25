@@ -76,9 +76,7 @@ export default function Header({
               <Menu className="w-5 h-5 stroke-[2.5]" />
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-9 h-9 bg-gradient-to-br from-rose-500 to-rose-800 rounded-xl flex items-center justify-center shadow-md shadow-rose-500/20">
-                <span className="text-white font-black text-xs tracking-tighter">PP</span>
-              </div>
+              <img src="/pwa-192x192.png" alt="PP" className="w-9 h-9 rounded-xl object-cover shadow-md shadow-rose-500/20" />
               <div>
                 <h1 className="text-sm font-black text-white tracking-tight leading-tight">{t.appTitle}</h1>
                 <span className="text-[9px] font-mono text-rose-500 font-bold uppercase tracking-wider">Combat never ends</span>
