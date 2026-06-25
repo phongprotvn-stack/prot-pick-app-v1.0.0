@@ -270,9 +270,23 @@ export default function Header({
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                {/* ROLE BADGE - P (Coach) / T (Student) - click always opens PIN to switch/authenticate */}
+                {/* ROLE BADGE - P (Coach) / T (Student) */}
                 <button
                   onClick={() => {
+                    // Coach → switch directly to student (no PIN)
+                    if (role === 'coach') {
+                      setRole('student');
+                      localStorage.setItem('protpick_role', 'student');
+                      setIsPinInputOpen(false);
+                      setPinDisplayP(false);
+                      setMenuPinInput('');
+                      setMenuPinError('');
+                      showToast(lang === 'vi'
+                        ? '👤 Đã chuyển sang chế độ Học viên'
+                        : '👤 Switched to Student mode');
+                      return;
+                    }
+                    // Student → open PIN, show P badge
                     setPinDisplayP(true);
                     setIsPinInputOpen(true);
                     setMenuPinInput('');
@@ -286,9 +300,9 @@ export default function Header({
                       ? 'bg-rose-500/15 text-rose-500 border border-rose-500/30 hover:bg-rose-500/25'
                       : 'bg-zinc-100 dark:bg-zinc-900 text-rose-500 border border-zinc-200 dark:border-zinc-800'
                   }`}
-                  title={lang === 'vi'
-                    ? 'Nhấn để chuyển sang HLV'
-                    : 'Tap to switch to Coach'}
+                  title={role === 'coach'
+                    ? (lang === 'vi' ? 'Nhấn để chuyển sang Học viên' : 'Tap to switch to Student')
+                    : (lang === 'vi' ? 'Nhấn để chuyển sang HLV' : 'Tap to switch to Coach')}
                 >
                   {pinDisplayP || role === 'coach' ? 'P' : 'T'}
                 </button>
