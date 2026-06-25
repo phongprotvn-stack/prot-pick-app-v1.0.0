@@ -75,7 +75,7 @@ export default function Header({
             >
               <Menu className="w-5 h-5 stroke-[2.5]" />
             </button>
-            <div className="flex items-center gap-2">
+            <div onClick={() => { setActiveTab('dashboard'); }} className="flex items-center gap-2 cursor-pointer">
               <img src="/pwa-192x192.png" alt="PP" className="w-9 h-9 rounded-xl object-cover shadow-md shadow-rose-500/20" />
               <div>
                 <h1 className="text-sm font-black text-zinc-900 dark:text-white tracking-tight leading-tight">{t.appTitle}</h1>
