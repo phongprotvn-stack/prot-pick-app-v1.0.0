@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Activity, Users, BookOpen, Calendar, Award,
   Sun, Moon, Bell, X, PlusCircle, Search, Menu, ChevronDown
@@ -45,6 +45,20 @@ export default function Header({
   translateViToEn, translationTimeoutRef,
   setActiveTab, activeTab, sortedNotifications
 }: HeaderProps) {
+  const notiRef = useRef<HTMLDivElement>(null);
+
+  // Close notification dropdown when clicking outside
+  useEffect(() => {
+    if (!isNotiHistoryOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (notiRef.current && !notiRef.current.contains(e.target as Node)) {
+        setIsNotiHistoryOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [isNotiHistoryOpen, setIsNotiHistoryOpen]);
+
   return (
     <header className="bg-zinc-950 border-b border-zinc-850 sticky top-0 z-30 shadow-xl">
       {/* TOP BAR */}
@@ -108,7 +122,7 @@ export default function Header({
             </button>
 
             {/* NOTIFICATIONS */}
-            <div className="relative">
+            <div className="relative" ref={notiRef}>
               <button
                 onClick={() => setIsNotiHistoryOpen(!isNotiHistoryOpen)}
                 className="relative p-2 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
