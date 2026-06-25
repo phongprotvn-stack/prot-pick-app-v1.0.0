@@ -547,8 +547,8 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
                   <div className="space-y-1.5 max-h-[360px] overflow-y-auto pr-1 no-scrollbar text-xs">
                     {[...skillsList].sort((a, b) => {
                       const order = [
-                        'Forehand', 'Backhand', 'Serve', 'Return', 'Block', 'Dink', 'Volley', 'Drop', 
-                        'Flick', 'Roll', 'Reset', 'Lob', 'Smash', 'Footwork', 'Transition Zone', 'Strategy'
+                        'Forehand', 'Backhand', 'Serve', 'Return', 'Block', 'Dink', 'Volley', 'Drop',
+                        'Reset', 'Flick', 'Roll', 'Lob', 'Smash', 'Footwork', 'Transition Zone', 'Strategy'
                       ];
                       const idxA = order.indexOf(a.name);
                       const idxB = order.indexOf(b.name);

@@ -473,7 +473,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       syncStudents(updated); showToast(lang === 'vi' ? "Cập nhật học viên thành công!" : "Student details saved!");
     } else {
       const defaultSkillScores: Record<string, number> = {};
-      skillsList.forEach(s => { defaultSkillScores[s.name] = 2; });
+      skillsList.forEach(s => { defaultSkillScores[s.name] = 1; });
       const newRecord: Student = {
         id: 'std_' + Date.now(), name: editingStudent.name || 'New Pupil',
         avatar: editingStudent.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
