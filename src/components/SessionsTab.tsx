@@ -435,8 +435,8 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                 <div className="mt-4 pt-3 border-t border-dashed border-zinc-200 dark:border-zinc-900 grid grid-cols-1 md:grid-cols-2 gap-4">
                   
                   <div className="space-y-1">
-                    <span className="text-[10px] text-zinc-405 uppercase font-mono block">HLV FEEDBACK & REVIEW:</span>
-                    <p className="text-xs text-zinc-700 dark:text-zinc-300 italic font-serif leading-relaxed">
+                    <span className="text-[10px] text-zinc-405 uppercase font-mono block">HLV PROT NHẬN XÉT:</span>
+                    <p className="text-xs text-zinc-700 dark:text-zinc-300 italic leading-relaxed">
                       " {lang === 'vi' ? sess.coachFeedbackVI : sess.coachFeedbackEN} "
                     </p>
                   </div>

@@ -721,8 +721,8 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
                 <p className="text-xs text-zinc-800 dark:text-zinc-200 leading-relaxed font-sans">{activeStudent.targetGoal || "Chưa thiết lập mục tiêu huấn luyện cụ thể."}</p>
                 
                 <div className="border-t border-zinc-150 dark:border-zinc-850 pt-3">
-                  <div className="text-[10px] uppercase font-mono text-zinc-400 mb-1">HLV Dossier Notes:</div>
-                  <p className="text-xs text-zinc-500 dark:text-zinc-400 italic font-serif leading-relaxed h-[130px] overflow-y-auto pr-1">
+                  <div className="text-[10px] uppercase font-mono text-zinc-400 mb-1">HLV PROT NHẬN XÉT:</div>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400 italic leading-relaxed h-[130px] overflow-y-auto pr-1">
                     {role === 'coach' || activeStudent.isPublic ? activeStudent.notes : "🔒 Ghi chú mật lớp học phác họa chiến thuật HLV."}
                   </p>
                 </div>

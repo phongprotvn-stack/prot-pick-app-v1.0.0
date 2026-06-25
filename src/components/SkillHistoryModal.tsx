@@ -208,7 +208,7 @@ export default function SkillHistoryModal({
                         <span className="font-bold truncate text-zinc-700 dark:text-zinc-300">{item.studentName} — {item.title}</span>
                         <span className="font-mono">{formatDate(item.date)}</span>
                       </div>
-                      <p className="text-xs text-zinc-650 dark:text-zinc-400 leading-relaxed font-serif italic text-stone-500 mt-1">
+                      <p className="text-xs text-zinc-650 dark:text-zinc-400 leading-relaxed italic text-stone-500 mt-1">
                         &ldquo;{lang === 'vi' ? item.coachFeedbackVI : item.coachFeedbackEN}&rdquo;
                       </p>
                     </div>
