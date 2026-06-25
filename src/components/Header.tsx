@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import {
   Activity, Users, BookOpen, Calendar, Award,
-  Sun, Moon, Bell, X, PlusCircle, Search, Menu, ChevronDown
+  Sun, Moon, Bell, X, PlusCircle, Search, Menu, ChevronDown, ChevronLeft
 } from 'lucide-react';
 import { LanguageKey, translations } from '../translations';
 import { NotificationItem } from '../types';
@@ -33,6 +33,8 @@ interface HeaderProps {
   translationTimeoutRef: React.MutableRefObject<Record<string, NodeJS.Timeout>>;
   setActiveTab: (tab: string) => void;
   activeTab: string;
+  navStack: string[];
+  goBack: () => void;
   sortedNotifications: NotificationItem[];
 }
 
@@ -46,7 +48,7 @@ export default function Header({
   handleRoleToggle, handleLangToggle, handleThemeToggle,
   handleSaveNoti, handleDeleteNoti,
   translateViToEn, translationTimeoutRef,
-  setActiveTab, activeTab, sortedNotifications
+  setActiveTab, activeTab, navStack, goBack, sortedNotifications
 }: HeaderProps) {
   const notiRef = useRef<HTMLDivElement>(null);
 
@@ -67,19 +69,27 @@ export default function Header({
       {/* TOP BAR */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
         <div className="flex items-center justify-between">
-          {/* LEFT: APP BRAND */}
+          {/* LEFT: BACK + APP BRAND */}
           <div className="flex items-center gap-3">
+            {navStack.length > 0 && (
+              <button
+                onClick={goBack}
+                className="p-2.5 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 text-rose-500 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+            )}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-1.5 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 cursor-pointer"
+              className="md:hidden p-2 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 cursor-pointer"
             >
               <Menu className="w-5 h-5 stroke-[2.5]" />
             </button>
-            <div onClick={() => { setActiveTab('dashboard'); }} className="flex items-center gap-2 cursor-pointer">
+            <div onClick={() => { setActiveTab('dashboard'); }} className="flex items-center gap-1.5 cursor-pointer">
               <img src="/pwa-192x192.png" alt="PP" className="w-9 h-9 rounded-xl object-cover shadow-md shadow-rose-500/20" />
-              <div>
-                <h1 className="text-sm font-black text-zinc-900 dark:text-white tracking-tight leading-tight">{t.appTitle}</h1>
-                <span className="text-[9px] font-mono text-rose-500 font-bold uppercase tracking-wider">Combat never ends</span>
+              <div className="flex flex-col leading-none">
+                <h1 className="text-sm font-black text-zinc-900 dark:text-white tracking-tight leading-[16px]">{t.appTitle}</h1>
+                <span className="text-[9px] font-mono text-rose-500 font-bold uppercase tracking-wider leading-[10px]">Combat never ends</span>
               </div>
             </div>
           </div>
@@ -89,7 +99,7 @@ export default function Header({
             {/* Mobile Search Toggle */}
             <button
               onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
-              className="md:hidden p-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+              className="md:hidden p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
             >
               <Search className="w-4 h-4 text-zinc-400" />
             </button>
@@ -97,7 +107,7 @@ export default function Header({
             {/* Theme Toggle */}
             <button
               onClick={handleThemeToggle}
-              className="p-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+              className="p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
             >
               {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-rose-500" />}
             </button>
@@ -105,28 +115,17 @@ export default function Header({
             {/* Language Toggle */}
             <button
               onClick={() => handleLangToggle(lang === 'vi' ? 'en' : 'vi')}
-              className="p-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 text-[10px] font-black text-zinc-600 dark:text-zinc-400 cursor-pointer"
+              className="p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 text-[10px] font-black text-zinc-600 dark:text-zinc-400 cursor-pointer"
             >
               {lang === 'vi' ? 'EN' : 'VI'}
             </button>
 
-            {/* Role Toggle */}
-            <button
-              onClick={() => handleRoleToggle(role === 'coach' ? 'student' : 'coach')}
-              className={`px-2.5 py-1.5 rounded-xl text-[10px] font-black transition-all active:scale-95 cursor-pointer border ${
-                role === 'coach'
-                  ? 'bg-rose-600 text-white border-rose-500 shadow-sm'
-                  : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-800'
-              }`}
-            >
-              {role === 'coach' ? (lang === 'vi' ? 'HLV' : 'COACH') : (lang === 'vi' ? 'HỌC VIÊN' : 'STUDENT')}
-            </button>
 
             {/* NOTIFICATIONS */}
             <div className="relative" ref={notiRef}>
               <button
                 onClick={() => setIsNotiHistoryOpen(!isNotiHistoryOpen)}
-                className="relative p-2 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+                className="relative p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
               >
                 <Bell className="w-4 h-4 text-zinc-400" />
                 {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length > 0 && (

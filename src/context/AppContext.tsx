@@ -38,6 +38,7 @@ export interface AppContextType {
   students: Student[]; skillsList: CurriculumSkill[]; lessonPlans: LessonPlan[];
   sessions: Session[]; notifications: NotificationItem[]; coach: CoachProfile;
   activeTab: string; setActiveTab: (t: string) => void;
+  navStack: string[]; goBack: () => void;
   searchQuery: string; setSearchQuery: (q: string) => void;
   selectedStudentId: string; setSelectedStudentId: (id: string) => void;
   editingStudent: Partial<Student> | null; setEditingStudent: (s: Partial<Student> | null) => void;
@@ -141,7 +142,23 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [customLegendNotes, setCustomLegendNotes] = useState('');
 
   // === UI STATE ===
-  const [activeTab, setActiveTab] = useState<string>('dashboard');
+  const [activeTab, setActiveTabState] = useState<string>('dashboard');
+  const [navStack, setNavStack] = useState<string[]>([]);
+  const setActiveTab = (tab: string) => {
+    setActiveTabState(prev => {
+      if (prev !== tab) setNavStack(s => [...s.slice(-10), prev]);
+      return tab;
+    });
+  };
+  const goBack = () => {
+    setNavStack(prev => {
+      if (prev.length === 0) return prev;
+      const newStack = [...prev];
+      const prevTab = newStack.pop()!;
+      setActiveTabState(prevTab);
+      return newStack;
+    });
+  };
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
   const [isFutureIdeasOpen, setIsFutureIdeasOpen] = useState(false);
@@ -616,7 +633,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const value: AppContextType = {
     lang, setLang, theme, setTheme, role, setRole, dbCoachPin,
     students, skillsList, lessonPlans, sessions, notifications, coach,
-    activeTab, setActiveTab, searchQuery, setSearchQuery, selectedStudentId, setSelectedStudentId,
+    activeTab, setActiveTab, navStack, goBack, searchQuery, setSearchQuery, selectedStudentId, setSelectedStudentId,
     editingStudent, setEditingStudent, editingPlan, setEditingPlan,
     newSession, setNewSession, editingSessionId, setEditingSessionId,
     newNoti, setNewNoti, newSkill, setNewSkill,

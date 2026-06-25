@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, lazy } from 'react';
+import React, { Suspense, useEffect, lazy, useRef } from 'react';
 import { useApp, compressImage } from './context/AppContext';
 import Header from './components/Header';
 import BottomNav from './components/BottomNav';
@@ -40,10 +40,28 @@ function AppContent() {
     currentPinValueForChange, setCurrentPinValueForChange,
     newPinValue1, setNewPinValue1, newPinValue2, setNewPinValue2,
     handleRoleToggle, handleLangToggle, handleThemeToggle,
-    translationTimeoutRef,
+    translationTimeoutRef, navStack, goBack,
     setCustomLegendNotes,
     syncCoach,
   } = useApp();
+
+  // === SWIPE-LEFT TO GO BACK ===
+  const swipeRef = useRef<{ x: number; y: number; t: number } | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    swipeRef.current = { x: touch.clientX, y: touch.clientY, t: Date.now() };
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!swipeRef.current || navStack.length === 0) return;
+    const touch = e.changedTouches[0];
+    const dx = swipeRef.current.x - touch.clientX; // positive = leftward
+    const dy = Math.abs(swipeRef.current.y - touch.clientY);
+    const dt = Date.now() - swipeRef.current.t;
+    if (dx > 80 && dy < dx * 2 && dt < 500) {
+      goBack();
+    }
+    swipeRef.current = null;
+  };
 
   // Scroll to selected notification
   useEffect(() => {
@@ -61,7 +79,10 @@ function AppContent() {
 
   return (
     <div className={`${theme === 'dark' ? 'dark' : ''}`}>
-      <div className={`min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white font-sans antialiased transition-colors duration-300`}>
+      <div className={`min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white font-sans antialiased transition-colors duration-300`}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {ToastBar}
 
         {/* HEADER */}
@@ -86,6 +107,8 @@ function AppContent() {
           translationTimeoutRef={translationTimeoutRef}
           setActiveTab={setActiveTab}
           activeTab={activeTab}
+          navStack={navStack}
+          goBack={goBack}
           sortedNotifications={sortedNotifications}
         />
 
