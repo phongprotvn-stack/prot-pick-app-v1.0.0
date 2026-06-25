@@ -20,10 +20,10 @@ export default function BottomNav({
 }: BottomNavProps) {
   const tabs = [
     { id: 'dashboard', label: lang === 'vi' ? 'Thống kê' : 'Dashboard', icon: <Activity className="w-5 h-5" /> },
-    { id: 'students', label: lang === 'vi' ? 'Học viên' : 'Pupils', icon: <Users className="w-5 h-5" /> },
-    { id: 'curriculum', label: lang === 'vi' ? 'Giáo án' : 'Syllabus', icon: <BookOpen className="w-5 h-5" /> },
+    { id: 'students', label: lang === 'vi' ? 'Học viên' : 'Students', icon: <Users className="w-5 h-5" /> },
+    { id: 'curriculum', label: lang === 'vi' ? 'Giáo án' : 'Plans', icon: <BookOpen className="w-5 h-5" /> },
     { id: 'sessions', label: lang === 'vi' ? 'Lịch dạy' : 'Sessions', icon: <Calendar className="w-5 h-5" /> },
-    { id: 'about', label: lang === 'vi' ? 'HLV Phong' : 'Coach', icon: <Award className="w-5 h-5" /> }
+    { id: 'about', label: lang === 'vi' ? 'HLV Phong' : 'Coach Prot', icon: <Award className="w-5 h-5" /> }
   ];
 
   return (

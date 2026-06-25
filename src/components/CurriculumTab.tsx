@@ -115,10 +115,12 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
         <div className="lg:col-span-7 bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
           <h3 className="text-base font-black text-rose-500 uppercase tracking-widest flex items-center gap-2">
             <Layers className="w-5 h-5 animate-pulse" />
-            GIÁO ÁN 16 KỸ NĂNG HUẤN LUYỆN CHUẨN HOÁ
+            {lang === 'vi' ? 'GIÁO ÁN 16 KỸ NĂNG HUẤN LUYỆN CHUẨN HOÁ' : '16 SKILL STANDARD CURRICULUM'}
           </h3>
           <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-            Học viên tập luyện với HLV Phongprot được đánh giá sát sao, tự hào theo đuổi giáo trình bao quát đầy đủ cả kỹ năng mềm lẫn tư duy thực chiến đối kháng dưới áp lực.
+            {lang === 'vi'
+              ? 'Học viên tập luyện với HLV Prot được đánh giá sát sao, tự tin theo đuổi giáo trình bao quát đầy đủ cả kỹ năng lẫn tư duy thực chiến đối kháng dưới áp lực.'
+              : 'Students training with Coach Prot receive meticulous evaluation, confidently following a comprehensive curriculum covering both skills and competitive tactical thinking under pressure.'}
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
