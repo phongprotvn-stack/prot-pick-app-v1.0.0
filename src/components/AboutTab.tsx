@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Flame, Edit2, Upload, Youtube, Video, Award, PlusCircle, Plus, X, Lock } from 'lucide-react';
 import { LanguageKey } from '../translations';
 import { CoachProfile, Student } from '../types';
@@ -36,6 +37,11 @@ export default function AboutTab({
   setCurrentPinValueForChange, setNewPinValue1, setNewPinValue2,
   setPinModalError, setIsChangingPin, setIsPinModalOpen, syncCoach
 }: AboutTabProps) {
+  const [isEditingAbout, setIsEditingAbout] = useState(false);
+  const [tempAboutVI, setTempAboutVI] = useState(coach.aboutVI);
+  const [tempAboutEN, setTempAboutEN] = useState(coach.aboutEN);
+  const [isEditingCourts, setIsEditingCourts] = useState(false);
+  const [tempCourts, setTempCourts] = useState(coach.courts || '');
   return (
     <div className="space-y-8 animate-fadeIn" id="tab-about-panel">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -129,9 +135,28 @@ export default function AboutTab({
               </span>
             </div>
 
-            <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans text-justify bg-zinc-50 dark:bg-zinc-950 p-4 rounded-2xl border border-zinc-150 dark:border-zinc-900">
-              {lang === 'vi' ? coach.aboutVI : coach.aboutEN}
-            </p>
+            {role === 'coach' && isEditingAbout ? (
+              <div className="space-y-2">
+                <textarea value={tempAboutVI} onChange={e => setTempAboutVI(e.target.value)} rows={4} placeholder="Tiếng Việt" className="w-full p-2.5 text-[11px] bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-900 dark:text-zinc-100 focus:outline-none resize-none" />
+                <textarea value={tempAboutEN} onChange={e => setTempAboutEN(e.target.value)} rows={4} placeholder="English" className="w-full p-2.5 text-[11px] bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-900 dark:text-zinc-100 focus:outline-none resize-none" />
+                <div className="flex gap-2">
+                  <button onClick={() => { syncCoach({...coach, aboutVI: tempAboutVI, aboutEN: tempAboutEN}); setIsEditingAbout(false); showToast(lang === 'vi' ? 'Đã lưu!' : 'Saved!'); }} className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] py-1.5 rounded-lg font-black cursor-pointer transition-colors shadow-xs">✅ {lang === 'vi' ? 'Lưu' : 'Save'}</button>
+                  <button onClick={() => setIsEditingAbout(false)} className="flex-1 bg-zinc-700 hover:bg-zinc-650 text-zinc-200 text-[10px] py-1.5 rounded-lg font-black cursor-pointer transition-colors">{lang === 'vi' ? 'Hủy' : 'Cancel'}</button>
+                </div>
+              </div>
+            ) : (
+              <div className="relative group">
+                <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans text-justify bg-zinc-50 dark:bg-zinc-950 p-4 rounded-2xl border border-zinc-150 dark:border-zinc-900">
+                  {lang === 'vi' ? coach.aboutVI : coach.aboutEN}
+                </p>
+                {role === 'coach' && (
+                  <button onClick={() => { setTempAboutVI(coach.aboutVI); setTempAboutEN(coach.aboutEN); setIsEditingAbout(true); }} className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 font-bold px-1.5 py-0.5 rounded-lg flex items-center gap-1 cursor-pointer">
+                    <Edit2 className="w-2.5 h-2.5" />
+                    {lang === 'vi' ? 'Sửa' : 'Edit'}
+                  </button>
+                )}
+              </div>
+            )}
 
             <div className="pt-2 text-left space-y-2.5 text-xs border-t border-zinc-150 dark:border-zinc-800">
               <div className="flex items-center gap-2">
@@ -152,9 +177,27 @@ export default function AboutTab({
                   </a>
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-rose-500" />
-                <span><strong>Sân tập:</strong> Cụm sân Pickleball HN & Sài Gòn</span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <Award className="w-4 h-4 text-rose-500 shrink-0" />
+                {role === 'coach' && isEditingCourts ? (
+                  <>
+                    <strong className="text-nowrap">{lang === 'vi' ? 'Sân tập:' : 'Training Court:'}</strong>
+                    <input type="text" value={tempCourts} onChange={e => setTempCourts(e.target.value)} className="flex-1 min-w-[100px] p-1 text-[10px] bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-100 focus:outline-none" />
+                    <button onClick={() => { syncCoach({...coach, courts: tempCourts}); setIsEditingCourts(false); showToast(lang === 'vi' ? 'Đã lưu!' : 'Saved!'); }} className="text-[9px] bg-emerald-600 hover:bg-emerald-700 text-white px-1.5 py-0.5 rounded font-bold cursor-pointer">{lang === 'vi' ? 'Lưu' : 'Save'}</button>
+                    <button onClick={() => setIsEditingCourts(false)} className="text-[9px] bg-zinc-600 hover:bg-zinc-500 text-white px-1.5 py-0.5 rounded font-bold cursor-pointer">{lang === 'vi' ? 'Hủy' : 'Cancel'}</button>
+                  </>
+                ) : (
+                  <>
+                    <strong>{lang === 'vi' ? 'Sân tập:' : 'Training Court:'}</strong>
+                    <span className="flex-1">{coach.courts}</span>
+                    {role === 'coach' && (
+                      <button onClick={() => { setTempCourts(coach.courts || ''); setIsEditingCourts(true); }} className="text-[9px] text-rose-500 hover:text-rose-400 font-bold flex items-center gap-0.5 cursor-pointer transition-colors shrink-0">
+                        <Edit2 className="w-2.5 h-2.5" />
+                        {lang === 'vi' ? 'Sửa' : 'Edit'}
+                      </button>
+                    )}
+                  </>
+                )}
               </div>
 
               {role === 'coach' && (
