@@ -385,23 +385,30 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
               className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans"
             />
           </div>
-          <div className="relative flex-1 min-w-0">
-            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
-            {!sessionDateFilter && (
-              <span className="absolute left-9 top-1/2 -translate-y-1/2 text-xs text-zinc-400 dark:text-zinc-500 pointer-events-none select-none truncate max-w-[calc(100%-4rem)]">
-                {lang === 'vi' ? 'Tìm theo ngày' : 'Search by date'}
-              </span>
-            )}
+          <div className="relative flex-1 min-w-0 h-[34px]">
+            {/* Hidden date input overlay — chiếm toàn bộ area, mở date picker khi tap */}
             <input
               type="date"
               value={sessionDateFilter}
               onChange={(e) => setSessionDateFilter(e.target.value)}
-              className="w-full pl-9 pr-9 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans min-w-0"
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
             />
+            {/* Visible display */}
+            <div className="flex items-center gap-1.5 w-full h-full px-3 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl pointer-events-none">
+              <Calendar className="w-4 h-4 text-zinc-400 shrink-0" />
+              {sessionDateFilter ? (
+                <span className="text-zinc-800 dark:text-zinc-200 truncate">{sessionDateFilter}</span>
+              ) : (
+                <span className="text-zinc-400 dark:text-zinc-500 truncate">
+                  {lang === 'vi' ? 'Tìm theo ngày' : 'Search by date'}
+                </span>
+              )}
+            </div>
+            {/* Clear button — nằm trên cùng */}
             {sessionDateFilter && (
               <button 
                 onClick={() => setSessionDateFilter('')} 
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-rose-500 bg-zinc-100 dark:bg-zinc-800 w-5 h-5 flex items-center justify-center rounded-full cursor-pointer text-xs leading-none"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 z-20 text-zinc-400 hover:text-rose-500 bg-zinc-100 dark:bg-zinc-800 w-5 h-5 flex items-center justify-center rounded-full cursor-pointer text-xs leading-none"
                 aria-label={lang === 'vi' ? 'Xoá ngày' : 'Clear date'}
               >
                 ✕
