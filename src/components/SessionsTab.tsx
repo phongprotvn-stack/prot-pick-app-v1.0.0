@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PlusCircle, Calendar, Trash2, Info, Search } from 'lucide-react';
 import { Session, LessonPlan, Student } from '../types';
 import { LanguageKey } from '../translations';
@@ -46,8 +46,6 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
   translateViToEn,
   translateEnToVi,
 }) => {
-  const dateInputRef = useRef<HTMLInputElement>(null);
-
   // ── Auto-translate coachFeedbackVI → coachFeedbackEN ──
   const [enFeedback, setEnFeedback] = useState('');
   useEffect(() => {
@@ -135,23 +133,13 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
 
                   <div className="space-y-1">
                     <label className="font-bold text-zinc-400">{lang === 'vi' ? 'Thời gian buổi dạy *' : 'Session Date *'}</label>
-                    <div className="relative">
-                      {/* Hidden date input on top — mở date picker khi tap */}
-                      <input
-                        ref={dateInputRef}
-                        type="date"
-                        required
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                        value={newSession?.date || ''}
-                        onChange={(e) => setNewSession({ ...newSession, date: e.target.value })}
-                      />
-                      {/* Visible dd/mm/yyyy display */}
-                      <div className="w-full p-3 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-black dark:text-white text-center select-none pointer-events-none">
-                        {newSession?.date
-                          ? (() => { const [y,m,d] = newSession.date.split('-'); return `${d}/${m}/${y}`; })()
-                          : (lang === 'vi' ? 'DD/MM/YYYY' : 'DD/MM/YYYY')}
-                      </div>
-                    </div>
+                    <input
+                      type="date"
+                      required
+                      className="w-full p-3 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-black dark:text-white"
+                      value={newSession?.date || ''}
+                      onChange={(e) => setNewSession({ ...newSession, date: e.target.value })}
+                    />
                   </div>
 
                   <div className="space-y-1">
@@ -380,29 +368,16 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
             />
           </div>
           <div className="relative flex-1 min-w-0 h-[34px]">
-            {/* Hidden date input overlay — chiếm toàn bộ area, mở date picker khi tap */}
             <input
               type="date"
               value={sessionDateFilter}
               onChange={(e) => setSessionDateFilter(e.target.value)}
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+              className="w-full h-full px-3 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-800 dark:text-zinc-200 cursor-pointer"
             />
-            {/* Visible display */}
-            <div className="flex items-center gap-1.5 w-full h-full px-3 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl pointer-events-none">
-              <Calendar className="w-4 h-4 text-zinc-400 shrink-0" />
-              {sessionDateFilter ? (
-                <span className="text-zinc-800 dark:text-zinc-200 truncate">{sessionDateFilter}</span>
-              ) : (
-                <span className="text-zinc-400 dark:text-zinc-500 truncate">
-                  {lang === 'vi' ? 'Tìm theo ngày' : 'Search by date'}
-                </span>
-              )}
-            </div>
-            {/* Clear button — nằm trên cùng */}
             {sessionDateFilter && (
               <button 
                 onClick={() => setSessionDateFilter('')} 
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 z-20 text-zinc-400 hover:text-rose-500 bg-zinc-100 dark:bg-zinc-800 w-5 h-5 flex items-center justify-center rounded-full cursor-pointer text-xs leading-none"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-rose-500 bg-zinc-100 dark:bg-zinc-800 w-5 h-5 flex items-center justify-center rounded-full cursor-pointer text-xs leading-none z-10"
                 aria-label={lang === 'vi' ? 'Xoá ngày' : 'Clear date'}
               >
                 ✕
