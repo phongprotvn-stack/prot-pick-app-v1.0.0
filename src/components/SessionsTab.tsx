@@ -379,15 +379,29 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
           </div>
           <div className="relative flex-1 min-w-0">
             <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
-            <input
-              type="date"
-              value={sessionDateFilter}
-              onChange={(e) => setSessionDateFilter(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 cursor-pointer"
-            />
+            <button
+              type="button"
+              onClick={() => {
+                const temp = document.createElement('input');
+                temp.type = 'date';
+                temp.style.cssText = 'position:fixed;left:0;top:0;opacity:0.01;pointer-events:none;z-index:99999;width:1px;height:1px';
+                if (sessionDateFilter) temp.value = sessionDateFilter;
+                document.body.appendChild(temp);
+                const cleanup = () => { if (document.body.contains(temp)) document.body.removeChild(temp); };
+                temp.addEventListener('change', () => { setSessionDateFilter(temp.value); cleanup(); });
+                temp.addEventListener('blur', () => { setTimeout(cleanup, 2000); });
+                setTimeout(() => { try { temp.showPicker(); } catch { temp.focus(); } }, 10);
+              }}
+              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 text-left cursor-pointer font-sans hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-colors"
+            >
+              {sessionDateFilter
+                ? (() => { const [y,m,d] = sessionDateFilter.split('-'); return `${d}/${m}/${y}`; })()
+                : (lang === 'vi' ? 'Tìm theo ngày' : 'Search by date')}
+            </button>
             {sessionDateFilter && (
               <button
-                onClick={() => setSessionDateFilter('')}
+                type="button"
+                onClick={(e) => { e.stopPropagation(); setSessionDateFilter(''); }}
                 className="absolute right-1.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-rose-500 bg-zinc-100 dark:bg-zinc-800 w-5 h-5 flex items-center justify-center rounded-full cursor-pointer text-xs leading-none z-10"
                 aria-label={lang === 'vi' ? 'Xoá ngày' : 'Clear date'}
               >
