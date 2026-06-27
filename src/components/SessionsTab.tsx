@@ -376,7 +376,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
         {/* SPECIALIZED SEARCH & FILTER BAR */}
         <div className="flex flex-col sm:flex-row gap-3 p-3 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-100 dark:border-zinc-900">
           <div className="relative flex-1 min-w-0">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
             <input
               type="text"
               placeholder={lang === 'vi' ? "Tìm theo tên học viên hoặc giáo án..." : "Search by student name or lesson plan..."}
@@ -385,10 +385,10 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
               className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans"
             />
           </div>
-          <div className="relative w-full sm:w-48 shrink-0">
+          <div className="relative flex-1 min-w-0">
             <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
             {!sessionDateFilter && (
-              <span className="absolute left-9 top-1/2 -translate-y-1/2 text-xs text-zinc-400 dark:text-zinc-500 pointer-events-none select-none whitespace-nowrap">
+              <span className="absolute left-9 top-1/2 -translate-y-1/2 text-xs text-zinc-400 dark:text-zinc-500 pointer-events-none select-none truncate max-w-[calc(100%-4rem)]">
                 {lang === 'vi' ? 'Tìm theo ngày' : 'Search by date'}
               </span>
             )}
@@ -396,7 +396,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
               type="date"
               value={sessionDateFilter}
               onChange={(e) => setSessionDateFilter(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans [color-scheme:light] dark:[color-scheme:dark]"
+              className="w-full pl-9 pr-9 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans min-w-0"
             />
             {sessionDateFilter && (
               <button 
