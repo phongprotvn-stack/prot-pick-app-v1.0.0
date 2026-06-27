@@ -1,6 +1,7 @@
-import { TrendingUp, X, TrendingDown, Minus } from 'lucide-react';
+import { TrendingUp, X, TrendingDown, Minus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { LanguageKey } from '../translations';
 import { CurriculumSkill, Session } from '../types';
+import { useRef, useEffect } from 'react';
 
 interface SkillHistoryModalProps {
   selectedSkillForHistory: CurriculumSkill | null;
@@ -8,6 +9,7 @@ interface SkillHistoryModalProps {
   lang: LanguageKey;
   sessions: Session[];
   resolvedStudents: any[];
+  studentId?: string;
 }
 
 function formatDate(dateStr: string): string {
@@ -27,12 +29,14 @@ function getScoreColor(score: number): string {
 
 export default function SkillHistoryModal({
   selectedSkillForHistory, setSelectedSkillForHistory,
-  lang, sessions, resolvedStudents
+  lang, sessions, resolvedStudents, studentId
 }: SkillHistoryModalProps) {
   if (!selectedSkillForHistory) return null;
 
+  // Filter sessions: only for this student (if studentId provided) + has the skill score
   const historyItems = sessions
     .filter(s => s.status === 'Completed')
+    .filter(s => !studentId || s.studentId === studentId)
     .map(s => {
       const student = resolvedStudents.find((st: any) => st.id === s.studentId);
       return { ...s, studentName: student?.name || 'Unknown' };
@@ -75,6 +79,14 @@ export default function SkillHistoryModal({
       : <Minus className="w-4 h-4 text-zinc-400" />
     : null;
 
+  // Auto-scroll chart to the rightmost (newest data)
+  const chartRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (chartRef.current) {
+      chartRef.current.scrollLeft = chartRef.current.scrollWidth;
+    }
+  }, [points.length]);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/85 backdrop-blur-xs transition-opacity duration-300">
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 md:p-8 max-w-xl w-full shadow-2xl relative overflow-hidden animate-scaleIn flex flex-col max-h-[90vh]">
@@ -106,9 +118,24 @@ export default function SkillHistoryModal({
           </div>
 
           {/* LINE CHART */}
-          {points.length > 1 && (
-            <div className="overflow-x-auto no-scrollbar -mx-2 px-2">
-              <svg width={chartWidth} height={CHART_H} className="shrink-0">
+          {points.length >= 1 && (
+            <>
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] text-zinc-400 font-mono uppercase tracking-wide font-bold">
+                  {lang === 'vi' ? 'BIỂU ĐỒ ĐIỂM THEO THỜI GIAN' : 'SCORE TREND OVER TIME'}
+                </span>
+                <span className="text-[8px] text-zinc-400 italic flex items-center gap-1">
+                  <ChevronLeft className="w-3 h-3" />
+                  {lang === 'vi' ? 'Kéo ngang' : 'Scroll'}
+                  <ChevronRight className="w-3 h-3" />
+                </span>
+              </div>
+              <div
+                ref={chartRef}
+                className="overflow-x-auto -mx-2 px-2 pb-1 scroll-smooth"
+                style={{ scrollbarWidth: 'thin' }}
+              >
+                <svg width={chartWidth} height={CHART_H} className="shrink-0">
                 {/* Grid lines & Y-axis labels */}
                 {yLabels.map((label) => {
                   const y = PADDING_TOP + (5 - label) * CHART_PLOT_H / 4;
@@ -181,6 +208,7 @@ export default function SkillHistoryModal({
                 ))}
               </svg>
             </div>
+            </>
           )}
 
           {/* HISTORY LIST */}

@@ -418,6 +418,7 @@ function AppContent() {
             setSelectedSkillForHistory={setSelectedSkillForHistory}
             sessions={sessions}
             resolvedStudents={resolvedStudents}
+            studentId={activeStudent?.id}
           />
         )}
 
