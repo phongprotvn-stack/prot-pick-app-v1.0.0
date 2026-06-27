@@ -19,6 +19,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { HelpCategory } from '../types';
 
 interface SortableHelpItemProps {
+  key?: string;
   cat: HelpCategory;
   lang: LanguageKey;
   role: 'coach' | 'student';
