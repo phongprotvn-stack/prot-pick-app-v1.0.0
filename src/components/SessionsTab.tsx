@@ -349,12 +349,12 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
       )}
 
       {/* SESSIONS HISTORY LIST */}
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
+      <div className="space-y-4">
         <div className="flex justify-between items-center pb-2.5 border-b border-zinc-150 dark:border-zinc-800">
           <div className="space-y-1">
             <h3 className="text-base font-black text-rose-505 text-rose-600 uppercase tracking-widest flex items-center gap-2 animate-pulse">
               <Calendar className="w-5 h-5 flex-shrink-0 text-rose-605" />
-              NHẬT KÝ TẬP
+              {lang === 'vi' ? 'NHẬT KÝ TẬP' : 'TRAINING LOG'}
             </h3>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 font-mono tracking-wide">
               {t.analyzeSkills}
