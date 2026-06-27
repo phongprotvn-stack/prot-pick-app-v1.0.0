@@ -358,20 +358,19 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
 
       {/* SESSIONS HISTORY LIST */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center pb-2.5 border-b border-zinc-150 dark:border-zinc-800">
-        <div className="space-y-1">
-          <h3 className="text-base font-black text-rose-505 text-rose-600 uppercase tracking-widest flex items-center gap-2 animate-pulse">
-            <Calendar className="w-5 h-5 flex-shrink-0 text-rose-605" />
-            NHẬT KÝ TẬP
-          </h3>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 font-mono tracking-wide">
-            {t.analyzeSkills}
-          </p>
-        </div>
-        <span className="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-400 px-3 py-1.5 rounded-xl font-mono text-center justify-self-center">
-          {filteredSessions.length} {lang === 'vi' ? 'buổi' : 'sessions'}
-        </span>
-        <div></div>
+        <div className="flex justify-between items-center pb-2.5 border-b border-zinc-150 dark:border-zinc-800">
+          <div className="space-y-1">
+            <h3 className="text-base font-black text-rose-505 text-rose-600 uppercase tracking-widest flex items-center gap-2 animate-pulse">
+              <Calendar className="w-5 h-5 flex-shrink-0 text-rose-605" />
+              NHẬT KÝ TẬP
+            </h3>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 font-mono tracking-wide">
+              {t.analyzeSkills}
+            </p>
+          </div>
+          <span className="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-400 px-3 py-1.5 rounded-xl font-mono">
+            {filteredSessions.length} {lang === 'vi' ? 'buổi' : 'sessions'}
+          </span>
         </div>
 
         {/* SPECIALIZED SEARCH & FILTER BAR */}
@@ -387,25 +386,19 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
             />
           </div>
           <div className="relative w-full sm:w-48 shrink-0">
-            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
-            {!sessionDateFilter && (
-              <span className="absolute left-9 top-1/2 -translate-y-1/2 text-xs text-zinc-400 dark:text-zinc-500 pointer-events-none select-none">
-                {lang === 'vi' ? 'Tìm theo ngày' : 'Search by date'}
-              </span>
-            )}
+            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
             <input
               type="date"
               value={sessionDateFilter}
               onChange={(e) => setSessionDateFilter(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans [color-scheme:light] dark:[color-scheme:dark]"
+              className="w-full pl-9 pr-14 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-mono"
             />
             {sessionDateFilter && (
               <button 
                 onClick={() => setSessionDateFilter('')} 
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-rose-500 bg-zinc-100 dark:bg-zinc-800 w-5 h-5 flex items-center justify-center rounded-full cursor-pointer text-xs leading-none"
-                aria-label={lang === 'vi' ? 'Xoá ngày' : 'Clear date'}
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-400 hover:text-rose-500 font-bold bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-lg cursor-pointer"
               >
-                ✕
+                {lang === 'vi' ? 'Xoá' : 'Clear'}
               </button>
             )}
           </div>
