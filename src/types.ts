@@ -19,7 +19,7 @@ export interface Student {
 export interface CurriculumSkill {
   id: string;
   name: string;
-  category: 'BASICS' | 'ADVANCEDS' | 'TACTICS';
+  category: 'BASIC' | 'ADVANCED' | 'TACTICS';
   descriptionVI: string;
   descriptionEN: string;
 }
@@ -73,5 +73,17 @@ export interface CoachProfile {
   youtubeYoutIds: string[]; // Youtube Video Embed Identifiers
   photos: string[]; // Base64 or elegant pickleball URLs
   courts?: string;
+  courtsVI?: string;
+  courtsEN?: string;
+  courseSpecialsVI?: string[];
+  courseSpecialsEN?: string[];
+}
+
+export interface HelpCategory {
+  id: string;
+  titleVI: string;
+  titleEN: string;
+  contentVI: string;
+  contentEN: string;
 }
 

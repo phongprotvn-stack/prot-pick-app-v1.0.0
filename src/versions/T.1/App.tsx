@@ -522,14 +522,14 @@ export default function App() {
   // Helper for dynamic language translation lookup
   const t = translations[lang];
 
-  // Auto-translate Vietnamese text to English via public MyMemory API
+  // Auto-translate Vietnamese text to English via Google Translate (free, no key)
   const translateViToEn = async (text: string): Promise<string> => {
     if (!text || text.trim() === '') return '';
     try {
-      const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=vi|en`);
+      const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=vi&tl=en&dt=t&q=${encodeURIComponent(text)}`);
       const data = await res.json();
-      if (data && data.responseData && data.responseData.translatedText) {
-        return data.responseData.translatedText;
+      if (data && data[0] && data[0][0] && data[0][0][0]) {
+        return data[0][0][0];
       }
     } catch (err) {
       console.error("Auto-translation to EN failed:", err);

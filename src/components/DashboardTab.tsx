@@ -62,9 +62,9 @@ export default function DashboardTab({
     <div className="space-y-5 animate-fadeIn" id="tab-dashboard-panel">
       {/* 1️⃣ BUỔI DẠY SẮP TỚI */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs">
-        <h3 className="text-sm font-extrabold text-zinc-800 dark:text-zinc-100 flex items-center gap-2 mb-3">
+        <h3 className="text-sm font-extrabold text-rose-600 dark:text-rose-400 flex items-center gap-2 mb-3">
           <Calendar className="w-4 h-4 text-rose-500" />
-          {t.upcomingSessions}
+          {lang === 'vi' ? 'Buổi học sắp tới' : 'Upcoming'}
         </h3>
         {upcomingSessions.length > 0 ? (
           <div className="space-y-2.5">
@@ -80,7 +80,10 @@ export default function DashboardTab({
                     <div className="flex items-center gap-2 text-[10px] text-zinc-500 mt-0.5">
                       {stu && <span className="font-semibold">{stu.name}</span>}
                       <span>·</span>
-                      <span>📅 {sess.date}</span>
+                      <span className="inline-flex items-center gap-1">
+                        <Calendar className="w-3 h-3 text-zinc-400" />
+                        {(() => { const d = sess.date?.split('-'); return d ? `${d[2]}/${d[1]}/${d[0]}` : sess.date; })()}
+                      </span>
                       {sess.durationMin && <><span>·</span><span>⏱ {sess.durationMin}p</span></>}
                     </div>
                   </div>
@@ -98,7 +101,7 @@ export default function DashboardTab({
 
       {/* 2️⃣ HỌC VIÊN XUẤT SẮC */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs">
-        <h3 className="text-sm font-extrabold text-zinc-800 dark:text-zinc-100 flex items-center gap-2 mb-3">
+        <h3 className="text-sm font-extrabold text-rose-600 dark:text-rose-400 flex items-center gap-2 mb-3">
           <Flame className="w-4 h-4 text-rose-500" />
           {t.highPerformers}
         </h3>
@@ -154,7 +157,7 @@ export default function DashboardTab({
 
       {/* 4️⃣ KỸ NĂNG ĐẠT CHUẨN (ĐIỂM >= 3) */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs">
-        <h3 className="text-sm font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100 flex items-center gap-2 mb-3">
+        <h3 className="text-sm font-extrabold text-rose-600 dark:text-rose-400 flex items-center gap-2 mb-3">
           <span className="w-2 h-2 rounded-full bg-rose-500"></span>
           {lang === 'vi' ? 'Học viên đạt chuẩn (Điểm ≥ 3) theo kỹ năng' : 'Students Meeting Standard (Score >=3) by Skill'}
         </h3>

@@ -420,9 +420,9 @@ export const defaultCoach: CoachProfile = {
   aboutVI: 'Phongprot là HLV chuyên nghiệp tận tụy, đam mê Pickleball từ những năm đầu du nhập. Anh xây dựng hệ thống huấn luyện khoa học dựa trên số liệu thực tế, theo sát tỉ mỉ từng buổi học để bảo đảm học viên phát triển toàn diện 16 kỹ năng dink, smash, reset một cách vững vàng nhất.',
   aboutEN: 'Phongprot is a highly dedicated professional Pickleball trainer. He designs bespoke statistical-oriented programs that optimize your attributes from kitchen dinks to baseline drives, ensuring every player shapes a distinctive style.',
   coursesVI: [
-    { title: 'Khóa Học Nhập Môn Phong Thần (1.0 - 2.5)', desc: 'Huấn luyện di chuyển chân, cách cầm vợt Continental, luật chơi dink & giao bóng cơ bản trong 10 buổi.', price: '3,500,000 VND / Khóa' },
-    { title: 'Khóa Chiến Đấu Đương Đầu (2.5 - 3.5)', desc: 'Sâu sát kỹ thuật 3rd Shot Drop, Flick tốc độ cao tại bếp, dink kéo bền và chiến thuật bọc lót đồng đội.', price: '5,000,000 VND / Khóa' },
-    { title: 'Khóa Cao Thủ Phản Đòn (Trình 3.5 - 4.0+)', desc: 'Lối chơi nhanh, gõ bóng Roll xoáy, đập Smash uy lực, cách bẻ góc bóng, khắc phục dồn ép góc chết.', price: '7,000,000 VND / Khóa' }
+    { title: 'Khóa Học Nhập Môn Phong Thần (1.0 - 2.5)', desc: 'Huấn luyện di chuyển chân, cách cầm vợt Continental, luật chơi dink & giao bóng cơ bản trong 10 buổi.', price: '3,500,000 VND' },
+    { title: 'Khóa Chiến Đấu Đương Đầu (2.5 - 3.5)', desc: 'Sâu sát kỹ thuật 3rd Shot Drop, Flick tốc độ cao tại bếp, dink kéo bền và chiến thuật bọc lót đồng đội.', price: '5,000,000 VND' },
+    { title: 'Khóa Cao Thủ Phản Đòn (Trình 3.5 - 4.0+)', desc: 'Lối chơi nhanh, gõ bóng Roll xoáy, đập Smash uy lực, cách bẻ góc bóng, khắc phục dồn ép góc chết.', price: '7,000,000 VND' }
   ],
   coursesEN: [
     { title: 'Deity Initiation Class (Level 1.0 - 2.5)', desc: '10 lessons covering master footsteps, native Continental grip, kitchen boundaries and simple baseline drives.', price: '150 USD / Package' },

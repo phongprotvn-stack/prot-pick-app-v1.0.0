@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useMemo } from 'react';
 import { collection, doc, onSnapshot, setDoc, getDoc, getDocs, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-import { Student, CurriculumSkill, LessonPlan, Session, NotificationItem, CoachProfile } from '../types';
+import { Student, CurriculumSkill, LessonPlan, Session, NotificationItem, CoachProfile, HelpCategory } from '../types';
 import { initialStudents, initialSkills, initialLessonPlans, initialSessions, initialNotifications, defaultCoach } from '../data';
 import { translations, LanguageKey } from '../translations';
 
@@ -99,6 +99,7 @@ export interface AppContextType {
   handleSaveLegend: () => void;
   showToast: (msg: string) => void;
   translateViToEn: (text: string) => Promise<string | null>;
+  translateEnToVi: (text: string) => Promise<string | null>;
   futureIdeas: { id: string; titleVI: string; titleEN: string }[];
   votedIdeas: Record<string, boolean>;
   setVotedIdeas: (v: Record<string, boolean>) => void;
@@ -110,6 +111,8 @@ export interface AppContextType {
   syncSessions: (data: Session[]) => void;
   syncNotifications: (data: NotificationItem[]) => void;
   syncCoach: (data: CoachProfile) => void;
+  helpCategories: HelpCategory[];
+  syncHelpCategories: (data: HelpCategory[]) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -140,6 +143,24 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [coach, setCoach] = useState<CoachProfile>(defaultCoach);
   const [customLegendNotes, setCustomLegendNotes] = useState('');
+  const [helpCategories, setHelpCategories] = useState<HelpCategory[]>([]);
+  const DEFAULT_HELP_CATEGORIES: HelpCategory[] = [
+    { id: 'scoring', titleVI: '📊 Chú giải hệ thống chấm điểm', titleEN: '📊 Scoring System Guide',
+      contentVI: 'Nội dung sẽ được cập nhật sau. Hệ thống chấm điểm từ 1 đến 5 dựa trên sự ổn định và hiệu quả trong điều kiện thi đấu thực tế. Mỗi kỹ năng được đánh giá riêng biệt và điểm tổng thể là trung bình cộng của tất cả các kỹ năng.\n\n• Điểm 1: Chưa ổn định / Chưa hình thành\n• Điểm 2: Có nền tảng nhưng thiếu ổn định\n• Điểm 3: Đạt chuẩn cơ bản\n• Điểm 4: Tốt / Ổn định trong thực chiến\n• Điểm 5: Rất tốt / Vũ khí chiến đấu',
+      contentEN: 'Content will be updated later. The scoring system ranges from 1 to 5 based on consistency and effectiveness under real match conditions. Each skill is evaluated individually.\n\n• Score 1: Not stable / Not formed\n• Score 2: Has platform but inconsistent\n• Score 3: Basic standard reached\n• Score 4: Good / Steady under match pressure\n• Score 5: Excellent / Match weapon' },
+    { id: 'contact', titleVI: '📞 Liên hệ với HLV Phongprot', titleEN: '📞 Contact Coach Phongprot',
+      contentVI: 'Nội dung sẽ được cập nhật sau.\n\nHLV Phongprot luôn sẵn sàng hỗ trợ. Vui lòng liên hệ qua các kênh sau:\n• Hotline: 0912.345.678\n• Email: phongprot.pickleball@gmail.com\n• Facebook: fb.com/phongprot.pickleball\n\nHoặc truy cập tab "HLV PHONGPROT" để biết thêm thông tin chi tiết về các khóa học.',
+      contentEN: 'Content will be updated later.\n\nCoach Phongprot is always available. Please reach out via:\n• Hotline: 0912.345.678\n• Email: phongprot.pickleball@gmail.com\n• Facebook: fb.com/phongprot.pickleball\n\nOr visit the "COACH PHONGPROT" tab for more details.' },
+    { id: 'schedule', titleVI: '📅 Cách sắp xếp lịch học', titleEN: '📅 How to Schedule Lessons',
+      contentVI: 'Nội dung sẽ được cập nhật sau.\n\nHọc viên có thể đặt lịch học trực tiếp qua HLV hoặc thông qua hệ thống. Các buổi học thường kéo dài 60-90 phút tùy theo nội dung giáo án.\n\nQuy trình đặt lịch:\n1. Liên hệ HLV để chọn thời gian phù hợp\n2. HLV tạo buổi học mới trên hệ thống\n3. Xem lịch sắp tới ở tab "Lịch dạy"',
+      contentEN: 'Content will be updated later.\n\nStudents can schedule lessons directly with the coach or through the system. Lessons typically last 60-90 minutes.\n\nScheduling process:\n1. Contact the coach to pick a suitable time\n2. Coach creates a new session in the system\n3. View upcoming schedule in "Sessions" tab' },
+    { id: 'skills', titleVI: '🏓 Ý nghĩa các kỹ năng Pickleball', titleEN: '🏓 Pickleball Skills Explained',
+      contentVI: 'Nội dung sẽ được cập nhật sau.\n\nBộ 16 kỹ năng pickleball được chia làm 3 nhóm:\n\n• CƠ BẢN: Forehand, Backhand, Serve, Return\n• NÂNG CAO: Block, Dink, Volley, Drop, Reset, Flick, Roll, Lob, Smash\n• CHIẾN THUẬT: Footwork, Transition Zone, Strategy\n\nMỗi kỹ năng được chấm từ 1-5 dựa trên khả năng thực chiến.',
+      contentEN: 'Content will be updated later.\n\nThe 16 pickleball skills are divided into 3 groups:\n\n• BASICS: Forehand, Backhand, Serve, Return\n• ADVANCED: Block, Dink, Volley, Drop, Reset, Flick, Roll, Lob, Smash\n• TACTICS: Footwork, Transition Zone, Strategy\n\nEach skill is rated 1-5 based on match performance.' },
+    { id: 'account', titleVI: '🔐 Tài khoản và quyền riêng tư', titleEN: '🔐 Account & Privacy',
+      contentVI: 'Nội dung sẽ được cập nhật sau.\n\n• Học viên (chế độ xem): Chỉ thấy thông tin công khai\n• Huấn luyện viên (chế độ chỉnh sửa): Cần nhập mã PIN 4 số\n\nMặc định mã PIN là 1234. Có thể thay đổi trong tab "HLV PHONGPROT".',
+      contentEN: 'Content will be updated later.\n\n• Student (view mode): Can only see public information\n• Coach (edit mode): Requires 4-digit PIN verification\n\nDefault PIN is 1234. Can be changed in the "COACH PHONGPROT" tab.' },
+  ];
 
   // === UI STATE ===
   const [activeTab, setActiveTabState] = useState<string>('dashboard');
@@ -230,6 +251,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const savedTheme = localStorage.getItem('protpick_theme') as 'light' | 'dark';
     if (savedTheme) setThemeState(savedTheme);
 
+    // ONE-TIME CLEANUP: xoá mock data cache trong localStorage
+    // để chỉ lấy dữ liệu thật từ Firestore qua onSnapshot
+    if (!localStorage.getItem('protpick_cleaned')) {
+      localStorage.removeItem('protpick_students');
+      localStorage.removeItem('protpick_lessonplans');
+      localStorage.removeItem('protpick_sessions');
+      localStorage.removeItem('protpick_notifications');
+      localStorage.removeItem('protpick_coach');
+      localStorage.removeItem('protpick_legend_notes');
+      localStorage.removeItem('protpick_skills');
+      localStorage.setItem('protpick_cleaned', 'true');
+    }
+
     setStudents(getLocalOrSet<Student[]>('protpick_students', initialStudents));
     setSkillsList(initialSkills.sort((a, b) => {
       const order = [
@@ -253,39 +287,36 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
     const unsubscribes: (() => void)[] = [];
 
+    // Check if user already had data before this session (true = returning user)
+    const hadLocalStudents = localStorage.getItem('protpick_students') !== null;
+    const hadLocalSkills = localStorage.getItem('protpick_skills') !== null;
+    const hadLocalLessonPlans = localStorage.getItem('protpick_lessonplans') !== null;
+    const hadLocalSessions = localStorage.getItem('protpick_sessions') !== null;
+    const hadLocalNotis = localStorage.getItem('protpick_notifications') !== null;
+    const hadLocalCoach = localStorage.getItem('protpick_coach') !== null;
+
     const initFirebaseData = async () => {
       try {
-        const refStudents = collection(db, 'students');
-        const snapStudents = await getDocs(refStudents);
-        if (snapStudents.empty) { for (const s of initialStudents) await setDoc(doc(db, 'students', s.id), s); }
-
+        // Only seed essential settings into Firebase if user has NO local data
         const refSkills = collection(db, 'skills');
         const snapSkills = await getDocs(refSkills);
-        if (snapSkills.empty) { for (const s of initialSkills) await setDoc(doc(db, 'skills', s.id), s); }
-
-        const refLessonPlans = collection(db, 'lessonplans');
-        const snapLessonPlans = await getDocs(refLessonPlans);
-        if (snapLessonPlans.empty) { for (const lp of initialLessonPlans) await setDoc(doc(db, 'lessonplans', lp.id), lp); }
-
-        const refSessions = collection(db, 'sessions');
-        const snapSessions = await getDocs(refSessions);
-        if (snapSessions.empty) { for (const s of initialSessions) await setDoc(doc(db, 'sessions', s.id), s); }
-
-        const refNotis = collection(db, 'notifications');
-        const snapNotis = await getDocs(refNotis);
-        if (snapNotis.empty) { for (const n of initialNotifications) await setDoc(doc(db, 'notifications', n.id), n); }
+        if (snapSkills.empty && !hadLocalSkills) { for (const s of initialSkills) await setDoc(doc(db, 'skills', s.id), s); }
 
         const refCoachDoc = doc(db, 'settings', 'coach');
         const snapCoach = await getDoc(refCoachDoc);
-        if (!snapCoach.exists()) await setDoc(refCoachDoc, defaultCoach);
+        if (!snapCoach.exists() && !hadLocalCoach) await setDoc(refCoachDoc, defaultCoach);
 
         const refLegendDoc = doc(db, 'settings', 'legend');
         const snapLegend = await getDoc(refLegendDoc);
-        if (!snapLegend.exists()) await setDoc(refLegendDoc, { notes: '[Phongprot] Hướng dẫn bổ sung tài liệu cầm vợt xoay cổ tay, di chuyển phản công dink sâu, chiến thuật ép góc dink biên bếp trái tay...' });
+        if (!snapLegend.exists() && !hadLocalCoach) await setDoc(refLegendDoc, { notes: '[Phongprot] Hướng dẫn bổ sung tài liệu cầm vợt xoay cổ tay, di chuyển phản công dink sâu, chiến thuật ép góc dink biên bếp trái tay...' });
 
         const refPinDoc = doc(db, 'settings', 'security');
         const snapPin = await getDoc(refPinDoc);
         if (!snapPin.exists()) await setDoc(refPinDoc, { pin: '1234' });
+
+        const refHelpDoc = doc(db, 'settings', 'helpcategories');
+        const snapHelp = await getDoc(refHelpDoc);
+        if (!snapHelp.exists()) await setDoc(refHelpDoc, { items: DEFAULT_HELP_CATEGORIES });
       } catch (err) { console.error("Firebase seed error:", err); }
     };
 
@@ -303,12 +334,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             // Normalize old category values → new ones + sort by canonical order
             const canonicalOrder = ['Forehand', 'Backhand', 'Serve', 'Return', 'Block', 'Dink', 'Volley', 'Drop', 'Reset', 'Flick', 'Roll', 'Lob', 'Smash', 'Footwork', 'Transition Zone', 'Strategy'];
             const catMap: Record<string, string> = {
-              'Basics': 'BASICS', 'Dink & Soft': 'ADVANCEDS', 'Hard Drives': 'ADVANCEDS',
-              'Defense & Reset': 'ADVANCEDS', 'Tactics & Footwork': 'TACTICS'
+              'Basics': 'BASIC', 'Dink & Soft': 'ADVANCED', 'Hard Drives': 'ADVANCED',
+              'Defense & Reset': 'ADVANCED', 'Tactics & Footwork': 'TACTICS',
+              'BASICS': 'BASIC', 'ADVANCEDS': 'ADVANCED'
             };
             const normalizeCat = (name: string, oldCat: string): string => {
               const mapped = catMap[oldCat] || oldCat;
-              return (name === 'Lob' && oldCat !== 'ADVANCEDS') ? 'ADVANCEDS' : mapped;
+              return (name === 'Lob' && oldCat !== 'ADVANCED') ? 'ADVANCED' : mapped;
             };
             let changed = false;
             list = list.map(s => {
@@ -364,6 +396,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           if (snap.exists()) { const data = snap.data() as { pin: string }; setDbCoachPin(data.pin); localStorage.setItem('protpick_coach_pin', data.pin); }
         })
       );
+      unsubscribes.push(
+        onSnapshot(doc(db, 'settings', 'helpcategories'), (snap) => {
+          if (snap.exists()) { const data = snap.data() as { items: HelpCategory[] }; setHelpCategories(data.items); localStorage.setItem('protpick_help_categories', JSON.stringify(data.items)); }
+        })
+      );
     });
 
     return () => { unsubscribes.forEach(sub => sub()); };
@@ -416,6 +453,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     try { await setDoc(doc(db, 'settings', 'coach'), updatedCoach); } catch (err) { console.error("sync coach error:", err); }
   };
 
+  const syncHelpCategories = async (data: HelpCategory[]) => {
+    setHelpCategories(data); localStorage.setItem('protpick_help_categories', JSON.stringify(data));
+    try { await setDoc(doc(db, 'settings', 'helpcategories'), { items: data }); } catch (err) { console.error("sync helpcategories error:", err); }
+  };
+
   // === TOAST ===
   const showToast = (msg: string) => { setToastMessage(msg); setTimeout(() => setToastMessage(null), 3000); };
 
@@ -423,9 +465,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const translateViToEn = async (text: string): Promise<string | null> => {
     if (!text?.trim()) return null;
     try {
-      const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=vi|en`);
+      const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=vi&tl=en&dt=t&q=${encodeURIComponent(text)}`);
       const data = await res.json();
-      return data?.responseData?.translatedText || null;
+      return data?.[0]?.[0]?.[0] || null;
+    } catch (err) { console.error("Translate error:", err); return null; }
+  };
+
+  const translateEnToVi = async (text: string): Promise<string | null> => {
+    if (!text?.trim()) return null;
+    try {
+      const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${encodeURIComponent(text)}`);
+      const data = await res.json();
+      return data?.[0]?.[0]?.[0] || null;
     } catch (err) { console.error("Translate error:", err); return null; }
   };
 
@@ -694,9 +745,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     handleSaveStudent, handleDeleteStudent, handleSavePlan, handleSaveSkill,
     handleSaveSession, handleDeleteSession, handleSaveNoti, handleDeleteNoti,
     handleDirectSkillRate, handleUpdateCoachAvatar, handleUpdateStudentAvatar,
-    handleAddMedia, handleSaveLegend, showToast, translateViToEn,
+    handleAddMedia, handleSaveLegend, showToast, translateViToEn, translateEnToVi,
     futureIdeas, votedIdeas, setVotedIdeas, isFutureIdeasOpen, setIsFutureIdeasOpen,
     syncStudents, syncSkills, syncLessonPlans, syncSessions, syncNotifications, syncCoach,
+    helpCategories, syncHelpCategories,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

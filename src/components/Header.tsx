@@ -3,7 +3,7 @@ import {
   Activity, Users, BookOpen, Calendar, Award,
   Sun, Moon, Bell, X, PlusCircle, Search, Menu,
   ChevronDown, ChevronLeft, ChevronRight,
-  HelpCircle, Star, Share2, Copy, Check
+  HelpCircle, Star, Share2, Copy, Check, Edit2, Trash2
 } from 'lucide-react';
 import { LanguageKey, translations } from '../translations';
 import { NotificationItem } from '../types';
@@ -41,6 +41,8 @@ interface HeaderProps {
   dbCoachPin: string;
   setRole: (r: 'coach' | 'student') => void;
   showToast: (msg: string) => void;
+  helpCategories: import('../types').HelpCategory[];
+  syncHelpCategories: (data: import('../types').HelpCategory[]) => void;
 }
 
 export default function Header({
@@ -54,7 +56,8 @@ export default function Header({
   handleSaveNoti, handleDeleteNoti,
   translateViToEn, translationTimeoutRef,
   setActiveTab, activeTab, navStack, goBack, sortedNotifications,
-  dbCoachPin, setRole, showToast
+  dbCoachPin, setRole, showToast,
+  helpCategories, syncHelpCategories,
 }: HeaderProps) {
   const notiRef = useRef<HTMLDivElement>(null);
   const [isPinInputOpen, setIsPinInputOpen] = useState(false);
@@ -70,29 +73,23 @@ export default function Header({
   const [helpExpandedId, setHelpExpandedId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  // Help center categories
-  const helpCategories = [
-    { id: 'scoring',
-      titleVI: '📊 Chú giải hệ thống chấm điểm', titleEN: '📊 Scoring System Guide',
-      contentVI: 'Nội dung sẽ được cập nhật sau. Hệ thống chấm điểm từ 1 đến 5 dựa trên sự ổn định và hiệu quả trong điều kiện thi đấu thực tế. Mỗi kỹ năng được đánh giá riêng biệt và điểm tổng thể là trung bình cộng của tất cả các kỹ năng.\n\n• Điểm 1: Chưa ổn định / Chưa hình thành\n• Điểm 2: Có nền tảng nhưng thiếu ổn định\n• Điểm 3: Đạt chuẩn cơ bản\n• Điểm 4: Tốt / Ổn định trong thực chiến\n• Điểm 5: Rất tốt / Vũ khí chiến đấu',
-      contentEN: 'Content will be updated later. The scoring system ranges from 1 to 5 based on consistency and effectiveness under real match conditions. Each skill is evaluated individually.\n\n• Score 1: Not stable / Not formed\n• Score 2: Has platform but inconsistent\n• Score 3: Basic standard reached\n• Score 4: Good / Steady under match pressure\n• Score 5: Excellent / Match weapon' },
-    { id: 'contact',
-      titleVI: '📞 Liên hệ với HLV Phongprot', titleEN: '📞 Contact Coach Phongprot',
-      contentVI: 'Nội dung sẽ được cập nhật sau.\n\nHLV Phongprot luôn sẵn sàng hỗ trợ. Vui lòng liên hệ qua các kênh sau:\n• Hotline: 0912.345.678\n• Email: phongprot.pickleball@gmail.com\n• Facebook: fb.com/phongprot.pickleball\n\nHoặc truy cập tab "HLV PHONGPROT" để biết thêm thông tin chi tiết về các khóa học.',
-      contentEN: 'Content will be updated later.\n\nCoach Phongprot is always available. Please reach out via:\n• Hotline: 0912.345.678\n• Email: phongprot.pickleball@gmail.com\n• Facebook: fb.com/phongprot.pickleball\n\nOr visit the "COACH PHONGPROT" tab for more details.' },
-    { id: 'schedule',
-      titleVI: '📅 Cách sắp xếp lịch học', titleEN: '📅 How to Schedule Lessons',
-      contentVI: 'Nội dung sẽ được cập nhật sau.\n\nHọc viên có thể đặt lịch học trực tiếp qua HLV hoặc thông qua hệ thống. Các buổi học thường kéo dài 60-90 phút tùy theo nội dung giáo án.\n\nQuy trình đặt lịch:\n1. Liên hệ HLV để chọn thời gian phù hợp\n2. HLV tạo buổi học mới trên hệ thống\n3. Xem lịch sắp tới ở tab "Lịch dạy"',
-      contentEN: 'Content will be updated later.\n\nStudents can schedule lessons directly with the coach or through the system. Lessons typically last 60-90 minutes.\n\nScheduling process:\n1. Contact the coach to pick a suitable time\n2. Coach creates a new session in the system\n3. View upcoming schedule in "Sessions" tab' },
-    { id: 'skills',
-      titleVI: '🏓 Ý nghĩa các kỹ năng Pickleball', titleEN: '🏓 Pickleball Skills Explained',
-      contentVI: 'Nội dung sẽ được cập nhật sau.\n\nBộ 16 kỹ năng pickleball được chia làm 3 nhóm:\n\n• CƠ BẢN: Forehand, Backhand, Serve, Return\n• NÂNG CAO: Block, Dink, Volley, Drop, Reset, Flick, Roll, Lob, Smash\n• CHIẾN THUẬT: Footwork, Transition Zone, Strategy\n\nMỗi kỹ năng được chấm từ 1-5 dựa trên khả năng thực chiến.',
-      contentEN: 'Content will be updated later.\n\nThe 16 pickleball skills are divided into 3 groups:\n\n• BASICS: Forehand, Backhand, Serve, Return\n• ADVANCED: Block, Dink, Volley, Drop, Reset, Flick, Roll, Lob, Smash\n• TACTICS: Footwork, Transition Zone, Strategy\n\nEach skill is rated 1-5 based on match performance.' },
-    { id: 'account',
-      titleVI: '🔐 Tài khoản và quyền riêng tư', titleEN: '🔐 Account & Privacy',
-      contentVI: 'Nội dung sẽ được cập nhật sau.\n\n• Học viên (chế độ xem): Chỉ thấy thông tin công khai\n• Huấn luyện viên (chế độ chỉnh sửa): Cần nhập mã PIN 4 số\n\nMặc định mã PIN là 1234. Có thể thay đổi trong tab "HLV PHONGPROT".',
-      contentEN: 'Content will be updated later.\n\n• Student (view mode): Can only see public information\n• Coach (edit mode): Requires 4-digit PIN verification\n\nDefault PIN is 1234. Can be changed in the "COACH PHONGPROT" tab.' },
-  ];
+  // ── Edit states for help categories ──
+  const [editingCatId, setEditingCatId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState({ titleVI: '', titleEN: '', contentVI: '', contentEN: '' });
+  function handleAddCategory() {
+    const id = 'cat_' + Date.now();
+    syncHelpCategories([...helpCategories, { id, titleVI: '📝 Danh mục mới', titleEN: '📝 New Category', contentVI: 'Nội dung...', contentEN: 'Content...' }]);
+    setEditingCatId(id);
+    setEditForm({ titleVI: '📝 Danh mục mới', titleEN: '📝 New Category', contentVI: 'Nội dung...', contentEN: 'Content...' });
+  }
+  function handleEditCategory(cat: import('../types').HelpCategory) { setEditingCatId(cat.id); setEditForm({ titleVI: cat.titleVI, titleEN: cat.titleEN, contentVI: cat.contentVI, contentEN: cat.contentEN }); }
+  function handleSaveEdit(id: string) { syncHelpCategories(helpCategories.map(c => c.id === id ? { ...c, ...editForm } : c)); setEditingCatId(null); }
+  function handleDeleteCategory(id: string) {
+    if (!confirm(lang === 'vi' ? 'Xóa danh mục này?' : 'Delete this category?')) return;
+    syncHelpCategories(helpCategories.filter(c => c.id !== id));
+    if (editingCatId === id) setEditingCatId(null);
+    if (helpExpandedId === id) setHelpExpandedId(null);
+  }
 
   // Rating stats (placeholder data)
   const ratingStats = {
@@ -130,15 +127,15 @@ export default function Header({
             )}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 cursor-pointer"
+              className="p-2 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 cursor-pointer"
             >
               <Menu className="w-5 h-5 stroke-[2.5]" />
             </button>
             <div onClick={() => { setActiveTab('dashboard'); }} className="flex items-center gap-1.5 cursor-pointer">
               <img src="/pwa-192x192.png" alt="PP" className="w-9 h-9 rounded-xl object-cover shadow-md shadow-rose-500/20" />
               <div className="flex flex-col leading-none">
-                <h1 className="text-sm font-black text-zinc-900 dark:text-white tracking-tight leading-[16px]">{t.appTitle}</h1>
-                <span className="text-[9px] font-mono text-rose-500 font-bold uppercase tracking-wider leading-[10px]">Combat never ends</span>
+                <h1 className="text-sm font-black text-zinc-900 dark:text-white tracking-tight leading-[16px] text-center">{t.appTitle}</h1>
+                <span className="text-[9px] font-mono text-rose-500 font-bold uppercase tracking-wider leading-[10px] text-center">{t.slogan}</span>
               </div>
             </div>
           </div>
@@ -148,7 +145,7 @@ export default function Header({
             {/* Mobile Search Toggle */}
             <button
               onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
-              className="md:hidden p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+              className="p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
             >
               <Search className="w-4 h-4 text-zinc-400" />
             </button>
@@ -241,7 +238,7 @@ export default function Header({
 
       {/* MOBILE SEARCH OVERLAY ROW */}
       {isMobileSearchOpen && (
-        <div className="md:hidden px-4 py-2 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-850 animate-slideDown">
+        <div className="px-4 py-2 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-850 animate-slideDown">
           <div className="relative flex items-center bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-1.5">
             <Search className="w-3.5 h-3.5 text-rose-500 mr-2 shrink-0 animate-pulse" />
             <input
@@ -293,14 +290,14 @@ export default function Header({
 
       {/* MOBILE SETTINGS DRAWER (HAMBURGER MENU) */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden flex">
+        <div className="fixed inset-0 z-50 flex">
           <div
             className="fixed inset-0 bg-black/75 backdrop-blur-xs transition-opacity duration-300"
             onClick={() => setIsMobileMenuOpen(false)}
           />
           <div className="relative flex flex-col w-80 max-w-[85vw] bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-850 text-zinc-900 dark:text-white p-5 shadow-2xl h-full animate-slideRight" style={{ paddingTop: 'calc(1.25rem + var(--sat,0px))', paddingBottom: 'var(--sab,0px)' }}>
             {/* MENU HEADER with role badge */}
-            <div className="flex items-center justify-between pb-4 border-b border-zinc-200 dark:border-zinc-850">
+            <div className="flex items-center justify-between pb-4 border-b border-zinc-200 dark:border-zinc-850 shrink-0">
               <div className="flex items-center gap-2">
                 {showHelpCenter || showRating || showShare ? (
                   <button
@@ -366,29 +363,82 @@ export default function Header({
             </div>
 
             {/* MENU BODY */}
-            <div className="flex-1 overflow-y-auto py-5 space-y-6 no-scrollbar">
+            <div className="flex-1 overflow-y-auto py-5 space-y-6 no-scrollbar min-h-0">
               {/* ───────── HELP CENTER SUB-VIEW ───────── */}
               {showHelpCenter && (
                 <div className="space-y-3">
                   {helpCategories.map(cat => {
                     const isExpanded = helpExpandedId === cat.id;
+                    const isEditing = editingCatId === cat.id;
                     return (
                       <div key={cat.id} className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden transition-all">
-                        <button
-                          onClick={() => setHelpExpandedId(isExpanded ? null : cat.id)}
-                          className="w-full flex items-center justify-between px-4 py-3 text-left cursor-pointer"
-                        >
-                          <span className="text-sm font-bold text-zinc-800 dark:text-zinc-100">{lang === 'vi' ? cat.titleVI : cat.titleEN}</span>
-                          <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
-                        </button>
-                        {isExpanded && (
-                          <div className="px-4 pb-4 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed whitespace-pre-line border-t border-zinc-100 dark:border-zinc-800 pt-3">
-                            {lang === 'vi' ? cat.contentVI : cat.contentEN}
+                        {isEditing ? (
+                          /* ── INLINE EDIT FORM ── */
+                          <div className="p-4 space-y-3">
+                            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Title (VI)</label>
+                            <input value={editForm.titleVI} onChange={e => setEditForm(f => ({ ...f, titleVI: e.target.value }))}
+                              className="w-full text-sm p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
+                            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Title (EN)</label>
+                            <input value={editForm.titleEN} onChange={e => setEditForm(f => ({ ...f, titleEN: e.target.value }))}
+                              className="w-full text-sm p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
+                            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">{lang === 'vi' ? 'Nội dung (VI)' : 'Content (VI)'}</label>
+                            <textarea value={editForm.contentVI} onChange={e => setEditForm(f => ({ ...f, contentVI: e.target.value }))} rows={4}
+                              className="w-full text-xs p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
+                            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">{lang === 'vi' ? 'Nội dung (EN)' : 'Content (EN)'}</label>
+                            <textarea value={editForm.contentEN} onChange={e => setEditForm(f => ({ ...f, contentEN: e.target.value }))} rows={4}
+                              className="w-full text-xs p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
+                            <div className="flex gap-2">
+                              <button onClick={() => handleSaveEdit(cat.id)}
+                                className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 rounded-xl cursor-pointer">
+                                {lang === 'vi' ? 'Lưu' : 'Save'}
+                              </button>
+                              <button onClick={() => setEditingCatId(null)}
+                                className="flex-1 bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600 text-zinc-700 dark:text-zinc-200 text-xs font-bold py-2 rounded-xl cursor-pointer">
+                                {lang === 'vi' ? 'Hủy' : 'Cancel'}
+                              </button>
+                            </div>
                           </div>
+                        ) : (
+                          /* ── VIEW MODE ── */
+                          <>
+                            <button
+                              onClick={() => setHelpExpandedId(isExpanded ? null : cat.id)}
+                              className="w-full flex items-center justify-between px-4 py-3 text-left cursor-pointer"
+                            >
+                              <span className="text-sm font-bold text-zinc-800 dark:text-zinc-100">{lang === 'vi' ? cat.titleVI : cat.titleEN}</span>
+                              <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                            </button>
+                            {isExpanded && (
+                              <div className="px-4 pb-4 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed whitespace-pre-line border-t border-zinc-100 dark:border-zinc-800 pt-3">
+                                {lang === 'vi' ? cat.contentVI : cat.contentEN}
+                              </div>
+                            )}
+                            {/* Coach edit/delete buttons */}
+                            {role === 'coach' && (
+                              <div className="flex justify-end gap-1.5 px-4 pb-3">
+                                <button onClick={() => handleEditCategory(cat)}
+                                  className="text-[10px] font-bold text-rose-500 hover:text-rose-400 flex items-center gap-1 cursor-pointer">
+                                  <Edit2 className="w-3 h-3" /> {lang === 'vi' ? 'Sửa' : 'Edit'}
+                                </button>
+                                <button onClick={() => handleDeleteCategory(cat.id)}
+                                  className="text-[10px] font-bold text-rose-600 hover:text-rose-500 flex items-center gap-1 cursor-pointer">
+                                  <Trash2 className="w-3 h-3" /> {lang === 'vi' ? 'Xóa' : 'Delete'}
+                                </button>
+                              </div>
+                            )}
+                          </>
                         )}
                       </div>
                     );
                   })}
+                  {/* Coach add button */}
+                  {role === 'coach' && (
+                    <button onClick={handleAddCategory}
+                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-2xl text-xs font-bold text-zinc-500 dark:text-zinc-400 hover:text-rose-500 hover:border-rose-500 transition-all cursor-pointer">
+                      <PlusCircle className="w-4 h-4" />
+                      {lang === 'vi' ? 'Thêm danh mục' : 'Add Category'}
+                    </button>
+                  )}
                   <p className="text-[9px] text-zinc-400 dark:text-zinc-500 text-center pt-2 italic">
                     {lang === 'vi' ? 'Nội dung sẽ được cập nhật chi tiết trong các phiên bản sau' : 'Content will be updated in future versions'}
                   </p>
@@ -682,20 +732,19 @@ export default function Header({
                   </div>
                 </>
               )}
-            </div>
-
             {/* VERSION FOOTER */}
-            <div className="border-t border-zinc-200 dark:border-zinc-800 pt-3 pb-1 flex items-center justify-center gap-1.5">
-              <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500 font-medium tracking-wide">
-                ProtPick <span className="text-rose-400 font-black">v1.0.0</span>
+            <div className="sticky bottom-0 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 pt-3 pb-1 flex items-center justify-center gap-1.5 shrink-0 z-10">
+              <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 font-medium tracking-wide">
+                ProtPick <span className="text-rose-500 font-black">v1.0.0</span>
               </span>
               <span className="w-1 h-1 rounded-full bg-zinc-300 dark:bg-zinc-600" />
-              <span className="text-[9px] font-mono text-zinc-400 dark:text-zinc-500">
+              <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
                 {lang === 'vi' ? 'Pickleball Coaching' : 'Pickleball Coaching'}
               </span>
             </div>
-          </div>
+          </div>  {/* ← closes flex-1 overflow-y-auto */}
         </div>
+      </div>
       )}
     </header>
   );

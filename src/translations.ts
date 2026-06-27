@@ -30,11 +30,11 @@ export const translations = {
     activeRole: "Vai trò hiện tại",
 
     // Tabs
-    tabDashboard: "Bảng Điều Khiển",
-    tabStudents: "Học Viên (FM Card)",
-    tabCurriculum: "Giáo Án & Kỹ Năng",
-    tabSessions: "Lịch Dạy & Note Nhật Ký",
-    tabAbout: "HLV PHONGPROT ⭐ (Hồ sơ & Khóa học)",
+    tabDashboard: "Điều khiển",
+    tabStudents: "Học viên",
+    tabCurriculum: "Giáo án",
+    tabSessions: "Lịch dạy",
+    tabAbout: "HLV Prot",
 
     // Dashboard
     statsTotalStudents: "Tổng Số Học Viên",
@@ -77,8 +77,8 @@ export const translations = {
     addStudent: "Thêm Học Viên",
     editStudent: "Sửa Học Viên",
     deleteStudent: "Xóa Học Viên",
-    save: "Lưu thông tin",
-    cancel: "Hủy bỏ",
+    save: "Lưu",
+    cancel: "Hủy",
     deleteConfirm: "Bạn có chắc chắn muốn xóa không?",
     statusPublic: "Công Khai",
     statusPrivate: "Riêng Tư (Chỉ HLV thấy)",
@@ -163,11 +163,11 @@ export const translations = {
     activeRole: "Active Role",
 
     // Tabs
-    tabDashboard: "Progress Dashboard",
-    tabStudents: "Students (FM Card)",
-    tabCurriculum: "Curriculum & Skills",
-    tabSessions: "Session Logs & Notes",
-    tabAbout: "COACH PHONGPROT ⭐ (Profile & Courses)",
+    tabDashboard: "Dashboard",
+    tabStudents: "Students",
+    tabCurriculum: "Curriculum",
+    tabSessions: "Sessions",
+    tabAbout: "Coach Prot",
 
     // Dashboard
     statsTotalStudents: "Total Students",
@@ -243,7 +243,7 @@ export const translations = {
     sessionNotes: "Coach's Performance Review Text",
     studentScores: "Score Student's Skill Performance Today",
     completeSession: "Complete Session & Auto-update Ratings",
-    uncompletedSession: "Upcoming Session",
+    uncompletedSession: "Upcoming",
     addSession: "Add Training Session",
     sessionHistoryOverview: "Session Logs (ratings auto-sync to Student FM Profiles)",
     analyzeSkills: "Systems automatically aggregate progress trends and attributes based on training history.",

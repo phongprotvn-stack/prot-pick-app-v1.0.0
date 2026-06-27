@@ -59,7 +59,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                 required
                 value={newSkill.name}
                 onChange={(e) => setNewSkill({ ...newSkill, name: e.target.value })}
-                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-955 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500"
+                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500"
                 placeholder="e.g. Backhand Drive"
               />
             </div>
@@ -69,10 +69,10 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
               <select
                 value={newSkill.category}
                 onChange={(e) => setNewSkill({ ...newSkill, category: e.target.value as any })}
-                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-955 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl"
+                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl"
               >
-                <option value="BASICS">BASICS</option>
-                <option value="ADVANCEDS">ADVANCEDS</option>
+                <option value="BASIC">BASIC</option>
+                <option value="ADVANCED">ADVANCED</option>
                 <option value="TACTICS">TACTICS</option>
               </select>
             </div>
@@ -85,7 +85,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                 type="text"
                 value={newSkill.descriptionVI}
                 onChange={(e) => setNewSkill({ ...newSkill, descriptionVI: e.target.value })}
-                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-955 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500"
+                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500"
               />
             </div>
             <div className="space-y-1">
@@ -94,7 +94,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                 type="text"
                 value={newSkill.descriptionEN}
                 onChange={(e) => setNewSkill({ ...newSkill, descriptionEN: e.target.value })}
-                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-955 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500"
+                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500"
               />
             </div>
           </div>
@@ -110,7 +110,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* LEFT: 16 CORE SKILLS */}
-        <div className="lg:col-span-7 bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
+        <div className="lg:col-span-7 border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
           <h3 className="text-base font-black text-rose-500 uppercase tracking-widest flex items-center gap-2">
             <Layers className="w-5 h-5 animate-pulse" />
             {lang === 'vi' ? 'GIÁO ÁN 16 KỸ NĂNG HUẤN LUYỆN CHUẨN HOÁ' : '16 SKILL STANDARD CURRICULUM'}
@@ -132,14 +132,14 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
               return (idxA !== -1 ? idxA : 999) - (idxB !== -1 ? idxB : 999);
             }).map((skill, index) => {
               return (
-                <div key={skill.id} className="p-3 bg-zinc-100/40 dark:bg-zinc-955 border border-zinc-150 dark:border-zinc-900 rounded-2xl space-y-1">
+                <div key={skill.id} className="p-3 bg-zinc-100/40 dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-900 rounded-2xl space-y-1">
                   <div className="flex items-center justify-between font-mono">
                     <span className="text-[10px] font-bold text-zinc-400 uppercase">Skill #{index + 1}</span>
                     <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                      skill.category === 'BASICS' ? 'bg-rose-500/10 text-rose-450' :
-                      skill.category === 'ADVANCEDS' ? 'bg-amber-500/10 text-amber-500' :
+                      (skill.category === 'BASIC' || skill.category === 'BASICS') ? 'bg-rose-500/10 text-rose-500' :
+                      (skill.category === 'ADVANCED' || skill.category === 'ADVANCEDS') ? 'bg-amber-500/10 text-amber-500' :
                       skill.category === 'TACTICS' ? 'bg-emerald-500/10 text-emerald-500' :
-                      'bg-rose-500/10 text-rose-450'
+                      'bg-zinc-500/10 text-zinc-500'
                     }`}>{skill.category}</span>
                   </div>
                   <h4 className="text-xs font-black text-zinc-800 dark:text-white">{skill.name}</h4>
@@ -155,7 +155,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
         {/* RIGHT: DETAILED PLANS */}
         <div className="lg:col-span-5 space-y-6">
           
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
+          <div className="border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
             <div className="flex justify-between items-center border-b border-zinc-150 dark:border-zinc-850 pb-3">
               <h3 className="text-sm font-black text-rose-505 text-rose-600 uppercase tracking-widest flex items-center gap-1.5">
                 <BookOpen className="w-4 h-4 text-rose-600" />
@@ -174,7 +174,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
             </div>
 
             {editingPlan && (
-              <form onSubmit={handleSavePlan} className="bg-zinc-150/50 dark:bg-zinc-955 p-4 border border-zinc-200 dark:border-zinc-850 rounded-2xl space-y-3 text-xs">
+              <form onSubmit={handleSavePlan} className="bg-zinc-150/50 dark:bg-zinc-900 p-4 border border-zinc-200 dark:border-zinc-850 rounded-2xl space-y-3 text-xs">
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-1">
                     <label className="text-zinc-450">Tên giáo án (VI) *</label>
@@ -183,7 +183,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                       required
                       value={editingPlan.titleVI || ''}
                       onChange={(e) => setEditingPlan({ ...editingPlan, titleVI: e.target.value })}
-                      className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg"
+                      className="w-full p-2 bg-white dark:bg-zinc-800 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg"
                     />
                   </div>
                   <div className="space-y-1">
@@ -192,7 +192,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                       type="text"
                       value={editingPlan.titleEN || ''}
                       onChange={(e) => setEditingPlan({ ...editingPlan, titleEN: e.target.value })}
-                      className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg"
+                      className="w-full p-2 bg-white dark:bg-zinc-800 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg"
                     />
                   </div>
                 </div>
@@ -203,7 +203,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                     <textarea
                       value={editingPlan.descriptionVI || ''}
                       onChange={(e) => setEditingPlan({ ...editingPlan, descriptionVI: e.target.value })}
-                      className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg h-14"
+                      className="w-full p-2 bg-white dark:bg-zinc-800 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg h-14"
                     />
                   </div>
                   <div className="space-y-1">
@@ -211,7 +211,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                     <textarea
                       value={editingPlan.descriptionEN || ''}
                       onChange={(e) => setEditingPlan({ ...editingPlan, descriptionEN: e.target.value })}
-                      className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg h-14"
+                      className="w-full p-2 bg-white dark:bg-zinc-800 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg h-14"
                     />
                   </div>
                 </div>
@@ -223,7 +223,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                       type="number"
                       value={editingPlan.durationMin || 60}
                       onChange={(e) => setEditingPlan({ ...editingPlan, durationMin: Number(e.target.value) })}
-                      className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg"
+                      className="w-full p-2 bg-white dark:bg-zinc-800 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg"
                     />
                   </div>
 
@@ -232,7 +232,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                     <select
                       value={editingPlan.isPublic ? 'true' : 'false'}
                       onChange={(e) => setEditingPlan({ ...editingPlan, isPublic: e.target.value === 'true' })}
-                      className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg"
+                      className="w-full p-2 bg-white dark:bg-zinc-800 border border-zinc-250 dark:border-zinc-800 text-black dark:text-white rounded-lg"
                     >
                       <option value="true">Công khai cho học viên</option>
                       <option value="false">Riêng tư bí mật</option>
@@ -279,7 +279,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
             <div className="space-y-4">
               {filteredPlans.map(plan => {
                 return (
-                  <div key={plan.id} className="p-4 bg-zinc-100/30 dark:bg-zinc-955 border border-zinc-150 dark:border-zinc-900 rounded-2xl relative">
+                  <div key={plan.id} className="p-4 bg-zinc-100/30 dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-900 rounded-2xl relative">
                     <span className="absolute top-3 right-3 text-[9px] font-mono bg-zinc-250 dark:bg-zinc-800 text-rose-500 border border-zinc-150 dark:border-zinc-800 px-2 py-0.5 rounded-full font-bold">
                       ⏱ {plan.durationMin} MIN
                     </span>

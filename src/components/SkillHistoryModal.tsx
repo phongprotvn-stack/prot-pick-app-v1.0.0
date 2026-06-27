@@ -77,10 +77,10 @@ export default function SkillHistoryModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/85 backdrop-blur-xs transition-opacity duration-300">
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-205 dark:border-zinc-800 rounded-3xl p-6 md:p-8 max-w-xl w-full shadow-2xl relative overflow-hidden animate-scaleIn flex flex-col max-h-[90vh]">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 md:p-8 max-w-xl w-full shadow-2xl relative overflow-hidden animate-scaleIn flex flex-col max-h-[90vh]">
         <button
           onClick={() => setSelectedSkillForHistory(null)}
-          className="absolute top-4 right-4 text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-rose-500 p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-850 transition cursor-pointer"
+          className="absolute top-4 right-4 text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-rose-500 p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer"
           type="button"
         >
           <X className="w-5 h-5" />
@@ -97,7 +97,7 @@ export default function SkillHistoryModal({
               {selectedSkillForHistory.name}
               {trendIcon}
             </h3>
-            <p className="text-xs text-zinc-550 dark:text-zinc-400 leading-relaxed pt-1.5 border-t border-zinc-100 dark:border-zinc-805">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed pt-1.5 border-t border-zinc-100 dark:border-zinc-800">
               <span className="font-bold text-zinc-700 dark:text-zinc-300">
                 {lang === 'vi' ? 'Định nghĩa: ' : 'Definition: '}
               </span>
@@ -195,7 +195,7 @@ export default function SkillHistoryModal({
               {historyItems.map((item: any) => {
                 const score = item.skillScores[selectedSkillForHistory.name];
                 return (
-                  <div key={item.id} className="p-3 bg-zinc-50 dark:bg-zinc-950 border border-zinc-150 dark:border-zinc-850 rounded-xl flex items-start gap-3">
+                  <div key={item.id} className="p-3 bg-zinc-50 dark:bg-zinc-950 border border-zinc-150 dark:border-zinc-800 rounded-xl flex items-start gap-3">
                     <span className={`px-2 py-1 font-mono font-bold text-xs rounded-lg shrink-0 mt-0.5 ${
                       score >= 4 ? 'bg-emerald-500/10 text-emerald-500' :
                       score <= 2 ? 'bg-red-500/10 text-red-400' :
@@ -208,7 +208,7 @@ export default function SkillHistoryModal({
                         <span className="font-bold truncate text-zinc-700 dark:text-zinc-300">{item.studentName} — {item.title}</span>
                         <span className="font-mono">{formatDate(item.date)}</span>
                       </div>
-                      <p className="text-xs text-zinc-650 dark:text-zinc-400 leading-relaxed italic text-stone-500 mt-1">
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed italic text-stone-500 mt-1">
                         &ldquo;{lang === 'vi' ? item.coachFeedbackVI : item.coachFeedbackEN}&rdquo;
                       </p>
                     </div>
@@ -227,7 +227,7 @@ export default function SkillHistoryModal({
           <button
             type="button"
             onClick={() => setSelectedSkillForHistory(null)}
-            className="w-full py-2.5 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-705 text-zinc-750 dark:text-zinc-305 font-bold rounded-xl text-xs transition cursor-pointer text-center"
+            className="w-full py-2.5 bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold rounded-xl text-xs transition cursor-pointer text-center"
           >
             {lang === 'vi' ? 'Đóng lại' : 'Close'}
           </button>
