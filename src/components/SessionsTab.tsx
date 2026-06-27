@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { PlusCircle, Calendar, Trash2, Info } from 'lucide-react';
+import { PlusCircle, Calendar, Trash2, Info, Search } from 'lucide-react';
 import { Session, LessonPlan, Student } from '../types';
 import { LanguageKey } from '../translations';
 
@@ -369,14 +369,14 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
             </p>
           </div>
           <span className="text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-400 px-3 py-1.5 rounded-xl font-mono">
-            {filteredSessions.length} total logs
+            {filteredSessions.length} {lang === 'vi' ? 'buổi' : 'sessions'}
           </span>
         </div>
 
         {/* SPECIALIZED SEARCH & FILTER BAR */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-3 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-100 dark:border-zinc-900">
-          <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-zinc-400">🔍</span>
+        <div className="flex flex-col sm:flex-row gap-3 p-3 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-100 dark:border-zinc-900">
+          <div className="relative flex-1 min-w-0">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
             <input
               type="text"
               placeholder={lang === 'vi' ? "Tìm theo tên học viên hoặc giáo án..." : "Search by student name or lesson plan..."}
@@ -385,20 +385,20 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
               className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans"
             />
           </div>
-          <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-zinc-400">📅</span>
+          <div className="relative w-full sm:w-48 shrink-0">
+            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
             <input
               type="date"
               value={sessionDateFilter}
               onChange={(e) => setSessionDateFilter(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-mono"
+              className="w-full pl-9 pr-14 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-mono"
             />
             {sessionDateFilter && (
               <button 
                 onClick={() => setSessionDateFilter('')} 
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] text-zinc-400 hover:text-rose-500 font-bold bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded cursor-pointer"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-[9px] text-zinc-400 hover:text-rose-500 font-bold bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded-lg cursor-pointer"
               >
-                Clear
+                {lang === 'vi' ? 'Xoá' : 'Clear'}
               </button>
             )}
           </div>
