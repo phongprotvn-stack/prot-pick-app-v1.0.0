@@ -642,7 +642,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       id, studentId: newSession.studentId || '', date: newSession.date || new Date().toISOString().split('T')[0],
       lessonPlanId: newSession.lessonPlanId || '', title: newSession.title || 'Coaching Session',
       durationMin: Number(newSession.durationMin) || 120, notes: finalStatus === 'Completed' ? (newSession.notes || '') : '',
-      status: finalStatus, skillScores: finalStatus === 'Completed' ? (newSession.skillScores || {}) : {},
+      status: finalStatus, skillScores: finalStatus === 'Completed'
+        ? (() => {
+            const existing = newSession.skillScores || {};
+            if (Object.keys(existing).length > 0) return existing;
+            const plan = lessonPlans.find(lp => lp.id === newSession.lessonPlanId);
+            const skills = plan?.skillsFocused || ['Dink', 'Block', 'Reset'];
+            const defaults: Record<string, number> = {};
+            skills.forEach(sk => { defaults[sk] = 1; });
+            return defaults;
+          })()
+        : {},
       isPublic: newSession.isPublic !== undefined ? newSession.isPublic : true,
       coachFeedbackVI: finalStatus === 'Completed' ? (newSession.coachFeedbackVI || '') : '',
       coachFeedbackEN: finalStatus === 'Completed' ? (newSession.coachFeedbackEN || '') : '',
