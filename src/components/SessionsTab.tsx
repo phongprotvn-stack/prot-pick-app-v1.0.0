@@ -134,36 +134,15 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                   <div className="space-y-1">
                     <label className="font-bold text-zinc-400">{lang === 'vi' ? 'Thời gian buổi dạy *' : 'Session Date *'}</label>
                     <div className="relative">
-                      {/* Hidden date input for the native picker (off-screen, but NOT hidden/clipped) */}
+                      {/* Native date input — fully visible, clickable anywhere to open picker */}
                       <input
-                        id="session-date-input"
                         type="date"
                         required
-                        tabIndex={-1}
-                        className="fixed -left-[9999px] top-0 opacity-0 pointer-events-none"
+                        className="w-full p-3 pl-9 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-black dark:text-white cursor-pointer"
                         value={newSession?.date || ''}
                         onChange={(e) => setNewSession({ ...newSession, date: e.target.value })}
                       />
-                      {/* Visible dd/mm/yyyy display — styled like other select/input fields */}
-                      <div
-                        onClick={() => {
-                          const picker = document.getElementById('session-date-input') as HTMLInputElement;
-                          if (picker) {
-                            if (typeof picker.showPicker === 'function') {
-                              picker.showPicker();
-                            } else {
-                              picker.focus();
-                              picker.click();
-                            }
-                          }
-                        }}
-                        className="w-full p-3 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-black dark:text-white text-center cursor-pointer select-none hover:bg-zinc-150 dark:hover:bg-zinc-750 transition-colors"
-                      >
-                        <Calendar className="w-4 h-4 inline-block mr-1.5 -mt-0.5 text-zinc-400" />
-                        {newSession?.date
-                          ? (() => { const [y,m,d] = newSession.date.split('-'); return `${d}/${m}/${y}`; })()
-                          : (lang === 'vi' ? 'DD/MM/YYYY' : 'DD/MM/YYYY')}
-                      </div>
+                      <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
                     </div>
                   </div>
 
