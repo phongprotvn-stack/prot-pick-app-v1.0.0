@@ -285,10 +285,10 @@ export default function AboutTab({
                   <div className="absolute top-0 right-0 bg-gradient-to-br from-rose-500 to-pink-600 text-white text-[9px] font-black px-3 py-1 rounded-bl-xl rounded-tr-2xl z-10 shadow-lg tracking-wider">{lang==='vi'?'HOT PACK':'HOT PACK'}</div>
                   {role === 'coach' && isEditingCourses ? (
                     <div className="space-y-1.5">
-                      <input value={course.title||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],title:e.target.value};setTempCoursesVI(n);}} placeholder="Tiêu đề khóa học" className="w-full text-[10px] p-1 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded text-zinc-900 dark:text-zinc-100" />
-                      <textarea value={course.desc||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],desc:e.target.value};setTempCoursesVI(n);}} placeholder="Nội dung khóa học" rows={3} className="w-full text-[10px] p-1 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded text-zinc-900 dark:text-zinc-100 resize-none" />
+                      <input value={course.title||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],title:e.target.value};setTempCoursesVI(n);}} placeholder="Tiêu đề khóa học" className="w-full text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-rose-500/50" />
+                      <textarea value={course.desc||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],desc:e.target.value};setTempCoursesVI(n);}} placeholder="Nội dung khóa học" rows={3} className="w-full text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 resize-none focus:outline-none focus:ring-1 focus:ring-rose-500/50" />
                       <div className="flex items-center gap-1">
-                        <input value={course.price||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],price:e.target.value};setTempCoursesVI(n);}} placeholder="Giá (VND)" className="flex-1 text-[10px] p-1 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded text-zinc-900 dark:text-zinc-100" />
+                        <input value={course.price||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],price:e.target.value};setTempCoursesVI(n);}} placeholder="Giá (VND)" className="flex-1 text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-rose-500/50" />
                         <span className="text-[9px] text-zinc-400 font-mono">VND</span>
                       </div>
                       <div className="text-[8px] text-zinc-400 italic">
@@ -352,7 +352,7 @@ export default function AboutTab({
                 </div>
                 {tempSpecialsVI.map((s: string, i: number) => (
                   <div key={i} className="flex gap-1 items-start">
-                    <input value={tempSpecialsVI[i]} onChange={e => { const n = [...tempSpecialsVI]; n[i] = e.target.value; setTempSpecialsVI(n); }} placeholder="Đặc quyền (VI)" className="flex-1 text-[10px] p-1 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded text-zinc-900 dark:text-zinc-100" />
+                    <input value={tempSpecialsVI[i]} onChange={e => { const n = [...tempSpecialsVI]; n[i] = e.target.value; setTempSpecialsVI(n); }} placeholder="Đặc quyền (VI)" className="flex-1 text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-rose-500/50" />
                     <button onClick={() => { setTempSpecialsVI(tempSpecialsVI.filter((_: any, idx: number) => idx !== i)); }} className="text-[9px] text-rose-400 hover:text-rose-500 cursor-pointer"><X className="w-3 h-3" /></button>
                   </div>
                 ))}
