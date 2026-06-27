@@ -689,7 +689,7 @@ export default function Header({
                 <>
                   {/* QUICK NAV */}
                   <div className="space-y-2">
-                    <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block font-bold">
+                    <span className="text-xs font-black text-zinc-600 dark:text-zinc-400 uppercase tracking-wider block">
                       {lang === 'vi' ? 'Điều hướng' : 'Navigation'}
                     </span>
                     <div className="space-y-1">
@@ -777,7 +777,7 @@ export default function Header({
 
                   {/* KHÁC - OTHER SECTION */}
                   <div className="space-y-2 border-t border-zinc-200 dark:border-zinc-800 pt-4">
-                    <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 uppercase tracking-widest block font-bold">
+                    <span className="text-xs font-black text-zinc-600 dark:text-zinc-400 uppercase tracking-wider block">
                       {lang === 'vi' ? 'KHÁC' : 'OTHER'}
                     </span>
                     <div className="space-y-1">
