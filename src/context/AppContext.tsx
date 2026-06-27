@@ -678,7 +678,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   };
 
   const handleDeleteSession = (id: string) => {
-    if (confirm(t.deleteConfirm)) { syncSessions(sessions.filter(s => s.id !== id)); showToast("Session removed"); }
+    syncSessions(sessions.filter(s => s.id !== id)); showToast("Session removed");
   };
 
   const handleSaveNoti = (e: React.FormEvent) => {
