@@ -377,16 +377,17 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
               className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans"
             />
           </div>
-          <div className="relative flex-1 min-w-0 h-[34px]">
+          <div className="relative flex-1 min-w-0">
+            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
             <input
               type="date"
               value={sessionDateFilter}
               onChange={(e) => setSessionDateFilter(e.target.value)}
-              className="w-full h-full px-3 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-zinc-800 dark:text-zinc-200 cursor-pointer"
+              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 cursor-pointer"
             />
             {sessionDateFilter && (
-              <button 
-                onClick={() => setSessionDateFilter('')} 
+              <button
+                onClick={() => setSessionDateFilter('')}
                 className="absolute right-1.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-rose-500 bg-zinc-100 dark:bg-zinc-800 w-5 h-5 flex items-center justify-center rounded-full cursor-pointer text-xs leading-none z-10"
                 aria-label={lang === 'vi' ? 'Xoá ngày' : 'Clear date'}
               >
