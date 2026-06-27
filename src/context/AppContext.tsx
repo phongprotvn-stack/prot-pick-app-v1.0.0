@@ -641,7 +641,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const buildSessionObj = (id: string): Session => ({
       id, studentId: newSession.studentId || '', date: newSession.date || new Date().toISOString().split('T')[0],
       lessonPlanId: newSession.lessonPlanId || '', title: newSession.title || 'Coaching Session',
-      durationMin: Number(newSession.durationMin) || 60, notes: finalStatus === 'Completed' ? (newSession.notes || '') : '',
+      durationMin: Number(newSession.durationMin) || 120, notes: finalStatus === 'Completed' ? (newSession.notes || '') : '',
       status: finalStatus, skillScores: finalStatus === 'Completed' ? (newSession.skillScores || {}) : {},
       isPublic: newSession.isPublic !== undefined ? newSession.isPublic : true,
       coachFeedbackVI: finalStatus === 'Completed' ? (newSession.coachFeedbackVI || '') : '',

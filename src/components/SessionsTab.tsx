@@ -133,13 +133,38 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
 
                   <div className="space-y-1">
                     <label className="font-bold text-zinc-400">{lang === 'vi' ? 'Thời gian buổi dạy *' : 'Session Date *'}</label>
-                    <input
-                      type="date"
-                      required
-                      className="w-full p-3 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-black dark:text-white"
-                      value={newSession?.date || ''}
-                      onChange={(e) => setNewSession({ ...newSession, date: e.target.value })}
-                    />
+                    <div className="relative">
+                      {/* Hidden date input for the native picker (off-screen, but NOT hidden/clipped) */}
+                      <input
+                        id="session-date-input"
+                        type="date"
+                        required
+                        tabIndex={-1}
+                        className="fixed -left-[9999px] top-0 opacity-0 pointer-events-none"
+                        value={newSession?.date || ''}
+                        onChange={(e) => setNewSession({ ...newSession, date: e.target.value })}
+                      />
+                      {/* Visible dd/mm/yyyy display — styled like other select/input fields */}
+                      <div
+                        onClick={() => {
+                          const picker = document.getElementById('session-date-input') as HTMLInputElement;
+                          if (picker) {
+                            if (typeof picker.showPicker === 'function') {
+                              picker.showPicker();
+                            } else {
+                              picker.focus();
+                              picker.click();
+                            }
+                          }
+                        }}
+                        className="w-full p-3 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-black dark:text-white text-center cursor-pointer select-none hover:bg-zinc-150 dark:hover:bg-zinc-750 transition-colors"
+                      >
+                        <Calendar className="w-4 h-4 inline-block mr-1.5 -mt-0.5 text-zinc-400" />
+                        {newSession?.date
+                          ? (() => { const [y,m,d] = newSession.date.split('-'); return `${d}/${m}/${y}`; })()
+                          : (lang === 'vi' ? 'DD/MM/YYYY' : 'DD/MM/YYYY')}
+                      </div>
+                    </div>
                   </div>
 
                   <div className="space-y-1">
@@ -157,11 +182,17 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                     <label className="font-bold text-zinc-400">{lang === 'vi' ? 'Thời lượng & Trạng thái' : 'Duration & Status'}</label>
                     <div className="grid grid-cols-2 gap-2">
                       <input
-                        type="number"
-                        placeholder={lang === 'vi' ? 'Phút' : 'Mins'}
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="120"
                         className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl text-center"
-                        value={newSession?.durationMin || 60}
-                        onChange={(e) => setNewSession({ ...newSession, durationMin: Number(e.target.value) })}
+                        value={newSession?.durationMin ?? ''}
+                        onChange={(e) => {
+                          const raw = e.target.value;
+                          if (raw === '' || /^\d+$/.test(raw)) {
+                            setNewSession({ ...newSession, durationMin: raw === '' ? (undefined as any) : Number(raw) });
+                          }
+                        }}
                       />
                       <select
                         className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl text-xs"
