@@ -544,7 +544,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         (student?.name || '').toLowerCase().includes(searchQuery.toLowerCase()) || planTitle.toLowerCase().includes(searchQuery.toLowerCase());
       const isMatched = matchesNameOrTitle && matchesDate && matchesGlobal;
       return role === 'student' ? (s.isPublic && isMatched) : isMatched;
-    }), [sessions, resolvedStudents, lessonPlans, lang, sessionSearchQuery, sessionDateFilter, searchQuery, role]);
+    }).sort((a, b) => b.date.localeCompare(a.date)), [sessions, resolvedStudents, lessonPlans, lang, sessionSearchQuery, sessionDateFilter, searchQuery, role]);
 
   // === HANDLERS ===
   const handleRoleToggle = (newRole: 'coach' | 'student') => {

@@ -135,28 +135,22 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
 
                   <div className="space-y-1">
                     <label className="font-bold text-zinc-400">{lang === 'vi' ? 'Thời gian buổi dạy *' : 'Session Date *'}</label>
-                    <div
-                      className="relative cursor-pointer"
-                      onClick={() => {
-                        try { dateInputRef.current?.showPicker(); }
-                        catch { dateInputRef.current?.click(); }
-                      }}
-                    >
-                      {/* Visible dd/mm/yyyy display — same styling as other inputs */}
-                      <div className="w-full p-3 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-black dark:text-white text-center select-none">
-                        {newSession?.date
-                          ? (() => { const [y,m,d] = newSession.date.split('-'); return `${d}/${m}/${y}`; })()
-                          : (lang === 'vi' ? 'DD/MM/YYYY' : 'DD/MM/YYYY')}
-                      </div>
-                      {/* Hidden date input for the native picker */}
+                    <div className="relative">
+                      {/* Hidden date input on top — mở date picker khi tap */}
                       <input
                         ref={dateInputRef}
                         type="date"
                         required
-                        className="sr-only"
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                         value={newSession?.date || ''}
                         onChange={(e) => setNewSession({ ...newSession, date: e.target.value })}
                       />
+                      {/* Visible dd/mm/yyyy display */}
+                      <div className="w-full p-3 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-black dark:text-white text-center select-none pointer-events-none">
+                        {newSession?.date
+                          ? (() => { const [y,m,d] = newSession.date.split('-'); return `${d}/${m}/${y}`; })()
+                          : (lang === 'vi' ? 'DD/MM/YYYY' : 'DD/MM/YYYY')}
+                      </div>
                     </div>
                   </div>
 
