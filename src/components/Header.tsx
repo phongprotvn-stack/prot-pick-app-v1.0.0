@@ -18,6 +18,108 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { HelpCategory } from '../types';
 
+interface SortableHelpItemProps {
+  cat: HelpCategory;
+  lang: LanguageKey;
+  role: 'coach' | 'student';
+  editForm: { titleVI: string; titleEN: string; contentVI: string; contentEN: string };
+  setEditForm: React.Dispatch<React.SetStateAction<{ titleVI: string; titleEN: string; contentVI: string; contentEN: string }>>;
+  editingCatId: string | null;
+  helpExpandedId: string | null;
+  setHelpExpandedId: (v: string | null) => void;
+  setEditingCatId: (v: string | null) => void;
+  handleSaveEdit: (id: string) => void;
+  handleEditCategory: (cat: HelpCategory) => void;
+  handleDeleteCategory: (id: string) => void;
+}
+
+function SortableHelpItem({
+  cat, lang, role, editForm, setEditForm,
+  editingCatId, helpExpandedId, setHelpExpandedId, setEditingCatId,
+  handleSaveEdit, handleEditCategory, handleDeleteCategory,
+}: SortableHelpItemProps) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: cat.id });
+  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
+  const isExpanded = helpExpandedId === cat.id;
+  const isEditing = editingCatId === cat.id;
+
+  return (
+    <div ref={setNodeRef} style={style} className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden transition-all">
+      {isEditing ? (
+        /* ── INLINE EDIT FORM ── */
+        <div className="p-4 space-y-3">
+          {lang === 'vi' ? (
+            <>
+              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Tiêu đề</label>
+              <input value={editForm.titleVI} onChange={e => setEditForm(f => ({ ...f, titleVI: e.target.value }))}
+                className="w-full text-sm p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
+              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Nội dung</label>
+              <textarea value={editForm.contentVI} onChange={e => setEditForm(f => ({ ...f, contentVI: e.target.value }))} rows={4}
+                className="w-full text-xs p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
+            </>
+          ) : (
+            <>
+              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Title</label>
+              <input value={editForm.titleEN} onChange={e => setEditForm(f => ({ ...f, titleEN: e.target.value }))}
+                className="w-full text-sm p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
+              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Content</label>
+              <textarea value={editForm.contentEN} onChange={e => setEditForm(f => ({ ...f, contentEN: e.target.value }))} rows={4}
+                className="w-full text-xs p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
+            </>
+          )}
+          <div className="flex gap-2">
+            <button onClick={() => handleSaveEdit(cat.id)}
+              className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 rounded-xl cursor-pointer">
+              {lang === 'vi' ? 'Lưu' : 'Save'}
+            </button>
+            <button onClick={() => setEditingCatId(null)}
+              className="flex-1 bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600 text-zinc-700 dark:text-zinc-200 text-xs font-bold py-2 rounded-xl cursor-pointer">
+              {lang === 'vi' ? 'Hủy' : 'Cancel'}
+            </button>
+          </div>
+        </div>
+      ) : (
+        /* ── VIEW MODE ── */
+        <>
+          <div className="flex items-center">
+            {role === 'coach' && (
+              <button {...attributes} {...listeners}
+                className="p-3 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 cursor-grab active:cursor-grabbing touch-none">
+                <GripVertical className="w-4 h-4" />
+              </button>
+            )}
+            <button
+              onClick={() => setHelpExpandedId(isExpanded ? null : cat.id)}
+              className="flex-1 flex items-center justify-between py-3 pr-4 text-left cursor-pointer"
+            >
+              <span className="text-sm font-bold text-zinc-800 dark:text-zinc-100">{lang === 'vi' ? cat.titleVI : cat.titleEN}</span>
+              <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-140 ${isExpanded ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+          {isExpanded && (
+            <div className="px-4 pb-4 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed whitespace-pre-line border-t border-zinc-100 dark:border-zinc-800 pt-3">
+              {lang === 'vi' ? cat.contentVI : cat.contentEN}
+            </div>
+          )}
+          {/* Coach edit/delete buttons */}
+          {role === 'coach' && (
+            <div className="flex justify-end gap-1.5 px-4 pb-3">
+              <button onClick={() => handleEditCategory(cat)}
+                className="text-[10px] font-bold text-rose-500 hover:text-rose-400 flex items-center gap-1 cursor-pointer">
+                <Edit2 className="w-3 h-3" /> {lang === 'vi' ? 'Sửa' : 'Edit'}
+              </button>
+              <button onClick={() => handleDeleteCategory(cat.id)}
+                className="text-[10px] font-bold text-rose-600 hover:text-rose-500 flex items-center gap-1 cursor-pointer">
+                <Trash2 className="w-3 h-3" /> {lang === 'vi' ? 'Xóa' : 'Delete'}
+              </button>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
 interface HeaderProps {
   t: Record<string, string>;
   lang: LanguageKey;
@@ -110,89 +212,6 @@ export default function Header({
     const oldIdx = helpCategories.findIndex(c => c.id === active.id);
     const newIdx = helpCategories.findIndex(c => c.id === over.id);
     syncHelpCategories(arrayMove(helpCategories, oldIdx, newIdx));
-  }
-
-  function SortableHelpItem({ cat }: { cat: HelpCategory }) {
-    const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: cat.id });
-    const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
-    const isExpanded = helpExpandedId === cat.id;
-    const isEditing = editingCatId === cat.id;
-
-    return (
-      <div key={cat.id} ref={setNodeRef} style={style} className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden transition-all">
-        {isEditing ? (
-          /* ── INLINE EDIT FORM ── */
-          <div className="p-4 space-y-3">
-            {lang === 'vi' ? (
-              <>
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Tiêu đề</label>
-                <input value={editForm.titleVI} onChange={e => setEditForm(f => ({ ...f, titleVI: e.target.value }))}
-                  className="w-full text-sm p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Nội dung</label>
-                <textarea value={editForm.contentVI} onChange={e => setEditForm(f => ({ ...f, contentVI: e.target.value }))} rows={4}
-                  className="w-full text-xs p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
-              </>
-            ) : (
-              <>
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Title</label>
-                <input value={editForm.titleEN} onChange={e => setEditForm(f => ({ ...f, titleEN: e.target.value }))}
-                  className="w-full text-sm p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Content</label>
-                <textarea value={editForm.contentEN} onChange={e => setEditForm(f => ({ ...f, contentEN: e.target.value }))} rows={4}
-                  className="w-full text-xs p-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-black dark:text-white" />
-              </>
-            )}
-            <div className="flex gap-2">
-              <button onClick={() => handleSaveEdit(cat.id)}
-                className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 rounded-xl cursor-pointer">
-                {lang === 'vi' ? 'Lưu' : 'Save'}
-              </button>
-              <button onClick={() => setEditingCatId(null)}
-                className="flex-1 bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600 text-zinc-700 dark:text-zinc-200 text-xs font-bold py-2 rounded-xl cursor-pointer">
-                {lang === 'vi' ? 'Hủy' : 'Cancel'}
-              </button>
-            </div>
-          </div>
-        ) : (
-          /* ── VIEW MODE ── */
-          <>
-            <div className="flex items-center">
-              {role === 'coach' && (
-                <button {...attributes} {...listeners}
-                  className="p-3 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 cursor-grab active:cursor-grabbing touch-none">
-                  <GripVertical className="w-4 h-4" />
-                </button>
-              )}
-              <button
-                onClick={() => setHelpExpandedId(isExpanded ? null : cat.id)}
-                className="flex-1 flex items-center justify-between py-3 pr-4 text-left cursor-pointer"
-              >
-                <span className="text-sm font-bold text-zinc-800 dark:text-zinc-100">{lang === 'vi' ? cat.titleVI : cat.titleEN}</span>
-                <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-140 ${isExpanded ? 'rotate-180' : ''}`} />
-              </button>
-            </div>
-            {isExpanded && (
-              <div className="px-4 pb-4 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed whitespace-pre-line border-t border-zinc-100 dark:border-zinc-800 pt-3">
-                {lang === 'vi' ? cat.contentVI : cat.contentEN}
-              </div>
-            )}
-            {/* Coach edit/delete buttons */}
-            {role === 'coach' && (
-              <div className="flex justify-end gap-1.5 px-4 pb-3">
-                <button onClick={() => handleEditCategory(cat)}
-                  className="text-[10px] font-bold text-rose-500 hover:text-rose-400 flex items-center gap-1 cursor-pointer">
-                  <Edit2 className="w-3 h-3" /> {lang === 'vi' ? 'Sửa' : 'Edit'}
-                </button>
-                <button onClick={() => handleDeleteCategory(cat.id)}
-                  className="text-[10px] font-bold text-rose-600 hover:text-rose-500 flex items-center gap-1 cursor-pointer">
-                  <Trash2 className="w-3 h-3" /> {lang === 'vi' ? 'Xóa' : 'Delete'}
-                </button>
-              </div>
-            )}
-          </>
-        )}
-      </div>
-    );
   }
 
   // Rating stats (placeholder data)
@@ -479,11 +498,21 @@ export default function Header({
                   {role === 'coach' ? (
                     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                       <SortableContext items={helpCategories.map(c => c.id)} strategy={verticalListSortingStrategy}>
-                        {helpCategories.map(cat => <SortableHelpItem key={cat.id} cat={cat} />)}
+                        {helpCategories.map(cat => <SortableHelpItem key={cat.id} cat={cat}
+                          lang={lang} role={role} editForm={editForm} setEditForm={setEditForm}
+                          editingCatId={editingCatId} helpExpandedId={helpExpandedId}
+                          setHelpExpandedId={setHelpExpandedId} setEditingCatId={setEditingCatId}
+                          handleSaveEdit={handleSaveEdit} handleEditCategory={handleEditCategory}
+                          handleDeleteCategory={handleDeleteCategory} />)}
                       </SortableContext>
                     </DndContext>
                   ) : (
-                    helpCategories.map(cat => <SortableHelpItem key={cat.id} cat={cat} />)
+                    helpCategories.map(cat => <SortableHelpItem key={cat.id} cat={cat}
+                      lang={lang} role={role} editForm={editForm} setEditForm={setEditForm}
+                      editingCatId={editingCatId} helpExpandedId={helpExpandedId}
+                      setHelpExpandedId={setHelpExpandedId} setEditingCatId={setEditingCatId}
+                      handleSaveEdit={handleSaveEdit} handleEditCategory={handleEditCategory}
+                      handleDeleteCategory={handleDeleteCategory} />)
                   )}
                   {/* Coach add button */}
                   {role === 'coach' && (
