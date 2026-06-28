@@ -62,8 +62,8 @@ export default function DashboardTab({
     <div className="space-y-5 animate-fadeIn" id="tab-dashboard-panel">
       {/* 1️⃣ BUỔI DẠY SẮP TỚI */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs">
-        <h3 className="text-sm font-extrabold text-rose-600 dark:text-rose-400 flex items-center gap-2 mb-3">
-          <Calendar className="w-4 h-4 text-rose-500" />
+        <h3 className="text-sm font-extrabold text-red-600 dark:text-red-400 flex items-center gap-2 mb-3">
+          <Calendar className="w-4 h-4 text-red-500" />
           {lang === 'vi' ? 'Buổi học sắp tới' : 'Upcoming'}
         </h3>
         {upcomingSessions.length > 0 ? (
@@ -101,8 +101,8 @@ export default function DashboardTab({
 
       {/* 2️⃣ HỌC VIÊN XUẤT SẮC */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs">
-        <h3 className="text-sm font-extrabold text-rose-600 dark:text-rose-400 flex items-center gap-2 mb-3">
-          <Flame className="w-4 h-4 text-rose-500" />
+        <h3 className="text-sm font-extrabold text-red-600 dark:text-red-400 flex items-center gap-2 mb-3">
+          <Flame className="w-4 h-4 text-red-500" />
           {t.highPerformers}
         </h3>
         {topStudents.length > 0 ? (
@@ -113,14 +113,14 @@ export default function DashboardTab({
                 onClick={() => { setSelectedStudentId(stu.id); setActiveTab('students'); }}
                 className="flex items-center gap-3 p-2.5 bg-zinc-50 dark:bg-zinc-950 rounded-xl border border-zinc-100 dark:border-zinc-800/50 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-all"
               >
-                <span className="font-mono text-sm font-black text-rose-500 w-6 shrink-0">#0{i+1}</span>
-                <img src={stu.avatar} className="w-8 h-8 rounded-full object-cover border border-rose-300 shrink-0" referrerPolicy="no-referrer" />
+                <span className="font-mono text-sm font-black text-red-500 w-6 shrink-0">#0{i+1}</span>
+                <img src={stu.avatar} className="w-8 h-8 rounded-full object-cover border border-red-300 shrink-0" referrerPolicy="no-referrer" />
                 <div className="flex-1 min-w-0">
                   <h4 className="text-xs font-bold truncate text-zinc-800 dark:text-zinc-100">{stu.name}</h4>
                   <p className="text-[10px] text-zinc-400 font-mono">Level {stu.level}</p>
                 </div>
-                <div className="flex items-center gap-1 bg-rose-500/10 px-2 py-0.5 rounded-lg text-[10px] font-black text-rose-500 font-mono shrink-0">
-                  <Star className="w-2.5 h-2.5 fill-rose-500" />
+                <div className="flex items-center gap-1 bg-red-500/10 px-2 py-0.5 rounded-lg text-[10px] font-black text-red-500 font-mono shrink-0">
+                  <Star className="w-2.5 h-2.5 fill-red-500" />
                   <span>{getAverageRating(stu)}</span>
                 </div>
               </div>
@@ -135,30 +135,30 @@ export default function DashboardTab({
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs flex flex-col justify-between">
           <span className="text-[10px] text-zinc-500 font-bold tracking-wide uppercase">{t.statsTotalStudents}</span>
-          <span className="text-2xl font-black text-rose-500 mt-1">{totalStudents}</span>
+          <span className="text-2xl font-black text-red-500 mt-1">{totalStudents}</span>
           <span className="text-[9px] text-zinc-400 mt-1">{lang === 'vi' ? 'Đang hoạt động' : 'Active students'}</span>
         </div>
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs flex flex-col justify-between">
           <span className="text-[10px] text-zinc-500 font-bold tracking-wide uppercase">{t.statsTotalSessions}</span>
-          <span className="text-2xl font-black text-rose-500 mt-1">{totalSessionsDone}</span>
+          <span className="text-2xl font-black text-red-500 mt-1">{totalSessionsDone}</span>
           <span className="text-[9px] text-zinc-400 mt-1">{lang === 'vi' ? 'Đã hoàn thành' : 'Completed'}</span>
         </div>
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs flex flex-col justify-between">
           <span className="text-[10px] text-zinc-500 font-bold tracking-wide uppercase">{t.statsAvgRating}</span>
-          <span className="text-2xl font-black text-rose-500 mt-1">{avgRating} <span className="text-sm">/ 5.0</span></span>
+          <span className="text-2xl font-black text-red-500 mt-1">{avgRating} <span className="text-sm">/ 5.0</span></span>
           <span className="text-[9px] text-zinc-400 mt-1">{lang === 'vi' ? 'Toàn bộ kỹ năng' : 'All skills'}</span>
         </div>
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs flex flex-col justify-between">
           <span className="text-[10px] text-zinc-500 font-bold tracking-wide uppercase">{t.statsCompletionRate}</span>
-          <span className="text-2xl font-black text-rose-500 mt-1">{completionRate}</span>
+          <span className="text-2xl font-black text-red-500 mt-1">{completionRate}</span>
           <span className="text-[9px] text-zinc-400 mt-1">{lang === 'vi' ? 'Hoàn thành buổi dạy' : 'Session completion'}</span>
         </div>
       </div>
 
       {/* 4️⃣ KỸ NĂNG ĐẠT CHUẨN (ĐIỂM >= 3) */}
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs">
-        <h3 className="text-sm font-extrabold text-rose-600 dark:text-rose-400 flex items-center gap-2 mb-3">
-          <span className="w-2 h-2 rounded-full bg-rose-500"></span>
+        <h3 className="text-sm font-extrabold text-red-600 dark:text-red-400 flex items-center gap-2 mb-3">
+          <span className="w-2 h-2 rounded-full bg-red-500"></span>
           {lang === 'vi' ? 'Học viên đạt chuẩn (Điểm ≥ 3) theo kỹ năng' : 'Students Meeting Standard (Score >=3) by Skill'}
         </h3>
         <div className="space-y-2.5">
@@ -180,7 +180,7 @@ export default function DashboardTab({
                 </div>
                 <div className="w-full bg-zinc-100 dark:bg-zinc-800 h-2 rounded-full overflow-hidden">
                   <div
-                    className="bg-rose-500 h-full rounded-full transition-all duration-500"
+                    className="bg-red-500 h-full rounded-full transition-all duration-500"
                     style={{ width: `${percent}%` }}
                   />
                 </div>

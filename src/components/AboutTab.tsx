@@ -98,10 +98,10 @@ export default function AboutTab({
               <img
                 src={coach.avatar}
                 alt="phongprot avatar display"
-                className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-rose-500 shadow-xl"
+                className="w-32 h-32 rounded-full mx-auto object-cover border-4 border-red-500 shadow-xl"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute bottom-1 right-2 bg-rose-600 text-white p-2 rounded-full shadow animate-pulse">
+              <div className="absolute bottom-1 right-2 bg-red-600 text-white p-2 rounded-full shadow animate-pulse">
                 <Flame className="w-4 h-4" />
               </div>
             </div>
@@ -121,7 +121,7 @@ export default function AboutTab({
                     />
                     <div className="w-full border-t border-zinc-200 dark:border-zinc-800 my-1"></div>
                     <span className="text-[10px] font-bold text-zinc-400 block">Hoặc tải ảnh từ máy (PC/Mobile):</span>
-                    <label className="w-full flex flex-col items-center justify-center p-2 bg-white dark:bg-zinc-900 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-lg cursor-pointer hover:border-rose-500 transition-all text-center">
+                    <label className="w-full flex flex-col items-center justify-center p-2 bg-white dark:bg-zinc-900 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-lg cursor-pointer hover:border-red-500 transition-all text-center">
                       <Upload className="w-4 h-4 text-zinc-400 mb-1" />
                       <span className="text-[9px] text-zinc-400">Chọn tệp ảnh từ thiết bị</span>
                       <input
@@ -164,7 +164,7 @@ export default function AboutTab({
                   <button
                     type="button"
                     onClick={() => { setTempCoachAvatar(coach.avatar); setIsEditingCoachAvatar(true); }}
-                    className="text-[10px] text-rose-500 hover:text-rose-450 font-bold flex items-center justify-center gap-1 cursor-pointer mt-1"
+                    className="text-[10px] text-red-500 hover:text-red-400 font-bold flex items-center justify-center gap-1 cursor-pointer mt-1"
                   >
                     <Edit2 className="w-2.5 h-2.5" />
                     Thay đổi ảnh HLV
@@ -175,7 +175,7 @@ export default function AboutTab({
 
             <div>
               <h3 className="text-xl font-black text-zinc-800 dark:text-white uppercase tracking-tight">{lang === 'vi' ? 'HLV PROT' : 'COACH PROT'}</h3>
-              <span className="font-mono text-xs text-rose-500 font-extrabold uppercase tracking-wide">
+              <span className="font-mono text-xs text-red-500 font-extrabold uppercase tracking-wide">
                 ⚡ {lang === 'vi' ? 'CHIẾN ĐẤU KHÔNG NGỪNG NGHỈ' : 'COMBAT NEVER ENDS'}
               </span>
             </div>
@@ -195,7 +195,7 @@ export default function AboutTab({
                   {lang === 'vi' ? coach.aboutVI : coach.aboutEN}
                 </p>
                 {role === 'coach' && (
-                  <button onClick={() => { setTempAboutVI(coach.aboutVI); setTempAboutEN(coach.aboutEN); setIsEditingAbout(true); }} className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 font-bold px-1.5 py-0.5 rounded-lg flex items-center gap-1 cursor-pointer">
+                  <button onClick={() => { setTempAboutVI(coach.aboutVI); setTempAboutEN(coach.aboutEN); setIsEditingAbout(true); }} className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-[9px] bg-red-500/10 hover:bg-red-500/20 text-red-500 font-bold px-1.5 py-0.5 rounded-lg flex items-center gap-1 cursor-pointer">
                     <Edit2 className="w-2.5 h-2.5" />
                     {lang === 'vi' ? 'Sửa' : 'Edit'}
                   </button>
@@ -208,7 +208,7 @@ export default function AboutTab({
                 <Youtube className="w-4 h-4 text-red-500" />
                 <span>
                   <strong>Youtube:</strong>{' '}
-                  <a href="https://www.youtube.com/@phongprot" target="_blank" rel="noopener noreferrer" className="text-rose-500 hover:text-rose-400 font-bold transition-all hover:underline cursor-pointer">
+                  <a href="https://www.youtube.com/@phongprot" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-400 font-bold transition-all hover:underline cursor-pointer">
                     @phongprot
                   </a>
                 </span>
@@ -217,13 +217,13 @@ export default function AboutTab({
                 <Video className="w-4 h-4 text-zinc-400" />
                 <span>
                   <strong>Tiktok:</strong>{' '}
-                  <a href="https://www.tiktok.com/@phongprot" target="_blank" rel="noopener noreferrer" className="text-rose-500 hover:text-rose-400 font-bold transition-all hover:underline cursor-pointer">
+                  <a href="https://www.tiktok.com/@phongprot" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-400 font-bold transition-all hover:underline cursor-pointer">
                     @phongprot
                   </a>
                 </span>
               </div>
               <div className="flex items-center gap-2 flex-wrap">
-                <Award className="w-4 h-4 text-rose-500 shrink-0" />
+                <Award className="w-4 h-4 text-red-500 shrink-0" />
                 {role === 'coach' && isEditingCourts ? (
                                   <>
                                     <strong className="text-nowrap">{lang === 'vi' ? 'Sân tập:' : 'Training Court:'}</strong>
@@ -236,7 +236,7 @@ export default function AboutTab({
                                     <strong className="text-nowrap">{lang === 'vi' ? 'Sân tập:' : 'Training Court:'}</strong>
                                     <span className="flex-1">{lang === 'vi' ? coach.courts : enCourts}</span>
                     {role === 'coach' && (
-                      <button onClick={() => { setTempCourts(coach.courts || ''); setIsEditingCourts(true); }} className="text-[9px] text-rose-500 hover:text-rose-400 font-bold flex items-center gap-0.5 cursor-pointer transition-colors shrink-0">
+                      <button onClick={() => { setTempCourts(coach.courts || ''); setIsEditingCourts(true); }} className="text-[9px] text-red-500 hover:text-red-400 font-bold flex items-center gap-0.5 cursor-pointer transition-colors shrink-0">
                         <Edit2 className="w-2.5 h-2.5" />
                         {lang === 'vi' ? 'Sửa' : 'Edit'}
                       </button>
@@ -270,7 +270,7 @@ export default function AboutTab({
           {/* RIGHT: COURSE OPTIONS & PLAYABLE MEDIA */}
         <div className="lg:col-span-8 space-y-8">
           <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 rounded-3xl p-6 shadow-xs space-y-5">
-            <h3 className="text-base font-black text-rose-505 text-rose-605 text-rose-600 uppercase tracking-widest flex items-center gap-1.5">
+            <h3 className="text-base font-black text-red-600 text-red-600 text-red-600 uppercase tracking-widest flex items-center gap-1.5">
               <Award className="w-5 h-5 animate-pulse" />
               {lang === 'vi' ? 'CÁC KHÓA HỌC' : 'COURSES'}
             </h3>
@@ -282,19 +282,19 @@ export default function AboutTab({
                 : (lang === 'vi' ? coach.coursesVI : (enCourses.length ? enCourses : coach.coursesEN))
               )?.map((course: any, i: number) => (
                 <div key={i} className="p-4 bg-zinc-100/30 dark:bg-zinc-800 border border-zinc-150 dark:border-zinc-900 rounded-2xl space-y-3 relative flex flex-col justify-between pt-5">
-                  <div className="absolute top-0 right-0 bg-gradient-to-br from-rose-500 to-pink-600 text-white text-[9px] font-black px-3 py-1 rounded-bl-xl rounded-tr-2xl z-10 shadow-lg tracking-wider">{lang==='vi'?'HOT PACK':'HOT PACK'}</div>
+                  <div className="absolute top-0 right-0 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[9px] font-black px-3 py-1 rounded-bl-xl rounded-tr-2xl z-10 shadow-lg tracking-wider">{lang==='vi'?'HOT PACK':'HOT PACK'}</div>
                   {role === 'coach' && isEditingCourses ? (
                     <div className="space-y-1.5">
-                      <input value={course.title||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],title:e.target.value};setTempCoursesVI(n);}} placeholder="Tiêu đề khóa học" className="w-full text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-rose-500/50" />
-                      <textarea value={course.desc||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],desc:e.target.value};setTempCoursesVI(n);}} placeholder="Nội dung khóa học" rows={3} className="w-full text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 resize-none focus:outline-none focus:ring-1 focus:ring-rose-500/50" />
+                      <input value={course.title||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],title:e.target.value};setTempCoursesVI(n);}} placeholder="Tiêu đề khóa học" className="w-full text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-red-500/50" />
+                      <textarea value={course.desc||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],desc:e.target.value};setTempCoursesVI(n);}} placeholder="Nội dung khóa học" rows={3} className="w-full text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 resize-none focus:outline-none focus:ring-1 focus:ring-red-500/50" />
                       <div className="flex items-center gap-1">
-                        <input value={course.price||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],price:e.target.value};setTempCoursesVI(n);}} placeholder="Giá (VND)" className="flex-1 text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-rose-500/50" />
+                        <input value={course.price||''} onChange={e=>{const n=[...tempCoursesVI];n[i]={...n[i],price:e.target.value};setTempCoursesVI(n);}} placeholder="Giá (VND)" className="flex-1 text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-red-500/50" />
                         <span className="text-[9px] text-zinc-400 font-mono">VND</span>
                       </div>
                       <div className="text-[8px] text-zinc-400 italic">
                         {lang==='en' ? `→ ${Math.round(parseInt(course.price?.replace(/[^0-9]/g,'')||'0')/exRate)} USD` : `→ EN: auto-translate`}
                       </div>
-                      <button onClick={()=>{const n=tempCoursesVI.filter((_:any,idx:number)=>idx!==i);setTempCoursesVI(n);}} className="text-[9px] text-rose-500 hover:text-rose-400 font-bold cursor-pointer">🗑️ {lang==='vi'?'Xóa':'Delete'}</button>
+                      <button onClick={()=>{const n=tempCoursesVI.filter((_:any,idx:number)=>idx!==i);setTempCoursesVI(n);}} className="text-[9px] text-red-500 hover:text-red-400 font-bold cursor-pointer">🗑️ {lang==='vi'?'Xóa':'Delete'}</button>
                     </div>
                   ) : (
                     <>
@@ -302,13 +302,13 @@ export default function AboutTab({
                         <h4 className="text-xs font-black text-zinc-800 dark:text-white uppercase tracking-tight line-clamp-2">{course.title}</h4>
                         <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">{course.desc}</p>
                       </div>
-                      <div className="border-t border-zinc-100 dark:border-zinc-900 pt-2 text-[11px] font-mono font-black text-rose-500 text-right mt-1.5">{course.price}</div>
+                      <div className="border-t border-zinc-100 dark:border-zinc-900 pt-2 text-[11px] font-mono font-black text-red-500 text-right mt-1.5">{course.price}</div>
                     </>
                   )}
                 </div>
               ))}
               {role === 'coach' && isEditingCourses && (
-                <button onClick={() => { setTempCoursesVI([...tempCoursesVI, { title: '📝 Khóa mới', desc: 'Mô tả...', price: 'Liên hệ' }]); }} className="p-4 border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-2xl flex items-center justify-center text-xs text-zinc-400 hover:text-rose-500 hover:border-rose-500 transition-all cursor-pointer">
+                <button onClick={() => { setTempCoursesVI([...tempCoursesVI, { title: '📝 Khóa mới', desc: 'Mô tả...', price: 'Liên hệ' }]); }} className="p-4 border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-2xl flex items-center justify-center text-xs text-zinc-400 hover:text-red-500 hover:border-red-500 transition-all cursor-pointer">
                   <Plus className="w-4 h-4 mr-1" /> {lang === 'vi' ? 'Thêm khóa học' : 'Add Course'}
                 </button>
               )}
@@ -336,7 +336,7 @@ export default function AboutTab({
                     <button onClick={() => { setTempCoursesVI(coach.coursesVI ? [...coach.coursesVI] : []); setEnCourses(coach.coursesEN ? [...coach.coursesEN] : []); setIsEditingCourses(false); }} className="bg-zinc-600 hover:bg-zinc-500 text-white text-[10px] px-3 py-1 rounded-lg font-bold cursor-pointer">{lang === 'vi' ? 'Hủy' : 'Cancel'}</button>
                   </>
                 ) : (
-                  <button onClick={() => { setTempCoursesVI(coach.coursesVI ? [...coach.coursesVI] : []); setIsEditingCourses(true); }} className="text-[10px] text-rose-500 hover:text-rose-400 font-bold flex items-center gap-1 cursor-pointer">
+                  <button onClick={() => { setTempCoursesVI(coach.coursesVI ? [...coach.coursesVI] : []); setIsEditingCourses(true); }} className="text-[10px] text-red-500 hover:text-red-400 font-bold flex items-center gap-1 cursor-pointer">
                     <Edit2 className="w-3 h-3" /> {lang === 'vi' ? 'Chỉnh sửa khóa học' : 'Edit Courses'}
                   </button>
                 )}
@@ -345,18 +345,18 @@ export default function AboutTab({
 
             {/* Course Specials (editable by coach) */}
             {role === 'coach' && isEditingSpecials ? (
-              <div className="bg-rose-500/5 border border-rose-500/10 rounded-2xl p-4 space-y-2">
+              <div className="bg-red-500/5 border border-red-500/10 rounded-2xl p-4 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-rose-500 uppercase block">{t.courseSpecial}</span>
+                  <span className="text-xs font-bold text-red-500 uppercase block">{t.courseSpecial}</span>
                   <button onClick={() => { setIsEditingSpecials(false); }} className="text-[9px] text-zinc-400 hover:text-zinc-300 cursor-pointer"><X className="w-3 h-3" /></button>
                 </div>
                 {tempSpecialsVI.map((s: string, i: number) => (
                   <div key={i} className="flex gap-1 items-start">
-                    <input value={tempSpecialsVI[i]} onChange={e => { const n = [...tempSpecialsVI]; n[i] = e.target.value; setTempSpecialsVI(n); }} placeholder="Đặc quyền (VI)" className="flex-1 text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-rose-500/50" />
-                    <button onClick={() => { setTempSpecialsVI(tempSpecialsVI.filter((_: any, idx: number) => idx !== i)); }} className="text-[9px] text-rose-400 hover:text-rose-500 cursor-pointer"><X className="w-3 h-3" /></button>
+                    <input value={tempSpecialsVI[i]} onChange={e => { const n = [...tempSpecialsVI]; n[i] = e.target.value; setTempSpecialsVI(n); }} placeholder="Đặc quyền (VI)" className="flex-1 text-[10px] p-1.5 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-600 rounded-lg text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-red-500/50" />
+                    <button onClick={() => { setTempSpecialsVI(tempSpecialsVI.filter((_: any, idx: number) => idx !== i)); }} className="text-[9px] text-red-400 hover:text-red-500 cursor-pointer"><X className="w-3 h-3" /></button>
                   </div>
                 ))}
-                <button onClick={() => { setTempSpecialsVI([...tempSpecialsVI, '']); }} className="text-[10px] text-rose-500 hover:text-rose-400 flex items-center gap-1 cursor-pointer"><Plus className="w-3 h-3" /> {lang === 'vi' ? 'Thêm' : 'Add'}</button>
+                <button onClick={() => { setTempSpecialsVI([...tempSpecialsVI, '']); }} className="text-[10px] text-red-500 hover:text-red-400 flex items-center gap-1 cursor-pointer"><Plus className="w-3 h-3" /> {lang === 'vi' ? 'Thêm' : 'Add'}</button>
                 <div className="flex gap-2 pt-1">
                   <button onClick={async () => {
                     const translatedEN = await Promise.all(tempSpecialsVI.map(s => s ? translateViToEn(s) : Promise.resolve('')));
@@ -368,11 +368,11 @@ export default function AboutTab({
                 </div>
               </div>
             ) : (
-              <div className="bg-rose-500/5 border border-rose-500/10 rounded-2xl p-4 space-y-2">
+              <div className="bg-red-500/5 border border-red-500/10 rounded-2xl p-4 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-rose-500 uppercase block">{t.courseSpecial}</span>
+                  <span className="text-xs font-bold text-red-500 uppercase block">{t.courseSpecial}</span>
                   {role === 'coach' && (
-                    <button onClick={() => { setTempSpecialsVI(coach.courseSpecialsVI ? [...coach.courseSpecialsVI] : []); setIsEditingSpecials(true); }} className="text-[9px] text-rose-500 hover:text-rose-400 font-bold flex items-center gap-1 cursor-pointer">
+                    <button onClick={() => { setTempSpecialsVI(coach.courseSpecialsVI ? [...coach.courseSpecialsVI] : []); setIsEditingSpecials(true); }} className="text-[9px] text-red-500 hover:text-red-400 font-bold flex items-center gap-1 cursor-pointer">
                       <Edit2 className="w-2.5 h-2.5" /> {lang === 'vi' ? 'Sửa' : 'Edit'}
                     </button>
                   )}
@@ -396,8 +396,8 @@ export default function AboutTab({
 
           {/* YOUTUBE EMBED PLAYER */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 rounded-3xl p-6 shadow-xs space-y-4">
-            <h3 className="text-base font-black text-rose-505 text-rose-600 uppercase tracking-widest flex items-center gap-1.5">
-              <Video className="w-5 h-5 text-rose-600" />
+            <h3 className="text-base font-black text-red-600 text-red-600 uppercase tracking-widest flex items-center gap-1.5">
+              <Video className="w-5 h-5 text-red-600" />
               {lang === 'vi' ? 'TẬN HƯỞNG KHOẢNH KHẮC' : 'ENJOY THE MOMENT'}
             </h3>
 
@@ -413,7 +413,7 @@ export default function AboutTab({
                           syncCoach({ ...coach, youtubeYoutIds: updatedIds });
                           showToast('Video removed');
                         }}
-                        className="text-rose-450 hover:text-rose-600 font-bold transition-all text-[9px] cursor-pointer"
+                        className="text-red-400 hover:text-red-600 font-bold transition-all text-[9px] cursor-pointer"
                       >
                         Xóa
                       </button>
@@ -434,7 +434,7 @@ export default function AboutTab({
 
             {/* Photos grid */}
             <div className="space-y-2 pt-2 border-t border-zinc-150 dark:border-zinc-800">
-              <span className="text-[10px] uppercase font-mono text-rose-500 font-bold block">{lang === 'vi' ? '📸 ẢNH GIAO LƯU' : '📸 EXCHANGE PHOTOS'}</span>
+              <span className="text-[10px] uppercase font-mono text-red-500 font-bold block">{lang === 'vi' ? '📸 ẢNH GIAO LƯU' : '📸 EXCHANGE PHOTOS'}</span>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {coach.photos.map((ph: string, idx: number) => (
                   <div key={idx} className="relative h-28 rounded-2xl overflow-hidden border border-zinc-150 dark:border-zinc-900 bg-zinc-100 dark:bg-zinc-800 group">
@@ -446,7 +446,7 @@ export default function AboutTab({
                           syncCoach({ ...coach, photos: newPhotos });
                           showToast('Photo deleted');
                         }}
-                        className="absolute top-1.5 right-1.5 bg-black/60 hover:bg-rose-600 text-white p-1 rounded-md text-[9px] transition-all cursor-pointer"
+                        className="absolute top-1.5 right-1.5 bg-black/60 hover:bg-red-600 text-white p-1 rounded-md text-[9px] transition-all cursor-pointer"
                       >
                         Del
                       </button>
@@ -459,7 +459,7 @@ export default function AboutTab({
             {/* Inline adding form */}
             {role === 'coach' && (
               <div className="bg-zinc-50 dark:bg-zinc-800 p-4 rounded-2xl border border-zinc-150 dark:border-zinc-800 space-y-3 mt-4 text-xs">
-                <div className="flex items-center gap-2 text-rose-600 dark:text-rose-500 font-bold">
+                <div className="flex items-center gap-2 text-red-600 dark:text-red-500 font-bold">
                   <PlusCircle className="w-4 h-4" />
                   <span>{lang === 'vi' ? 'Đăng Video hoặc Ảnh' : 'Post Video or Photo'}</span>
                 </div>
@@ -498,7 +498,7 @@ export default function AboutTab({
                             reader.readAsDataURL(file);
                           }
                         }}
-                        className="w-full text-xs text-zinc-400 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[10px] file:font-semibold file:bg-rose-500/10 file:text-rose-500 hover:file:bg-rose-500/20 bg-white dark:bg-zinc-900 p-1 border border-zinc-200 dark:border-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full text-xs text-zinc-400 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[10px] file:font-semibold file:bg-red-500/10 file:text-red-500 hover:file:bg-red-500/20 bg-white dark:bg-zinc-900 p-1 border border-zinc-200 dark:border-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
                   ) : (
@@ -518,7 +518,7 @@ export default function AboutTab({
                     </div>
                   )}
                 </div>
-                <button onClick={handleAddMedia} className="py-1.5 px-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-lg transition-all cursor-pointer inline-flex items-center gap-1.5 shadow">
+                <button onClick={handleAddMedia} className="py-1.5 px-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-all cursor-pointer inline-flex items-center gap-1.5 shadow">
                   <Plus className="w-3.5 h-3.5" />
                   {lang === 'vi' ? 'Đăng lên Thư Viện Media' : 'Post to Media Library'}
                 </button>

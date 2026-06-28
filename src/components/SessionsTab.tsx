@@ -78,8 +78,8 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
       {/* NEW SESSIONS LOG FORM */}
       {role === 'coach' && (
         <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
-          <h3 id="session-form-heading" className="text-base font-black text-rose-505 text-rose-600 uppercase tracking-widest flex items-center gap-1.5">
-            <PlusCircle className="w-5 h-5 text-rose-600 animate-pulse" />
+          <h3 id="session-form-heading" className="text-base font-black text-red-600 text-red-600 uppercase tracking-widest flex items-center gap-1.5">
+            <PlusCircle className="w-5 h-5 text-red-600 animate-pulse" />
             {lang === 'vi' ? 'GHI LỊCH DẠY & ĐÁNH GIÁ HỌC VIÊN' : 'SESSION LOG & STUDENT EVALUATION'}
           </h3>
           <p className="text-xs text-zinc-550 dark:text-zinc-400 leading-relaxed">
@@ -198,9 +198,9 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
 
                 {/* DYNAMIC SCORING CONTROLLER */}
                 {newSession?.lessonPlanId && (
-                  <div className="bg-rose-500/5 border border-rose-500/10 rounded-2xl p-4 space-y-3">
+                  <div className="bg-red-500/5 border border-red-500/10 rounded-2xl p-4 space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs font-black text-rose-500 tracking-wider block font-mono">
+                      <span className="text-xs font-black text-red-500 tracking-wider block font-mono">
                         {lang === 'vi' ? '⚙ CHẤM ĐIỂM CÁC KỸ NĂNG TIÊU ĐIỂM (Scale 1 - 5):' : '⚙ RATE FOCUS SKILLS (Scale 1 - 5):'}
                       </span>
                       {isScheduledMode && (
@@ -236,10 +236,10 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                                         });
                                       }}
                                       className={`w-6 h-6 rounded flex items-center justify-center font-mono text-[10px] font-bold transition-all ${
-                                        isScheduledMode ? 'cursor-not-allowed opacity-40' : 'cursor-pointer hover:bg-rose-600 hover:text-white'
+                                        isScheduledMode ? 'cursor-not-allowed opacity-40' : 'cursor-pointer hover:bg-red-600 hover:text-white'
                                       } ${
                                         currentScore === val
-                                          ? 'bg-rose-600 text-white font-black'
+                                          ? 'bg-red-600 text-white font-black'
                                           : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
                                       }`}
                                     >
@@ -308,7 +308,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                       <button
                         type="button"
                         onClick={(e) => handleSaveSession(e, 'Completed')}
-                        className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-lg cursor-pointer transition-all font-black"
+                        className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-lg cursor-pointer transition-all font-black"
                       >
                         {lang === 'vi' ? 'Đánh giá' : 'Evaluate'}
                       </button>
@@ -335,7 +335,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                       <button
                         type="button"
                         onClick={(e) => handleSaveSession(e, 'Completed')}
-                        className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-lg cursor-pointer transition-all"
+                        className="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-lg cursor-pointer transition-all"
                       >
                         {lang === 'vi' ? 'Đánh giá' : 'Evaluate'}
                       </button>
@@ -352,8 +352,8 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
       <div className="space-y-4">
         <div className="flex justify-between items-center pb-2.5 border-b border-zinc-150 dark:border-zinc-800">
           <div className="space-y-1">
-            <h3 className="text-base font-black text-rose-505 text-rose-600 uppercase tracking-widest flex items-center gap-2 animate-pulse">
-              <Calendar className="w-5 h-5 flex-shrink-0 text-rose-605" />
+            <h3 className="text-base font-black text-red-600 text-red-600 uppercase tracking-widest flex items-center gap-2 animate-pulse">
+              <Calendar className="w-5 h-5 flex-shrink-0 text-red-600" />
               {lang === 'vi' ? 'NHẬT KÝ TẬP' : 'TRAINING LOG'}
             </h3>
             <p className="text-xs text-zinc-500 dark:text-zinc-400 font-mono tracking-wide">
@@ -374,7 +374,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
               placeholder={lang === 'vi' ? "Tìm theo tên học viên hoặc giáo án..." : "Search by student name or lesson plan..."}
               value={sessionSearchQuery}
               onChange={(e) => setSessionSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans"
+              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-red-500 font-sans"
             />
           </div>
           <div className="relative flex-1 min-w-0">
@@ -383,13 +383,13 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
               type="date"
               value={sessionDateFilter}
               onChange={(e) => setSessionDateFilter(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans [color-scheme:light] dark:[color-scheme:dark]"
+              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-red-500 font-sans [color-scheme:light] dark:[color-scheme:dark]"
             />
             {sessionDateFilter && (
               <button
                 type="button"
                 onClick={() => setSessionDateFilter('')}
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-rose-500 bg-zinc-100 dark:bg-zinc-800 w-5 h-5 flex items-center justify-center rounded-full cursor-pointer text-xs leading-none z-10"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-red-500 bg-zinc-100 dark:bg-zinc-800 w-5 h-5 flex items-center justify-center rounded-full cursor-pointer text-xs leading-none z-10"
                 aria-label={lang === 'vi' ? 'Xoá ngày' : 'Clear date'}
               >
                 ✕
@@ -417,7 +417,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                 }}
                 className={`p-3.5 sm:p-4 bg-zinc-100/30 dark:bg-zinc-800 border border-zinc-150 dark:border-zinc-900 rounded-2xl relative overflow-hidden transition-all text-xs ${
                   role === 'coach' 
-                    ? 'cursor-pointer hover:border-rose-500 hover:ring-2 hover:ring-rose-500/15'
+                    ? 'cursor-pointer hover:border-red-500 hover:ring-2 hover:ring-red-500/15'
                     : 'hover:border-zinc-200 dark:hover:border-zinc-800'
                 }`}
               >
@@ -435,7 +435,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                     <img
                       src={student.avatar}
                       alt="student avatar snippet"
-                      className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl object-cover border-2 border-rose-500/40 shrink-0"
+                      className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl object-cover border-2 border-red-500/40 shrink-0"
                       referrerPolicy="no-referrer"
                     />
                   )}
@@ -448,7 +448,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                         </div>
                       </div>
                     </div>
-                    <h4 className="text-xs font-bold text-rose-500 uppercase mt-1 leading-tight">{sess.title}</h4>
+                    <h4 className="text-xs font-bold text-red-500 uppercase mt-1 leading-tight">{sess.title}</h4>
                   </div>
                 </div>
 
@@ -494,10 +494,10 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                 </div>
 
                 {sess.notes && (role === 'coach' || sess.isPublic) && (
-                  <div className="mt-3.5 bg-rose-500/5 p-3 rounded-xl text-xs flex items-start gap-2 border border-rose-500/10">
-                    <Info className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                  <div className="mt-3.5 bg-red-500/5 p-3 rounded-xl text-xs flex items-start gap-2 border border-red-500/10">
+                    <Info className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-[10px] font-mono text-rose-500 uppercase block">{lang === 'vi' ? 'HLV Ghi chú thực thi giáo án:' : 'COACH Execution Internal Note:'}</strong>
+                      <strong className="text-[10px] font-mono text-red-500 uppercase block">{lang === 'vi' ? 'HLV Ghi chú thực thi giáo án:' : 'COACH Execution Internal Note:'}</strong>
                       <p className="text-zinc-550 dark:text-zinc-400 mt-0.5 font-sans leading-relaxed">{sess.notes}</p>
                     </div>
                   </div>
@@ -505,16 +505,16 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
 
                 {role === 'coach' && (
                   <div className="mt-4 pt-2 border-t border-zinc-150 dark:border-zinc-850 flex justify-between items-center text-[10px]">
-                    <span className="text-rose-600 dark:text-rose-450 font-extrabold animate-pulse">
+                    <span className="text-red-600 dark:text-red-400 font-extrabold animate-pulse">
                       👉 {lang === 'vi' ? "Nhấp vào khung này để đánh giá & chấm điểm!" : "Click this card to evaluate & grade!"}
                     </span>
-                    <span>{lang === 'vi' ? 'Trạng thái hiển thị:' : 'Visibility:'} <strong className="text-rose-500">{sess.isPublic ? (lang === 'vi' ? 'Công khai' : 'Public in card') : (lang === 'vi' ? 'HLV riêng tư' : 'Private Coach only')}</strong></span>
+                    <span>{lang === 'vi' ? 'Trạng thái hiển thị:' : 'Visibility:'} <strong className="text-red-500">{sess.isPublic ? (lang === 'vi' ? 'Công khai' : 'Public in card') : (lang === 'vi' ? 'HLV riêng tư' : 'Private Coach only')}</strong></span>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         if (confirm(t.deleteConfirm)) handleDeleteSession(sess.id);
                       }}
-                      className="text-rose-450 hover:text-rose-600 font-bold transition-all cursor-pointer flex items-center gap-1"
+                      className="text-red-400 hover:text-red-600 font-bold transition-all cursor-pointer flex items-center gap-1"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                       Remove logs

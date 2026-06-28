@@ -106,11 +106,11 @@ function SortableHelpItem({
           {role === 'coach' && (
             <div className="flex justify-end gap-1.5 px-4 pb-3">
               <button onClick={() => handleEditCategory(cat)}
-                className="text-[10px] font-bold text-rose-500 hover:text-rose-400 flex items-center gap-1 cursor-pointer">
+                className="text-[10px] font-bold text-red-500 hover:text-red-400 flex items-center gap-1 cursor-pointer">
                 <Edit2 className="w-3 h-3" /> {lang === 'vi' ? 'Sửa' : 'Edit'}
               </button>
               <button onClick={() => handleDeleteCategory(cat.id)}
-                className="text-[10px] font-bold text-rose-600 hover:text-rose-500 flex items-center gap-1 cursor-pointer">
+                className="text-[10px] font-bold text-red-600 hover:text-red-500 flex items-center gap-1 cursor-pointer">
                 <Trash2 className="w-3 h-3" /> {lang === 'vi' ? 'Xóa' : 'Delete'}
               </button>
             </div>
@@ -313,7 +313,7 @@ export default function Header({
               {isNotiHistoryOpen && (
                   <div className="absolute right-0 mt-3.5 z-50 w-72 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 rounded-2xl shadow-2xl p-4 space-y-3 font-sans animate-slideDown overflow-visible">
                     <div className="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-2">
-                      <h4 className="text-xs font-black uppercase tracking-wider text-rose-600 flex items-center gap-1.5">
+                      <h4 className="text-xs font-black uppercase tracking-wider text-red-600 flex items-center gap-1.5">
                         <Bell className="w-3.5 h-3.5" />
                         {lang === 'vi' ? 'Thông báo' : 'Notifications'}
                       </h4>
@@ -330,7 +330,7 @@ export default function Header({
                             onClick={() => { setSelectedNotiId(noti.id); setIsNotiHistoryOpen(false); }}
                             className={`p-2.5 rounded-xl space-y-1 text-left relative group cursor-pointer transition-all ${
                               selectedNotiId === noti.id
-                                ? 'bg-rose-100 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-800'
+                                ? 'bg-red-100 dark:bg-red-950/40 border border-red-300 dark:border-red-800'
                                 : 'bg-zinc-50 dark:bg-zinc-950/65 border border-zinc-150 dark:border-zinc-850 hover:border-zinc-300 dark:hover:border-zinc-700'
                             }`}
                           >
@@ -518,7 +518,7 @@ export default function Header({
                   {/* Coach add button */}
                   {role === 'coach' && (
                     <button onClick={handleAddCategory}
-                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-2xl text-xs font-bold text-zinc-500 dark:text-zinc-400 hover:text-rose-500 hover:border-rose-500 transition-all cursor-pointer">
+                      className="w-full flex items-center justify-center gap-2 py-3 border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-2xl text-xs font-bold text-zinc-500 dark:text-zinc-400 hover:text-red-500 hover:border-red-500 transition-all cursor-pointer">
                       <PlusCircle className="w-4 h-4" />
                       {lang === 'vi' ? 'Thêm danh mục' : 'Add Category'}
                     </button>
@@ -594,8 +594,8 @@ export default function Header({
               {showShare && (
                 <div className="space-y-5">
                   <div className="text-center space-y-3">
-                    <div className="w-16 h-16 mx-auto bg-rose-500/10 rounded-2xl flex items-center justify-center border border-rose-500/20">
-                      <Share2 className="w-7 h-7 text-rose-500" />
+                    <div className="w-16 h-16 mx-auto bg-red-500/10 rounded-2xl flex items-center justify-center border border-red-500/20">
+                      <Share2 className="w-7 h-7 text-red-500" />
                     </div>
                     <div>
                       <h3 className="text-sm font-black text-zinc-900 dark:text-white">
@@ -650,7 +650,7 @@ export default function Header({
                           }).catch(() => {});
                         }
                       }}
-                      className="w-full flex items-center justify-center gap-2.5 px-4 py-3 bg-rose-500 hover:bg-rose-600 border border-rose-500 rounded-xl text-xs font-bold text-white transition-all cursor-pointer"
+                      className="w-full flex items-center justify-center gap-2.5 px-4 py-3 bg-red-500 hover:bg-red-600 border border-red-500 rounded-xl text-xs font-bold text-white transition-all cursor-pointer"
                     >
                       <Share2 className="w-4 h-4" />
                       {lang === 'vi' ? 'Chia sẻ qua ứng dụng khác' : 'Share via other apps'}
@@ -706,7 +706,7 @@ export default function Header({
                           onClick={() => { setActiveTab(tab.id); setIsMobileMenuOpen(false); }}
                           className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                             activeTab === tab.id
-                              ? 'bg-rose-600/10 text-rose-500 border border-rose-500/20'
+                              ? 'bg-red-600/10 text-red-500 border border-red-500/20'
                               : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200'
                           }`}
                         >
@@ -721,7 +721,7 @@ export default function Header({
                   {isPinInputOpen && (
                     <div className="space-y-3 border-t border-zinc-200 dark:border-zinc-800 pt-4">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-mono text-rose-500 uppercase tracking-widest block font-bold">
+                        <span className="text-[10px] font-mono text-red-500 uppercase tracking-widest block font-bold">
                           {lang === 'vi' ? 'Xác thực HLV' : 'Coach Auth'}
                         </span>
                         <button
@@ -760,13 +760,13 @@ export default function Header({
                               }
                             }
                           }}
-                          className="flex-1 px-3 py-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-sm text-center font-mono font-bold text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500/40 placeholder-zinc-400 dark:placeholder-zinc-600"
+                          className="flex-1 px-3 py-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl text-sm text-center font-mono font-bold text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500/40 placeholder-zinc-400 dark:placeholder-zinc-600"
                           placeholder="* * * *"
                           autoFocus
                         />
                       </div>
                       {menuPinError && (
-                        <p className="text-[11px] text-rose-500 font-bold">{menuPinError}</p>
+                        <p className="text-[11px] text-red-500 font-bold">{menuPinError}</p>
                       )}
                       <p className="text-[9px] text-zinc-500 dark:text-zinc-500 leading-relaxed">
                         {lang === 'vi'
@@ -787,7 +787,7 @@ export default function Header({
                         className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 hover:text-zinc-900 dark:hover:text-zinc-200 transition-all cursor-pointer"
                       >
                         <span className="flex items-center gap-3">
-                          <HelpCircle className="w-4 h-4 text-rose-500" />
+                          <HelpCircle className="w-4 h-4 text-red-500" />
                           {lang === 'vi' ? 'Trung tâm trợ giúp' : 'Help Center'}
                         </span>
                         <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
@@ -819,7 +819,7 @@ export default function Header({
             {/* VERSION FOOTER */}
             <div className="sticky bottom-0 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 pt-3 pb-1 flex items-center justify-center gap-1.5 shrink-0 z-10">
               <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 font-medium tracking-wide">
-                ProtPick <span className="text-rose-500 font-black">v1.0.0</span>
+                ProtPick <span className="text-red-500 font-black">v1.0.0</span>
               </span>
               <span className="w-1 h-1 rounded-full bg-zinc-300 dark:bg-zinc-600" />
               <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400">

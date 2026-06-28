@@ -107,8 +107,8 @@ export default function RadarChart({ skillsList, studentSkills, size = 300 }: Ra
           {points.length > 0 && (
             <polygon
               points={polygonsPointsString}
-              fill="rgba(244, 63, 94, 0.25)" // rose-500 opacity
-              stroke="#f43f5e" // rose-500
+              fill="rgba(244, 63, 94, 0.25)" // red-500 opacity
+              stroke="#f43f5e" // red-500
               strokeWidth="2.5"
               strokeLinejoin="round"
               className="transition-all duration-500"
@@ -122,7 +122,7 @@ export default function RadarChart({ skillsList, studentSkills, size = 300 }: Ra
               cx={p.scoreX}
               cy={p.scoreY}
               r="4"
-              className="fill-rose-600 dark:fill-rose-400 stroke-white dark:stroke-zinc-950 stroke-2 transition-all duration-500 cursor-pointer"
+              className="fill-red-600 dark:fill-red-400 stroke-white dark:stroke-zinc-950 stroke-2 transition-all duration-500 cursor-pointer"
               title={`${p.name}: ${p.score}/5`}
             />
           ))}
@@ -161,7 +161,7 @@ export default function RadarChart({ skillsList, studentSkills, size = 300 }: Ra
 
       <div className="flex items-center gap-4 mt-1 text-[11px] font-mono text-zinc-500">
         <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 bg-rose-500/30 border border-rose-500 rounded-sm"></span>
+          <span className="w-2.5 h-2.5 bg-red-500/30 border border-red-500 rounded-sm"></span>
           <span>Current Level Radar Grid</span>
         </div>
         <div>

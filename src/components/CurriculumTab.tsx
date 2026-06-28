@@ -42,15 +42,15 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
       {role === 'coach' && !newSkill && (
         <button
           onClick={() => setNewSkill({ name: '', category: 'Basics', descriptionVI: '', descriptionEN: '' })}
-          className="bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs px-5 py-3 rounded-2xl shadow-md cursor-pointer transition-colors"
+          className="bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs px-5 py-3 rounded-2xl shadow-md cursor-pointer transition-colors"
         >
           + Bổ sung Kỹ năng mới vào Giáo án
         </button>
       )}
 
       {newSkill && (
-        <form onSubmit={handleSaveSkill} className="bg-white dark:bg-zinc-900 border-2 border-rose-500 rounded-3xl p-6 shadow-xl space-y-3">
-          <h4 className="text-sm font-black text-rose-500 uppercase tracking-widest font-mono">Thêm Kỹ Năng Mới</h4>
+        <form onSubmit={handleSaveSkill} className="bg-white dark:bg-zinc-900 border-2 border-red-500 rounded-3xl p-6 shadow-xl space-y-3">
+          <h4 className="text-sm font-black text-red-500 uppercase tracking-widest font-mono">Thêm Kỹ Năng Mới</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div className="space-y-1">
               <label className="text-zinc-400 font-bold">Skill Name (EN) *</label>
@@ -59,7 +59,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                 required
                 value={newSkill.name}
                 onChange={(e) => setNewSkill({ ...newSkill, name: e.target.value })}
-                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500"
+                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-red-500"
                 placeholder="e.g. Backhand Drive"
               />
             </div>
@@ -85,7 +85,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                 type="text"
                 value={newSkill.descriptionVI}
                 onChange={(e) => setNewSkill({ ...newSkill, descriptionVI: e.target.value })}
-                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500"
+                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-red-500"
               />
             </div>
             <div className="space-y-1">
@@ -94,14 +94,14 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                 type="text"
                 value={newSkill.descriptionEN}
                 onChange={(e) => setNewSkill({ ...newSkill, descriptionEN: e.target.value })}
-                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-rose-500"
+                className="w-full p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-black dark:text-white rounded-xl focus:ring-1 focus:ring-red-500"
               />
             </div>
           </div>
 
           <div className="flex gap-2 justify-end pt-2 text-xs font-bold">
             <button type="button" onClick={() => setNewSkill(null)} className="px-4 py-1.5 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg cursor-pointer">Hủy</button>
-            <button type="submit" className="px-5 py-1.5 bg-rose-600 text-white rounded-lg cursor-pointer">Lưu lại</button>
+            <button type="submit" className="px-5 py-1.5 bg-red-600 text-white rounded-lg cursor-pointer">Lưu lại</button>
           </div>
         </form>
       )}
@@ -111,7 +111,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
         
         {/* LEFT: 16 CORE SKILLS */}
         <div className="lg:col-span-7 border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
-          <h3 className="text-base font-black text-rose-500 uppercase tracking-widest flex items-center gap-2">
+          <h3 className="text-base font-black text-red-500 uppercase tracking-widest flex items-center gap-2">
             <Layers className="w-5 h-5 animate-pulse" />
             {lang === 'vi' ? 'GIÁO ÁN 16 KỸ NĂNG HUẤN LUYỆN CHUẨN HOÁ' : '16 SKILL STANDARD CURRICULUM'}
           </h3>
@@ -136,7 +136,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                   <div className="flex items-center justify-between font-mono">
                     <span className="text-[10px] font-bold text-zinc-400 uppercase">Skill #{index + 1}</span>
                     <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase ${
-                      (skill.category === 'BASIC' || skill.category === 'BASICS') ? 'bg-rose-500/10 text-rose-500' :
+                      (skill.category === 'BASIC' || skill.category === 'BASICS') ? 'bg-red-500/10 text-red-500' :
                       (skill.category === 'ADVANCED' || skill.category === 'ADVANCEDS') ? 'bg-amber-500/10 text-amber-500' :
                       skill.category === 'TACTICS' ? 'bg-emerald-500/10 text-emerald-500' :
                       'bg-zinc-500/10 text-zinc-500'
@@ -157,15 +157,15 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
           
           <div className="border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
             <div className="flex justify-between items-center border-b border-zinc-150 dark:border-zinc-850 pb-3">
-              <h3 className="text-sm font-black text-rose-505 text-rose-600 uppercase tracking-widest flex items-center gap-1.5">
-                <BookOpen className="w-4 h-4 text-rose-600" />
+              <h3 className="text-sm font-black text-red-600 text-red-600 uppercase tracking-widest flex items-center gap-1.5">
+                <BookOpen className="w-4 h-4 text-red-600" />
                 DANH SÁCH GIÁO ÁN KHÓA HỌC
               </h3>
               
               {role === 'coach' && (
                 <button
                   onClick={() => setEditingPlan({ titleVI: '', titleEN: '', descriptionVI: '', descriptionEN: '', skillsFocused: [], durationMin: 60, isPublic: true })}
-                  className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-850 dark:hover:bg-zinc-800 p-1.5 rounded-lg text-rose-600 dark:text-rose-500 hover:text-rose-700 dark:hover:text-white cursor-pointer"
+                  className="bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-850 dark:hover:bg-zinc-800 p-1.5 rounded-lg text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-white cursor-pointer"
                   title="Tạo giáo án mới"
                 >
                   <PlusCircle className="w-4.5 h-4.5" />
@@ -259,7 +259,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                             setEditingPlan({ ...editingPlan, skillsFocused: prev });
                           }}
                           className={`px-2 py-0.5 rounded transition-all cursor-pointer ${
-                            isChosen ? 'bg-rose-600 text-white font-bold' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
+                            isChosen ? 'bg-red-600 text-white font-bold' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
                           }`}
                         >
                           {sk.name}
@@ -271,7 +271,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
 
                 <div className="flex gap-2 justify-end pt-1">
                   <button type="button" onClick={() => setEditingPlan(null)} className="px-3 py-1 bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 rounded-lg cursor-pointer">Cancel</button>
-                  <button type="submit" className="px-3.5 py-1 bg-rose-600 text-white font-bold rounded-lg cursor-pointer">{t.save}</button>
+                  <button type="submit" className="px-3.5 py-1 bg-red-600 text-white font-bold rounded-lg cursor-pointer">{t.save}</button>
                 </div>
               </form>
             )}
@@ -280,7 +280,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
               {filteredPlans.map(plan => {
                 return (
                   <div key={plan.id} className="p-4 bg-zinc-100/30 dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-900 rounded-2xl relative">
-                    <span className="absolute top-3 right-3 text-[9px] font-mono bg-zinc-250 dark:bg-zinc-800 text-rose-500 border border-zinc-150 dark:border-zinc-800 px-2 py-0.5 rounded-full font-bold">
+                    <span className="absolute top-3 right-3 text-[9px] font-mono bg-zinc-250 dark:bg-zinc-800 text-red-500 border border-zinc-150 dark:border-zinc-800 px-2 py-0.5 rounded-full font-bold">
                       ⏱ {plan.durationMin} MIN
                     </span>
 
@@ -294,7 +294,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                     {plan.skillsFocused.length > 0 && (
                       <div className="mt-3 pt-2.5 border-t border-dashed border-zinc-200 dark:border-zinc-900 flex flex-wrap gap-1">
                         {plan.skillsFocused.map(sk => (
-                          <span key={sk} className="text-[9px] font-bold bg-rose-500/10 text-rose-500 px-2 py-0.5 rounded">
+                          <span key={sk} className="text-[9px] font-bold bg-red-500/10 text-red-500 px-2 py-0.5 rounded">
                             {sk}
                           </span>
                         ))}
@@ -303,10 +303,10 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
 
                     {role === 'coach' && (
                       <div className="flex items-center justify-end gap-2.5 mt-3 pt-2 border-t border-zinc-200 dark:border-zinc-900 text-[10px]">
-                        <span>Status: <strong className="text-rose-500">{plan.isPublic ? "Public" : "Private"}</strong></span>
+                        <span>Status: <strong className="text-red-500">{plan.isPublic ? "Public" : "Private"}</strong></span>
                         <button
                           onClick={() => setEditingPlan(plan)}
-                          className="text-zinc-500 hover:text-rose-500 cursor-pointer"
+                          className="text-zinc-500 hover:text-red-500 cursor-pointer"
                         >
                           Edit Plan
                         </button>
@@ -317,7 +317,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
                               showToast("Plan deleted");
                             }
                           }}
-                          className="text-rose-500 hover:underline cursor-pointer"
+                          className="text-red-500 hover:underline cursor-pointer"
                         >
                           Delete
                         </button>

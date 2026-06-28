@@ -75,7 +75,7 @@ export default function SkillHistoryModal({
   const lastScore = points.length > 0 ? points[points.length - 1].score : null;
   const trendIcon = firstScore !== null && lastScore !== null
     ? lastScore > firstScore ? <TrendingUp className="w-4 h-4 text-emerald-500" />
-      : lastScore < firstScore ? <TrendingDown className="w-4 h-4 text-rose-500" />
+      : lastScore < firstScore ? <TrendingDown className="w-4 h-4 text-red-500" />
       : <Minus className="w-4 h-4 text-zinc-400" />
     : null;
 
@@ -92,7 +92,7 @@ export default function SkillHistoryModal({
       <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 md:p-8 max-w-xl w-full shadow-2xl relative overflow-hidden animate-scaleIn flex flex-col max-h-[90vh]">
         <button
           onClick={() => setSelectedSkillForHistory(null)}
-          className="absolute top-4 right-4 text-zinc-500 hover:text-rose-500 dark:text-zinc-400 dark:hover:text-rose-500 p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer"
+          className="absolute top-4 right-4 text-zinc-500 hover:text-red-500 dark:text-zinc-400 dark:hover:text-red-500 p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer"
           type="button"
         >
           <X className="w-5 h-5" />
@@ -101,11 +101,11 @@ export default function SkillHistoryModal({
         <div className="space-y-4 flex-1 overflow-y-auto pr-1 no-scrollbar">
           {/* HEADER */}
           <div className="space-y-1">
-            <span className="text-[10px] text-rose-500 font-mono font-bold uppercase tracking-widest block">
+            <span className="text-[10px] text-red-500 font-mono font-bold uppercase tracking-widest block">
               {lang === 'vi' ? 'THEO DÕI KỸ NĂNG' : 'SKILL HISTORY'}
             </span>
             <h3 className="text-xl font-black text-zinc-940 dark:text-white tracking-tight flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-rose-500" />
+              <TrendingUp className="w-5 h-5 text-red-500" />
               {selectedSkillForHistory.name}
               {trendIcon}
             </h3>
@@ -227,7 +227,7 @@ export default function SkillHistoryModal({
                     <span className={`px-2 py-1 font-mono font-bold text-xs rounded-lg shrink-0 mt-0.5 ${
                       score >= 4 ? 'bg-emerald-500/10 text-emerald-500' :
                       score <= 2 ? 'bg-red-500/10 text-red-400' :
-                      'bg-rose-500/10 text-rose-500'
+                      'bg-red-500/10 text-red-500'
                     }`}>
                       {score} / 5
                     </span>
