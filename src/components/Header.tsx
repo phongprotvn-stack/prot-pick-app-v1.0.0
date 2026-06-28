@@ -240,7 +240,7 @@ export default function Header({
   );
 
   return (
-    <header className="bg-red-600 sticky top-0 z-30 shadow-xl shadow-red-600/20" style={{ paddingTop: 'var(--sat)' }}>
+    <header className="bg-white dark:bg-zinc-950 sticky top-0 z-30 shadow-xl shadow-zinc-200/50 dark:shadow-black/20" style={{ paddingTop: 'var(--sat)' }}>
       {/* TOP BAR */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-2 md:py-3">
         <div className="flex items-center justify-between">
@@ -249,22 +249,22 @@ export default function Header({
             {navStack.length > 0 && (
               <button
                 onClick={goBack}
-                className="p-2.5 bg-white/20 backdrop-blur-sm border-0 rounded-xl text-white hover:bg-white/30 transition-all active:scale-95 cursor-pointer"
+                className="p-2.5 bg-zinc-100 dark:bg-zinc-800 border-0 rounded-xl text-red-500 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all active:scale-95 cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
             )}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 bg-white/20 backdrop-blur-sm border-0 rounded-xl text-white/90 hover:bg-white/30 cursor-pointer"
+              className="p-2 bg-zinc-100 dark:bg-zinc-800 border-0 rounded-xl text-red-500 hover:bg-zinc-200 dark:hover:bg-zinc-700 cursor-pointer"
             >
               <Menu className="w-5 h-5 stroke-[2.5]" />
             </button>
             <div onClick={() => { setActiveTab('dashboard'); }} className="flex items-center gap-1.5 cursor-pointer">
               <img src="/pwa-192x192.png" alt="PP" className="w-9 h-9 rounded-xl object-cover shadow-md shadow-black/20" />
               <div className="flex flex-col leading-none">
-                <h1 className="text-sm font-black text-white tracking-tight leading-[16px] text-center">{t.appTitle}</h1>
-                <span className="text-[9px] font-mono text-white/80 font-bold uppercase tracking-wider leading-[10px] text-center">{t.slogan}</span>
+                <h1 className="text-sm font-black text-zinc-900 dark:text-white tracking-tight leading-[16px] text-center">{t.appTitle}</h1>
+                <span className="text-[9px] font-mono text-zinc-500 dark:text-zinc-400 font-bold uppercase tracking-wider leading-[10px] text-center">{t.slogan}</span>
               </div>
             </div>
           </div>
@@ -274,23 +274,23 @@ export default function Header({
             {/* Mobile Search Toggle */}
             <button
               onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
-              className="p-2.5 bg-white/20 backdrop-blur-sm border-0 rounded-xl hover:bg-white/30 transition-all active:scale-95 cursor-pointer"
+              className="p-2.5 bg-zinc-100 dark:bg-zinc-800 border-0 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all active:scale-95 cursor-pointer"
             >
-              <Search className="w-4 h-4 text-white" />
+              <Search className="w-4 h-4 text-red-500" />
             </button>
 
             {/* Theme Toggle */}
             <button
               onClick={handleThemeToggle}
-              className="p-2.5 bg-white/20 backdrop-blur-sm border-0 rounded-xl hover:bg-white/30 transition-all active:scale-95 cursor-pointer"
+              className="p-2.5 bg-zinc-100 dark:bg-zinc-800 border-0 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all active:scale-95 cursor-pointer"
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-white" />}
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-zinc-600 dark:text-zinc-400" />}
             </button>
 
             {/* Language Toggle */}
             <button
               onClick={() => handleLangToggle(lang === 'vi' ? 'en' : 'vi')}
-              className="p-2.5 bg-white/20 backdrop-blur-sm border-0 rounded-xl hover:bg-white/30 transition-all active:scale-95 text-[10px] font-black text-white cursor-pointer"
+              className="p-2.5 bg-zinc-100 dark:bg-zinc-800 border-0 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all active:scale-95 text-[10px] font-black text-red-500 cursor-pointer"
             >
               {lang === 'vi' ? 'EN' : 'VI'}
             </button>
@@ -300,11 +300,11 @@ export default function Header({
             <div className="relative" ref={notiRef}>
               <button
                 onClick={() => setIsNotiHistoryOpen(!isNotiHistoryOpen)}
-                className="relative p-2.5 bg-white/20 backdrop-blur-sm border-0 rounded-xl hover:bg-white/30 transition-all active:scale-95 cursor-pointer"
+                className="relative p-2.5 bg-zinc-100 dark:bg-zinc-800 border-0 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all active:scale-95 cursor-pointer"
               >
-                <Bell className="w-4 h-4 text-white" />
+                <Bell className="w-4 h-4 text-red-500" />
                 {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-amber-400 border-2 border-red-600 rounded-full text-[6px] font-black text-red-900 flex items-center justify-center animate-pulse">
+                  <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-amber-400 border-2 border-white dark:border-zinc-950 rounded-full text-[6px] font-black text-red-900 flex items-center justify-center animate-pulse">
                     {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length}
                   </span>
                 )}
@@ -367,7 +367,7 @@ export default function Header({
 
       {/* MOBILE SEARCH OVERLAY ROW */}
       {isMobileSearchOpen && (
-        <div className="px-4 py-2 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-white/10 animate-slideDown">
+        <div className="px-4 py-2 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-zinc-100 dark:border-zinc-900 animate-slideDown">
           <div className="relative flex items-center bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-1.5">
             <Search className="w-3.5 h-3.5 text-red-500 mr-2 shrink-0 animate-pulse" />
             <input
