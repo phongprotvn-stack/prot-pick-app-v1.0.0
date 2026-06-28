@@ -149,8 +149,8 @@ export default function RadarChart({ skillsList, studentSkills, size = 300 }: Ra
                 y={labelY + 3}
                 textAnchor={textAnchor}
                 fontSize="10"
-                fontWeight="500"
-                className="fill-zinc-700 dark:fill-zinc-300 font-sans select-none"
+                fontWeight="900"
+                className="fill-zinc-700 dark:fill-zinc-300 font-sans select-none font-black"
               >
                 {p.name}
               </text>

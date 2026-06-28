@@ -394,7 +394,7 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
         <div className="space-y-6">
 
           {/* ─── HEADER CARD ─── 3 zones + progress + rating + coach buttons */}
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+          <div className="card relative overflow-hidden">
 
             {/* ZONE 1: Avatar + 3 info lines side by side */}
             <div className="flex flex-row items-center gap-4 md:gap-6">
@@ -615,7 +615,7 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
             {/* LEFT: ATTRIBUTES & RADAR CHART */}
             <div className="lg:col-span-8 space-y-6">
 
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 shadow-xs">
+              <div className="card">
                 <div className="flex items-center justify-between mb-4 border-b border-zinc-200 dark:border-zinc-800 pb-3">
                   <h4 className="text-sm font-black uppercase tracking-wider text-red-500 flex items-center gap-1.5">
                     <Activity className="w-4 h-4 text-red-600" />
@@ -704,7 +704,7 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
             <div className="lg:col-span-4 space-y-6">
 
               {/* STRONGEST */}
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 shadow-xs space-y-3">
+              <div className="card space-y-3">
                 <h4 className="text-xs font-black uppercase text-emerald-500 tracking-wider flex items-center gap-1.5">
                   <Star className="w-4 h-4 fill-emerald-500" />
                   {t.strongestSkills}
@@ -723,7 +723,7 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
               </div>
 
               {/* TO IMPROVE */}
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 shadow-xs space-y-3">
+              <div className="card space-y-3">
                 <h4 className="text-xs font-black uppercase text-red-500 tracking-wider flex items-center gap-1.5">
                   <Info className="w-4 h-4 text-red-500" />
                   {t.needImprovement}
@@ -742,7 +742,7 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
               </div>
 
               {/* TARGETS */}
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 shadow-xs space-y-3">
+              <div className="card space-y-3">
                 <h4 className="text-xs font-black uppercase text-red-500 tracking-wider">🎯 {lang === 'vi' ? 'Mục tiêu' : 'Target'}</h4>
                 <p className="text-xs text-zinc-800 dark:text-zinc-200 leading-relaxed font-sans">
                   {lang === 'en' && enTargetGoal
@@ -760,7 +760,7 @@ const StudentsTab: React.FC<StudentsTabProps> = ({
               </div>
 
               {/* HISTORY LESSON LOGS */}
-              <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 shadow-xs space-y-4">
+              <div className="card space-y-4">
                 <h4 className="text-xs font-black uppercase text-red-500 tracking-wider flex items-center gap-1.5 border-b border-zinc-200 dark:border-zinc-800 pb-2.5">
                   <Calendar className="w-4 h-4" />
                   {t.sessionHistory}

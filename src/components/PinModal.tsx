@@ -121,7 +121,7 @@ export default function PinModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity duration-300">
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-red-500/25 rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl relative overflow-hidden animate-scaleIn">
+      <div className="card rounded-3xl p-6 md:p-8 shadow-2xl animate-scaleIn relative overflow-hidden max-w-sm w-full border-zinc-200 dark:border-red-500/25">
         <button
           onClick={() => setIsPinModalOpen(false)}
           className="absolute top-4 right-4 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white p-1 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-805 transition cursor-pointer"

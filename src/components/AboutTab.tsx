@@ -93,7 +93,7 @@ export default function AboutTab({
         
         {/* LEFT: COACH RESUME */}
         <div className="lg:col-span-4 space-y-6">
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 rounded-3xl p-6 shadow-xs text-center space-y-4">
+          <div className="card text-center space-y-4">
             <div className="relative inline-block">
               <img
                 src={coach.avatar}
@@ -269,8 +269,8 @@ export default function AboutTab({
 
           {/* RIGHT: COURSE OPTIONS & PLAYABLE MEDIA */}
         <div className="lg:col-span-8 space-y-8">
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 rounded-3xl p-6 shadow-xs space-y-5">
-            <h3 className="text-base font-black text-red-600 text-red-600 text-red-600 uppercase tracking-widest flex items-center gap-1.5">
+          <div className="card space-y-5">
+            <h3 className="text-base font-black text-red-600 uppercase tracking-widest flex items-center gap-1.5">
               <Award className="w-5 h-5 animate-pulse" />
               {lang === 'vi' ? 'CÁC KHÓA HỌC' : 'COURSES'}
             </h3>
@@ -281,7 +281,7 @@ export default function AboutTab({
                 ? tempCoursesVI
                 : (lang === 'vi' ? coach.coursesVI : (enCourses.length ? enCourses : coach.coursesEN))
               )?.map((course: any, i: number) => (
-                <div key={i} className="p-4 bg-zinc-100/30 dark:bg-zinc-800 border border-zinc-150 dark:border-zinc-900 rounded-2xl space-y-3 relative flex flex-col justify-between pt-5">
+                <div key={i} className="card p-4 bg-zinc-100/30 dark:bg-zinc-800 border border-zinc-150 dark:border-zinc-900 rounded-2xl space-y-3 relative flex flex-col justify-between pt-5">
                   <div className="absolute top-0 right-0 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[9px] font-black px-3 py-1 rounded-bl-xl rounded-tr-2xl z-10 shadow-lg tracking-wider">{lang==='vi'?'HOT PACK':'HOT PACK'}</div>
                   {role === 'coach' && isEditingCourses ? (
                     <div className="space-y-1.5">
@@ -345,7 +345,7 @@ export default function AboutTab({
 
             {/* Course Specials (editable by coach) */}
             {role === 'coach' && isEditingSpecials ? (
-              <div className="bg-red-500/5 border border-red-500/10 rounded-2xl p-4 space-y-2">
+              <div className="card p-4 bg-red-500/5 border border-red-500/10 rounded-2xl space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-red-500 uppercase block">{t.courseSpecial}</span>
                   <button onClick={() => { setIsEditingSpecials(false); }} className="text-[9px] text-zinc-400 hover:text-zinc-300 cursor-pointer"><X className="w-3 h-3" /></button>
@@ -368,7 +368,7 @@ export default function AboutTab({
                 </div>
               </div>
             ) : (
-              <div className="bg-red-500/5 border border-red-500/10 rounded-2xl p-4 space-y-2">
+              <div className="card p-4 bg-red-500/5 border border-red-500/10 rounded-2xl space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-red-500 uppercase block">{t.courseSpecial}</span>
                   {role === 'coach' && (
@@ -395,8 +395,8 @@ export default function AboutTab({
           </div>
 
           {/* YOUTUBE EMBED PLAYER */}
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 rounded-3xl p-6 shadow-xs space-y-4">
-            <h3 className="text-base font-black text-red-600 text-red-600 uppercase tracking-widest flex items-center gap-1.5">
+          <div className="card space-y-4">
+            <h3 className="text-base font-black text-red-600 uppercase tracking-widest flex items-center gap-1.5">
               <Video className="w-5 h-5 text-red-600" />
               {lang === 'vi' ? 'TẬN HƯỞNG KHOẢNH KHẮC' : 'ENJOY THE MOMENT'}
             </h3>
@@ -458,7 +458,7 @@ export default function AboutTab({
 
             {/* Inline adding form */}
             {role === 'coach' && (
-              <div className="bg-zinc-50 dark:bg-zinc-800 p-4 rounded-2xl border border-zinc-150 dark:border-zinc-800 space-y-3 mt-4 text-xs">
+              <div className="card bg-zinc-50 dark:bg-zinc-800 p-4 rounded-2xl border border-zinc-150 dark:border-zinc-800 space-y-3 mt-4 text-xs">
                 <div className="flex items-center gap-2 text-red-600 dark:text-red-500 font-bold">
                   <PlusCircle className="w-4 h-4" />
                   <span>{lang === 'vi' ? 'Đăng Video hoặc Ảnh' : 'Post Video or Photo'}</span>

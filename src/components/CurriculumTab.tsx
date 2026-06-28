@@ -110,7 +110,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* LEFT: 16 CORE SKILLS */}
-        <div className="lg:col-span-7 border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
+        <div className="lg:col-span-7 card space-y-4">
           <h3 className="text-base font-black text-red-500 uppercase tracking-widest flex items-center gap-2">
             <Layers className="w-5 h-5 animate-pulse" />
             {lang === 'vi' ? 'GIÁO ÁN 16 KỸ NĂNG HUẤN LUYỆN CHUẨN HOÁ' : '16 SKILL STANDARD CURRICULUM'}
@@ -132,7 +132,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
               return (idxA !== -1 ? idxA : 999) - (idxB !== -1 ? idxB : 999);
             }).map((skill, index) => {
               return (
-                <div key={skill.id} className="p-3 bg-zinc-100/40 dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-900 rounded-2xl space-y-1">
+                <div key={skill.id} className="card p-3 space-y-1">
                   <div className="flex items-center justify-between font-mono">
                     <span className="text-[10px] font-bold text-zinc-400 uppercase">Skill #{index + 1}</span>
                     <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full uppercase ${
@@ -155,7 +155,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
         {/* RIGHT: DETAILED PLANS */}
         <div className="lg:col-span-5 space-y-6">
           
-          <div className="border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
+          <div className="card space-y-4">
             <div className="flex justify-between items-center border-b border-zinc-150 dark:border-zinc-850 pb-3">
               <h3 className="text-sm font-black text-red-600 text-red-600 uppercase tracking-widest flex items-center gap-1.5">
                 <BookOpen className="w-4 h-4 text-red-600" />
@@ -279,7 +279,7 @@ const CurriculumTab: React.FC<CurriculumTabProps> = ({
             <div className="space-y-4">
               {filteredPlans.map(plan => {
                 return (
-                  <div key={plan.id} className="p-4 bg-zinc-100/30 dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-900 rounded-2xl relative">
+                  <div key={plan.id} className="card relative">
                     <span className="absolute top-3 right-3 text-[9px] font-mono bg-zinc-250 dark:bg-zinc-800 text-red-500 border border-zinc-150 dark:border-zinc-800 px-2 py-0.5 rounded-full font-bold">
                       ⏱ {plan.durationMin} MIN
                     </span>

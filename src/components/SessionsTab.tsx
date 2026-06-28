@@ -77,8 +77,8 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
     <div className="space-y-8 animate-fadeIn" id="tab-sessions-panel">
       {/* NEW SESSIONS LOG FORM */}
       {role === 'coach' && (
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-850 rounded-3xl p-6 shadow-xs space-y-4">
-          <h3 id="session-form-heading" className="text-base font-black text-red-600 text-red-600 uppercase tracking-widest flex items-center gap-1.5">
+        <div className="card space-y-4">
+          <h3 id="session-form-heading" className="text-base font-black text-red-600 uppercase tracking-widest flex items-center gap-1.5">
             <PlusCircle className="w-5 h-5 text-red-600 animate-pulse" />
             {lang === 'vi' ? 'GHI LỊCH DẠY & ĐÁNH GIÁ HỌC VIÊN' : 'SESSION LOG & STUDENT EVALUATION'}
           </h3>
@@ -198,7 +198,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
 
                 {/* DYNAMIC SCORING CONTROLLER */}
                 {newSession?.lessonPlanId && (
-                  <div className="bg-red-500/5 border border-red-500/10 rounded-2xl p-4 space-y-3">
+                  <div className="bg-red-500/5 border border-red-500/10 rounded-2xl card p-4 space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-xs font-black text-red-500 tracking-wider block font-mono">
                         {lang === 'vi' ? '⚙ CHẤM ĐIỂM CÁC KỸ NĂNG TIÊU ĐIỂM (Scale 1 - 5):' : '⚙ RATE FOCUS SKILLS (Scale 1 - 5):'}
@@ -366,7 +366,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
         </div>
 
         {/* SPECIALIZED SEARCH & FILTER BAR */}
-        <div className="flex flex-col sm:flex-row gap-3 p-3 bg-zinc-50 dark:bg-zinc-950 rounded-2xl border border-zinc-100 dark:border-zinc-900">
+        <div className="flex flex-col sm:flex-row gap-3 card p-3 bg-zinc-50 dark:bg-zinc-950">
           <div className="relative flex-1 min-w-0">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
             <input
@@ -415,7 +415,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
                   document.getElementById('session-form-heading')?.scrollIntoView({ behavior: 'smooth' });
                   showToast(lang === 'vi' ? "Đã chọn buổi học để đánh giá & chấm điểm!" : "Session selected for evaluation & grading!");
                 }}
-                className={`p-3.5 sm:p-4 bg-zinc-100/30 dark:bg-zinc-800 border border-zinc-150 dark:border-zinc-900 rounded-2xl relative overflow-hidden transition-all text-xs ${
+                className={`card p-3.5 sm:p-4 bg-zinc-100/30 dark:bg-zinc-800 border border-zinc-150 dark:border-zinc-900 rounded-2xl relative overflow-hidden transition-all text-xs ${
                   role === 'coach' 
                     ? 'cursor-pointer hover:border-red-500 hover:ring-2 hover:ring-red-500/15'
                     : 'hover:border-zinc-200 dark:hover:border-zinc-800'

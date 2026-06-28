@@ -9,57 +9,72 @@ export default defineConfig(() => {
     plugins: [
       react(),
       tailwindcss(),
-      VitePWA({
-        registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'favicon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
-        manifest: {
-          name: 'PROT PICK - Pickleball Coaching',
-          short_name: 'PROT PICK',
-          description: 'Pickleball coaching management system by Coach Phongprot',
-          theme_color: '#dc2626',
-          background_color: '#dc2626',
-          display: 'standalone',
-          display_override: ['standalone', 'minimal-ui'],
-          orientation: 'portrait',
-          lang: 'vi',
-          start_url: '/',
-          scope: '/',
-          categories: ['sports', 'education', 'productivity'],
-          prefer_related_applications: false,
-          icons: [
-            {
-              src: '/pwa-192x192.png',
-              sizes: '192x192',
-              type: 'image/png',
-            },
-            {
-              src: '/pwa-512x512.png',
-              sizes: '512x512',
-              type: 'image/png',
-            },
-            {
-              src: '/pwa-512x512.png',
-              sizes: '512x512',
-              type: 'image/png',
-              purpose: 'any maskable',
-            },
-          ],
-          screenshots: [],
-        },
-        workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
-          runtimeCaching: [
-            {
-              urlPattern: /^https:\/\/firestore\.googleapis\.com\/.*/i,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'firestore-api',
-                expiration: {maxEntries: 50, maxAgeSeconds: 86400},
+        VitePWA({
+          registerType: 'autoUpdate',
+          includeAssets: ['favicon.ico', 'favicon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
+          manifest: {
+            name: 'PROT PICK - Pickleball Coaching',
+            short_name: 'PROT PICK',
+            description: 'Ứng dụng quản lý đào tạo Pickleball bởi HLV Phongprot. Coach students, track skills & manage lessons.',
+            theme_color: '#dc2626',
+            background_color: '#dc2626',
+            display: 'standalone',
+            display_override: ['standalone', 'minimal-ui'],
+            orientation: 'portrait',
+            lang: 'vi',
+            start_url: '/?v=1.0.2',
+            scope: '/',
+            categories: ['sports', 'education', 'productivity'],
+            prefer_related_applications: false,
+            icons: [
+              {
+                src: '/pwa-192x192.png',
+                sizes: '192x192',
+                type: 'image/png',
               },
-            },
-          ],
-        },
-      }),
+              {
+                src: '/pwa-512x512.png',
+                sizes: '512x512',
+                type: 'image/png',
+              },
+              {
+                src: '/pwa-512x512.png',
+                sizes: '512x512',
+                type: 'image/png',
+                purpose: 'any maskable',
+              },
+            ],
+            screenshots: [
+              {
+                src: '/screenshot-mobile-1.png',
+                sizes: '414x896',
+                type: 'image/png',
+                form_factor: 'narrow',
+                label: 'Dashboard - Quản lý học viên & buổi tập',
+              },
+              {
+                src: '/screenshot-wide-1.png',
+                sizes: '1280x800',
+                type: 'image/png',
+                form_factor: 'wide',
+                label: 'PROT PICK trên Desktop',
+              },
+            ],
+          },
+          workbox: {
+            globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+            runtimeCaching: [
+              {
+                urlPattern: /^https:\/\/firestore\.googleapis\.com\/.*/i,
+                handler: 'NetworkFirst',
+                options: {
+                  cacheName: 'firestore-api',
+                  expiration: {maxEntries: 50, maxAgeSeconds: 86400},
+                },
+              },
+            ],
+          },
+        }),
     ],
     resolve: {
       alias: {

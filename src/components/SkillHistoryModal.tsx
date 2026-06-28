@@ -89,7 +89,7 @@ export default function SkillHistoryModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/85 backdrop-blur-xs transition-opacity duration-300">
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-6 md:p-8 max-w-xl w-full shadow-2xl relative overflow-hidden animate-scaleIn flex flex-col max-h-[90vh]">
+      <div className="card max-w-xl w-full relative overflow-hidden animate-scaleIn flex flex-col max-h-[90vh]">
         <button
           onClick={() => setSelectedSkillForHistory(null)}
           className="absolute top-4 right-4 text-zinc-500 hover:text-red-500 dark:text-zinc-400 dark:hover:text-red-500 p-1.5 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer"

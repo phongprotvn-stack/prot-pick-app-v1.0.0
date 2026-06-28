@@ -61,7 +61,8 @@ html {
 
 /* ── Card utility ── */
 @utility card {
-  @apply bg-white dark:bg-zinc-900/90 rounded-2xl shadow-md shadow-zinc-200/50 dark:shadow-black/20 p-4 border border-zinc-100 dark:border-zinc-800/60;
+  @apply bg-white dark:bg-zinc-900/90 rounded-2xl shadow-lg shadow-zinc-200/50 dark:shadow-black/25 p-4 border border-zinc-100 dark:border-zinc-800/60
+         transition-all duration-200;
 }
 
 /* ── Primary button ── */

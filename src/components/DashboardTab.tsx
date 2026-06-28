@@ -61,7 +61,7 @@ export default function DashboardTab({
   return (
     <div className="space-y-5 animate-fadeIn" id="tab-dashboard-panel">
       {/* 1️⃣ BUỔI DẠY SẮP TỚI */}
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs">
+      <div className="card">
         <h3 className="text-sm font-extrabold text-red-600 dark:text-red-400 flex items-center gap-2 mb-3">
           <Calendar className="w-4 h-4 text-red-500" />
           {lang === 'vi' ? 'Buổi học sắp tới' : 'Upcoming'}
@@ -100,7 +100,7 @@ export default function DashboardTab({
       </div>
 
       {/* 2️⃣ HỌC VIÊN XUẤT SẮC */}
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs">
+      <div className="card">
         <h3 className="text-sm font-extrabold text-red-600 dark:text-red-400 flex items-center gap-2 mb-3">
           <Flame className="w-4 h-4 text-red-500" />
           {t.highPerformers}
@@ -133,22 +133,22 @@ export default function DashboardTab({
 
       {/* 3️⃣ 4 THỐNG KÊ CHÍNH — 2x2 GRID */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs flex flex-col justify-between">
+        <div className="card flex flex-col justify-between">
           <span className="text-[10px] text-zinc-500 font-bold tracking-wide uppercase">{t.statsTotalStudents}</span>
           <span className="text-2xl font-black text-red-500 mt-1">{totalStudents}</span>
           <span className="text-[9px] text-zinc-400 mt-1">{lang === 'vi' ? 'Đang hoạt động' : 'Active students'}</span>
         </div>
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs flex flex-col justify-between">
+        <div className="card flex flex-col justify-between">
           <span className="text-[10px] text-zinc-500 font-bold tracking-wide uppercase">{t.statsTotalSessions}</span>
           <span className="text-2xl font-black text-red-500 mt-1">{totalSessionsDone}</span>
           <span className="text-[9px] text-zinc-400 mt-1">{lang === 'vi' ? 'Đã hoàn thành' : 'Completed'}</span>
         </div>
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs flex flex-col justify-between">
+        <div className="card flex flex-col justify-between">
           <span className="text-[10px] text-zinc-500 font-bold tracking-wide uppercase">{t.statsAvgRating}</span>
           <span className="text-2xl font-black text-red-500 mt-1">{avgRating} <span className="text-sm">/ 5.0</span></span>
           <span className="text-[9px] text-zinc-400 mt-1">{lang === 'vi' ? 'Toàn bộ kỹ năng' : 'All skills'}</span>
         </div>
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs flex flex-col justify-between">
+        <div className="card flex flex-col justify-between">
           <span className="text-[10px] text-zinc-500 font-bold tracking-wide uppercase">{t.statsCompletionRate}</span>
           <span className="text-2xl font-black text-red-500 mt-1">{completionRate}</span>
           <span className="text-[9px] text-zinc-400 mt-1">{lang === 'vi' ? 'Hoàn thành buổi dạy' : 'Session completion'}</span>
@@ -156,7 +156,7 @@ export default function DashboardTab({
       </div>
 
       {/* 4️⃣ KỸ NĂNG ĐẠT CHUẨN (ĐIỂM >= 3) */}
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 shadow-xs">
+      <div className="card">
         <h3 className="text-sm font-extrabold text-red-600 dark:text-red-400 flex items-center gap-2 mb-3">
           <span className="w-2 h-2 rounded-full bg-red-500"></span>
           {lang === 'vi' ? 'Học viên đạt chuẩn (Điểm ≥ 3) theo kỹ năng' : 'Students Meeting Standard (Score >=3) by Skill'}
