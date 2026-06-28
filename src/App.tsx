@@ -258,7 +258,7 @@ function AppContent() {
                             <div className="flex gap-1.5">
                               <button type="button" onClick={() => setNewNoti(null)}
                                 className="px-3 py-1 bg-zinc-200 dark:bg-zinc-800 text-zinc-750 dark:text-zinc-400 rounded-xl cursor-pointer hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors">{lang === 'vi' ? 'Hủy' : 'Cancel'}</button>
-                              <button type="submit" className="px-3 py-1 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-500 hover:to-orange-400 text-white font-bold rounded-xl cursor-pointer shadow-lg shadow-red-500/20 transition-all">{lang === 'vi' ? 'Tạo' : 'Broadcast'}</button>
+                              <button type="submit" className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl cursor-pointer shadow-lg shadow-red-500/20 transition-all">{lang === 'vi' ? 'Tạo' : 'Broadcast'}</button>
                             </div>
                           </div>
                         </form>
@@ -386,7 +386,7 @@ function AppContent() {
                 setTimeout(() => document.getElementById('session-form-heading')?.scrollIntoView({ behavior: 'smooth' }), 100);
               } else if (activeTab === 'dashboard') setNewNoti({ titleVI: '', titleEN: '', contentVI: '', contentEN: '', type: 'info', isPublic: true });
             }}
-            className="md:hidden fixed right-4 z-40 w-14 h-14 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 active:scale-95 text-white rounded-full flex items-center justify-center shadow-xl shadow-red-600/20 transition-all cursor-pointer"
+            className="md:hidden fixed right-4 z-40 w-14 h-14 bg-red-600 hover:bg-red-700 active:scale-95 text-white rounded-full flex items-center justify-center shadow-xl shadow-red-600/20 transition-all cursor-pointer"
           style={{ bottom: 'calc(4rem + var(--sab,0px) + 0.75rem)' }}
             title={lang === 'vi' ? 'Thêm mới' : 'Add New'}
           >

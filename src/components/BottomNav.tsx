@@ -78,7 +78,7 @@ export default function BottomNav({
               setNewNoti({ titleVI: '', titleEN: '', contentVI: '', contentEN: '', type: 'info', isPublic: true });
             }
           }}
-          className="md:hidden fixed right-4 z-40 w-14 h-14 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 active:scale-95 text-white rounded-full flex items-center justify-center shadow-xl shadow-red-600/20 transition-all cursor-pointer"
+          className="md:hidden fixed right-4 z-40 w-14 h-14 bg-red-600 hover:bg-red-700 active:scale-95 text-white rounded-full flex items-center justify-center shadow-xl shadow-red-600/20 transition-all cursor-pointer"
           style={{ bottom: 'calc(4rem + var(--sab,0px) + 0.75rem)' }}
           title={lang === 'vi' ? 'Thêm mới' : 'Add New'}
         >
