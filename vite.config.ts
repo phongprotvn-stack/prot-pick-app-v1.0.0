@@ -16,12 +16,16 @@ export default defineConfig(() => {
           name: 'PROT PICK - Pickleball Coaching',
           short_name: 'PROT PICK',
           description: 'Pickleball coaching management system by Coach Phongprot',
-          theme_color: '#09090b',
-          background_color: '#09090b',
+          theme_color: '#dc2626',
+          background_color: '#dc2626',
           display: 'standalone',
+          display_override: ['standalone', 'minimal-ui'],
           orientation: 'portrait',
           lang: 'vi',
           start_url: '/',
+          scope: '/',
+          categories: ['sports', 'education', 'productivity'],
+          prefer_related_applications: false,
           icons: [
             {
               src: '/pwa-192x192.png',
@@ -40,6 +44,7 @@ export default defineConfig(() => {
               purpose: 'any maskable',
             },
           ],
+          screenshots: [],
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],

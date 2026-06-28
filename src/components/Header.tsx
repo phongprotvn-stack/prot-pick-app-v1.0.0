@@ -240,7 +240,7 @@ export default function Header({
   );
 
   return (
-    <header className="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-850 sticky top-0 z-30 shadow-xl" style={{ paddingTop: 'var(--sat)' }}>
+    <header className="bg-gradient-to-r from-red-600 to-orange-500 sticky top-0 z-30 shadow-xl shadow-red-600/20" style={{ paddingTop: 'var(--sat)' }}>
       {/* TOP BAR */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-2 md:py-3">
         <div className="flex items-center justify-between">
@@ -249,22 +249,22 @@ export default function Header({
             {navStack.length > 0 && (
               <button
                 onClick={goBack}
-                className="p-2.5 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 text-rose-500 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+                className="p-2.5 bg-white/20 backdrop-blur-sm border-0 rounded-xl text-white hover:bg-white/30 transition-all active:scale-95 cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
             )}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 cursor-pointer"
+              className="p-2 bg-white/20 backdrop-blur-sm border-0 rounded-xl text-white/90 hover:bg-white/30 cursor-pointer"
             >
               <Menu className="w-5 h-5 stroke-[2.5]" />
             </button>
             <div onClick={() => { setActiveTab('dashboard'); }} className="flex items-center gap-1.5 cursor-pointer">
-              <img src="/pwa-192x192.png" alt="PP" className="w-9 h-9 rounded-xl object-cover shadow-md shadow-rose-500/20" />
+              <img src="/pwa-192x192.png" alt="PP" className="w-9 h-9 rounded-xl object-cover shadow-md shadow-black/20" />
               <div className="flex flex-col leading-none">
-                <h1 className="text-sm font-black text-zinc-900 dark:text-white tracking-tight leading-[16px] text-center">{t.appTitle}</h1>
-                <span className="text-[9px] font-mono text-rose-500 font-bold uppercase tracking-wider leading-[10px] text-center">{t.slogan}</span>
+                <h1 className="text-sm font-black text-white tracking-tight leading-[16px] text-center">{t.appTitle}</h1>
+                <span className="text-[9px] font-mono text-white/80 font-bold uppercase tracking-wider leading-[10px] text-center">{t.slogan}</span>
               </div>
             </div>
           </div>
@@ -274,23 +274,23 @@ export default function Header({
             {/* Mobile Search Toggle */}
             <button
               onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
-              className="p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+              className="p-2.5 bg-white/20 backdrop-blur-sm border-0 rounded-xl hover:bg-white/30 transition-all active:scale-95 cursor-pointer"
             >
-              <Search className="w-4 h-4 text-zinc-400" />
+              <Search className="w-4 h-4 text-white" />
             </button>
 
             {/* Theme Toggle */}
             <button
               onClick={handleThemeToggle}
-              className="p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+              className="p-2.5 bg-white/20 backdrop-blur-sm border-0 rounded-xl hover:bg-white/30 transition-all active:scale-95 cursor-pointer"
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-rose-500" />}
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-white" />}
             </button>
 
             {/* Language Toggle */}
             <button
               onClick={() => handleLangToggle(lang === 'vi' ? 'en' : 'vi')}
-              className="p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 text-[10px] font-black text-zinc-600 dark:text-zinc-400 cursor-pointer"
+              className="p-2.5 bg-white/20 backdrop-blur-sm border-0 rounded-xl hover:bg-white/30 transition-all active:scale-95 text-[10px] font-black text-white cursor-pointer"
             >
               {lang === 'vi' ? 'EN' : 'VI'}
             </button>
@@ -300,11 +300,11 @@ export default function Header({
             <div className="relative" ref={notiRef}>
               <button
                 onClick={() => setIsNotiHistoryOpen(!isNotiHistoryOpen)}
-                className="relative p-2.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all active:scale-95 cursor-pointer"
+                className="relative p-2.5 bg-white/20 backdrop-blur-sm border-0 rounded-xl hover:bg-white/30 transition-all active:scale-95 cursor-pointer"
               >
-                <Bell className="w-4 h-4 text-zinc-400" />
+                <Bell className="w-4 h-4 text-white" />
                 {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-rose-500 border-2 border-white dark:border-zinc-950 rounded-full text-[6px] font-black text-white flex items-center justify-center animate-pulse">
+                  <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-amber-400 border-2 border-red-600 rounded-full text-[6px] font-black text-red-900 flex items-center justify-center animate-pulse">
                     {sortedNotifications.filter(n => role === 'coach' || n.isPublic).length}
                   </span>
                 )}
@@ -367,9 +367,9 @@ export default function Header({
 
       {/* MOBILE SEARCH OVERLAY ROW */}
       {isMobileSearchOpen && (
-        <div className="px-4 py-2 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-850 animate-slideDown">
+        <div className="px-4 py-2 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border-t border-white/10 animate-slideDown">
           <div className="relative flex items-center bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-1.5">
-            <Search className="w-3.5 h-3.5 text-rose-500 mr-2 shrink-0 animate-pulse" />
+            <Search className="w-3.5 h-3.5 text-red-500 mr-2 shrink-0 animate-pulse" />
             <input
               type="text"
               value={searchQuery}
@@ -390,7 +390,7 @@ export default function Header({
       )}
 
       {/* TABS NAVIGATION PANEL (DESKTOP ONLY) */}
-      <div className="hidden md:block bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-850 px-4 md:px-6">
+      <div className="hidden md:block bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-900 px-4 md:px-6">
         <div className="max-w-7xl mx-auto flex overflow-x-auto no-scrollbar py-1">
           <div className="flex gap-1.5 min-w-max">
             {[
@@ -405,7 +405,7 @@ export default function Header({
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 px-5 py-3 text-xs font-bold transition-all border-b-2 cursor-pointer ${
                   activeTab === tab.id
-                    ? 'border-rose-500 text-rose-500'
+                    ? 'border-red-500 text-red-600'
                     : 'border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-300 dark:hover:border-zinc-750'
                 }`}
               >
@@ -431,14 +431,14 @@ export default function Header({
                 {showHelpCenter || showRating || showShare ? (
                   <button
                     onClick={() => { setShowHelpCenter(false); setShowRating(false); setShowShare(false); setHelpExpandedId(null); }}
-                    className="p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-rose-500 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all cursor-pointer"
+                    className="p-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-red-500 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
                 ) : (
-                  <Menu className="w-4 h-4 text-rose-500" />
+                  <Menu className="w-4 h-4 text-red-500" />
                 )}
-                <span className="font-black text-xs uppercase tracking-wider text-rose-500">
+                <span className="font-black text-xs uppercase tracking-wider text-red-500">
                   {showHelpCenter ? (lang === 'vi' ? 'Trung tâm trợ giúp' : 'Help Center')
                     : showRating ? (lang === 'vi' ? 'Đánh giá ứng dụng' : 'Rate App')
                     : showShare ? (lang === 'vi' ? 'Giới thiệu bạn bè' : 'Refer Friends')
@@ -472,8 +472,8 @@ export default function Header({
                     }}
                     className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black transition-all cursor-pointer ${
                       pinDisplayP || role === 'coach'
-                        ? 'bg-rose-500/15 text-rose-500 border border-rose-500/30 hover:bg-rose-500/25'
-                        : 'bg-zinc-100 dark:bg-zinc-900 text-rose-500 border border-zinc-200 dark:border-zinc-800'
+                        ? 'bg-red-500/15 text-red-500 border border-red-500/30 hover:bg-red-500/25'
+                        : 'bg-zinc-100 dark:bg-zinc-900 text-red-500 border border-zinc-200 dark:border-zinc-800'
                     }`}
                     title={role === 'coach'
                       ? (lang === 'vi' ? 'Nhấn để chuyển sang Học viên' : 'Tap to switch to Student')

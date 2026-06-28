@@ -88,7 +88,7 @@ function AppContent() {
 
   return (
     <div className={`${theme === 'dark' ? 'dark' : ''}`}>
-      <div className={`min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white font-sans antialiased transition-colors duration-300`}
+      <div className={`min-h-screen bg-red-50/30 dark:bg-zinc-950 text-zinc-900 dark:text-white font-sans antialiased transition-colors duration-300`}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -127,7 +127,7 @@ function AppContent() {
         />
  
           <main className="max-w-7xl mx-auto px-4 md:px-6 pt-4 pb-24 md:py-6" id="protpick-main-canvas">
-          <Suspense fallback={<div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-rose-500 border-t-transparent rounded-full animate-spin" /></div>}>
+          <Suspense fallback={<div className="flex items-center justify-center py-20"><div className="w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full animate-spin" /></div>}>
             {activeTab === 'dashboard' && (
               <>
                 {/* NOTIFICATION CENTER — only on Dashboard */}
@@ -136,18 +136,18 @@ function AppContent() {
                   const focus = selectedNotiId ? visible.find(n => n.id === selectedNotiId) : null;
                   const latestNoti = focus || visible[0];
                   return (
-                    <div className="mb-4 bg-white/70 dark:bg-zinc-900/40 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800/60 rounded-2xl p-4 shadow-md dark:shadow-none relative overflow-hidden" id="protpick-notification-center">
+                    <div className="mb-4 bg-white/70 dark:bg-zinc-900/40 backdrop-blur-xl border border-zinc-200/80 dark:border-zinc-800/60 rounded-2xl p-4 shadow-md dark:shadow-none relative overflow-hidden card" id="protpick-notification-center">
                       <div className="absolute right-3 top-3 opacity-[0.06] dark:opacity-10 pointer-events-none">
-                        <Bell className="w-8 h-8 text-rose-500 dark:text-rose-400/60" />
+                        <Bell className="w-8 h-8 text-red-500 dark:text-red-400/60" />
                       </div>
                       <div className="space-y-2">
-                        <h3 className="text-sm font-extrabold text-rose-600 dark:text-rose-400 flex items-center gap-2">
-                          <Bell className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+                        <h3 className="text-sm font-extrabold text-red-600 dark:text-red-400 flex items-center gap-2">
+                          <Bell className="w-4 h-4 text-red-600 dark:text-red-400" />
                           {lang === 'vi' ? 'Thông báo' : 'Notifications'}
                         </h3>
                         {latestNoti ? (
                           <div id={`noti-${latestNoti.id}`} className={`space-y-1 transition-all duration-300 ${
-                            selectedNotiId === latestNoti.id ? 'ring-2 ring-rose-500/30 rounded-xl p-3 -mx-3' : ''
+                            selectedNotiId === latestNoti.id ? 'ring-2 ring-red-500/30 rounded-xl p-3 -mx-3' : ''
                           }`}>
                             <h4 className="text-xs font-bold text-zinc-800 dark:text-zinc-100 truncate">
                               {lang === 'vi' ? latestNoti.titleVI : latestNoti.titleEN}
@@ -169,7 +169,7 @@ function AppContent() {
                               {!latestNoti.isPublic && <span className="bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-750 px-1 py-0.5 rounded font-bold">Private</span>}
                               {role === 'coach' && (
                                 <button type="button" onClick={() => handleDeleteNoti(latestNoti.id)}
-                                  className="text-zinc-500 hover:text-rose-500 hover:underline transition-colors ml-auto cursor-pointer font-bold">Delete</button>
+                                  className="text-zinc-500 hover:text-red-500 hover:underline transition-colors ml-auto cursor-pointer font-bold">Delete</button>
                               )}
                             </div>
                           </div>
@@ -179,7 +179,7 @@ function AppContent() {
                       </div>
                       {role === 'coach' && !newNoti && (
                         <button type="button" onClick={() => setNewNoti({ titleVI: '', titleEN: '', contentVI: '', contentEN: '', type: 'info', isPublic: true })}
-                          className="mt-3 text-[10px] text-rose-650 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 font-extrabold flex items-center gap-1 cursor-pointer transition-colors">
+                          className="mt-3 text-[10px] text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-extrabold flex items-center gap-1 cursor-pointer transition-colors">
                           <Plus className="w-3 h-3" /> {t.sendNotification}
                         </button>
                       )}
@@ -200,15 +200,15 @@ function AppContent() {
                                       }, 800);
                                     }
                                   }}
-                                  className="w-full text-[11px] p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-zinc-100 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500" />
-                              </div>
-                            )}
-                            {lang === 'en' && (
-                              <div className="space-y-1">
-                                <label className="text-[10px] text-zinc-500 dark:text-zinc-400 font-bold">Title (EN)</label>
-                                <input type="text" required value={newNoti.titleEN || ''}
-                                  onChange={(e) => setNewNoti({ ...newNoti, titleEN: e.target.value })}
-                                  className="w-full text-[11px] p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-zinc-100 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500" />
+                                  className="w-full text-[11px] p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-zinc-100 rounded-xl focus:outline-none focus:ring-1 focus:ring-red-500" />
+                                      </div>
+                                    )}
+                                    {lang === 'en' && (
+                                      <div className="space-y-1">
+                                        <label className="text-[10px] text-zinc-500 dark:text-zinc-400 font-bold">Title (EN)</label>
+                                        <input type="text" required value={newNoti.titleEN || ''}
+                                          onChange={(e) => setNewNoti({ ...newNoti, titleEN: e.target.value })}
+                                          className="w-full text-[11px] p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-zinc-100 rounded-xl focus:outline-none focus:ring-1 focus:ring-red-500" />
                               </div>
                             )}
                           </div>
@@ -227,7 +227,7 @@ function AppContent() {
                                       }, 1000);
                                     }
                                   }}
-                                  className="w-full text-[11px] p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-zinc-100 rounded-xl h-16 focus:outline-none focus:ring-1 focus:ring-rose-500" />
+                                  className="w-full text-[11px] p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-zinc-100 rounded-xl h-16 focus:outline-none focus:ring-1 focus:ring-red-500" />
                               </div>
                             )}
                             {lang === 'en' && (
@@ -235,7 +235,7 @@ function AppContent() {
                                 <label className="text-[10px] text-zinc-500 dark:text-zinc-400 font-bold font-sans">Content (EN)</label>
                                 <textarea required value={newNoti.contentEN || ''}
                                   onChange={(e) => setNewNoti({ ...newNoti, contentEN: e.target.value })}
-                                  className="w-full text-[11px] p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-zinc-100 rounded-xl h-16 focus:outline-none focus:ring-1 focus:ring-rose-500" />
+                                  className="w-full text-[11px] p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-750 text-zinc-900 dark:text-zinc-100 rounded-xl h-16 focus:outline-none focus:ring-1 focus:ring-red-500" />
                               </div>
                             )}
                           </div>
@@ -243,7 +243,7 @@ function AppContent() {
                             <div className="flex items-center gap-2">
                               <select value={newNoti.type || 'info'}
                                 onChange={(e) => setNewNoti({ ...newNoti, type: e.target.value as 'info' | 'success' | 'warning' })}
-                                className="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-750 rounded-xl p-1.5 text-[10px] text-zinc-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-rose-500">
+                                className="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-750 rounded-xl p-1.5 text-[10px] text-zinc-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-red-500">
                                 <option value="info">Info</option>
                                 <option value="success">Success</option>
                                 <option value="warning">Warning</option>
@@ -251,14 +251,14 @@ function AppContent() {
                               <label className="flex items-center gap-1 cursor-pointer font-bold text-zinc-650 dark:text-zinc-300">
                                 <input type="checkbox" checked={newNoti.isPublic ?? true}
                                   onChange={(e) => setNewNoti({ ...newNoti, isPublic: e.target.checked })}
-                                  className="accent-rose-500 rounded cursor-pointer" />
+                                  className="accent-red-500 rounded cursor-pointer" />
                                 <span>{lang === 'vi' ? 'Công khai' : 'Public'}</span>
                               </label>
                             </div>
                             <div className="flex gap-1.5">
                               <button type="button" onClick={() => setNewNoti(null)}
                                 className="px-3 py-1 bg-zinc-200 dark:bg-zinc-800 text-zinc-750 dark:text-zinc-400 rounded-xl cursor-pointer hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors">{lang === 'vi' ? 'Hủy' : 'Cancel'}</button>
-                              <button type="submit" className="px-3 py-1 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl cursor-pointer shadow-sm transition-colors">{lang === 'vi' ? 'Tạo' : 'Broadcast'}</button>
+                              <button type="submit" className="px-3 py-1 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-500 hover:to-orange-400 text-white font-bold rounded-xl cursor-pointer shadow-lg shadow-red-500/20 transition-all">{lang === 'vi' ? 'Tạo' : 'Broadcast'}</button>
                             </div>
                           </div>
                         </form>
@@ -386,7 +386,7 @@ function AppContent() {
                 setTimeout(() => document.getElementById('session-form-heading')?.scrollIntoView({ behavior: 'smooth' }), 100);
               } else if (activeTab === 'dashboard') setNewNoti({ titleVI: '', titleEN: '', contentVI: '', contentEN: '', type: 'info', isPublic: true });
             }}
-            className="md:hidden fixed right-4 z-40 w-14 h-14 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white rounded-full flex items-center justify-center shadow-2xl transition-all cursor-pointer"
+            className="md:hidden fixed right-4 z-40 w-14 h-14 bg-gradient-to-r from-red-600 to-orange-500 hover:from-red-700 hover:to-orange-600 active:scale-95 text-white rounded-full flex items-center justify-center shadow-xl shadow-red-600/20 transition-all cursor-pointer"
           style={{ bottom: 'calc(4rem + var(--sab,0px) + 0.75rem)' }}
             title={lang === 'vi' ? 'Thêm mới' : 'Add New'}
           >
