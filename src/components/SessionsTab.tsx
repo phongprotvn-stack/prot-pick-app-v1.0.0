@@ -383,7 +383,7 @@ const SessionsTab: React.FC<SessionsTabProps> = ({
               type="date"
               value={sessionDateFilter}
               onChange={(e) => setSessionDateFilter(e.target.value)}
-              className="w-full pl-9 pr-8 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 cursor-pointer font-sans hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-colors [color-scheme:light] dark:[color-scheme:dark]"
+              className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-rose-500 font-sans appearance-none [color-scheme:light] dark:[color-scheme:dark]"
             />
             {sessionDateFilter && (
               <button
